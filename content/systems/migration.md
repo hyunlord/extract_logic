@@ -1,156 +1,132 @@
 ---
-title: "Migration System"
+title: "Migration"
 description: "Generated system documentation page."
 generated: true
 source_files:
   - "scripts/systems/migration_system.gd"
 nav_order: 60
+system_name: "migration"
 ---
 
-# Migration System
-
-> No module-level documentation comment was extracted.
+# Migration
 
 📄 source: `scripts/systems/migration_system.gd` | Priority: 60 | Tick interval: config (GameConfig.MIGRATION_TICK_INTERVAL)
 
-## Overview
+## Overview (개요)
 
-This page summarizes the extracted structure and runtime behavior for `Migration`.
+The **Migration** system implements a domain-specific simulation model to simulate migration dynamics for entities and world state.
+It runs on a **config-driven cadence** (`GameConfig.MIGRATION_TICK_INTERVAL`) at priority **60**.
 
-The extractor found 13 functions, 14 configuration references, and 7 tracked entity fields.
+**Core entity data**: `action_target` (read/write (inferred)), `action_timer` (read/write (inferred)), `cached_path` (read/write (inferred)), `current_action` (read/write (inferred)), `id` (read/write (inferred)), `path_index` (read/write (inferred)), `settlement_id` (read/write (inferred))
 
-## Configuration
+## Tick Pipeline (틱 파이프라인)
 
-| Constant | Value | Description |
-| --- | --- | --- |
-| `MAX_SETTLEMENTS` | 5 | from GameConfig |
-| `MIGRATION_CHANCE` | 0.05 | from GameConfig |
-| `MIGRATION_COOLDOWN_TICKS` | 500 | from GameConfig |
-| `MIGRATION_GROUP_SIZE_MAX` | 7 | from GameConfig |
-| `MIGRATION_GROUP_SIZE_MIN` | 5 | from GameConfig |
-| `MIGRATION_MIN_POP` | 40 | from GameConfig |
-| `MIGRATION_SEARCH_RADIUS_MAX` | 80 | from GameConfig |
-| `MIGRATION_SEARCH_RADIUS_MIN` | 30 | from GameConfig |
-| `MIGRATION_STARTUP_FOOD` | 30.0 | from GameConfig |
-| `MIGRATION_STARTUP_STONE` | 3.0 | from GameConfig |
-| `MIGRATION_STARTUP_WOOD` | 10.0 | from GameConfig |
-| `MIGRATION_TICK_INTERVAL` | 100 | from GameConfig |
-| `SETTLEMENT_CLEANUP_INTERVAL` | 250 | from GameConfig |
-| `SETTLEMENT_MIN_DISTANCE` | 25 | ══════════════════════════════════════ Settlement & Migration ══════════════════════════════════════ |
+1. Run per-entity tick update loop
+   📄 source: `scripts/systems/migration_system.gd:L27`
+   Math context: Computes a gameplay state update from mathematical relationships in the source logic.
+2. Resolve settlement stockpile totals
+   📄 source: `scripts/systems/migration_system.gd:L188`
+3. Resolve food in radius
+   📄 source: `scripts/systems/migration_system.gd:L295`
+4. Resolve food score
+   📄 source: `scripts/systems/migration_system.gd:L309`
 
-## Entity Fields Accessed
+## Formulas (수식)
 
-| Field | Access | Description |
-| --- | --- | --- |
-| `action_target` | read | Current behavior/action state. |
-| `action_timer` | read | Current behavior/action state. |
-| `cached_path` | read | World-space movement data. |
-| `current_action` | read | Current behavior/action state. |
-| `id` | read | Entity identity reference. |
-| `path_index` | read | World-space movement data. |
-| `settlement_id` | read | Entity identity reference. |
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-## Functions
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
-### `_init()`
-
-**Parameters**: `(none)`
-**Lines**: 12-17 (6 lines)
-
-### `init(entity_manager: RefCounted, building_manager: RefCounted, settlement_manager: RefCounted, world_data: RefCounted, resource_map: RefCounted, rng: RandomNumberGenerator)`
-
-**Parameters**: `entity_manager: RefCounted, building_manager: RefCounted, settlement_manager: RefCounted, world_data: RefCounted, resource_map: RefCounted, rng: RandomNumberGenerator`
-**Lines**: 18-26 (9 lines)
-
-### `execute_tick(tick: int)`
-
-**Parameters**: `tick: int`
-**Lines**: 27-149 (123 lines)
-
-### `_ensure_group_composition(migrants: Array, candidates: Array)`
-
-**Parameters**: `migrants: Array, candidates: Array`
-**Lines**: 150-177 (28 lines)
-
-### `_can_withdraw_from_stockpiles(settlement_id: int, resources: Dictionary)`
-
-**Parameters**: `settlement_id: int, resources: Dictionary`
-**Lines**: 178-187 (10 lines)
-
-### `_get_settlement_stockpile_totals(settlement_id: int)`
-
-**Parameters**: `settlement_id: int`
-**Lines**: 188-201 (14 lines)
-
-### `_withdraw_from_stockpiles(settlement_id: int, resources: Dictionary)`
-
-**Parameters**: `settlement_id: int, resources: Dictionary`
-**Lines**: 202-219 (18 lines)
-
-### `_distribute_startup_resources(migrants: Array, resources: Dictionary)`
-
-**Parameters**: `migrants: Array, resources: Dictionary`
-**Lines**: 220-243 (24 lines)
-
-### `_find_migration_site(source: RefCounted, all_settlements: Array)`
-
-**Parameters**: `source: RefCounted, all_settlements: Array`
-**Lines**: 244-284 (41 lines)
-
-### `_count_settlement_shelters(settlement_id: int)`
-
-**Parameters**: `settlement_id: int`
-**Lines**: 285-294 (10 lines)
-
-### `_get_food_in_radius(cx: int, cy: int, radius: int)`
-
-**Parameters**: `cx: int, cy: int, radius: int`
-**Lines**: 295-308 (14 lines)
-
-### `_get_food_score(x: int, y: int, radius: int)`
-
-**Parameters**: `x: int, y: int, radius: int`
-**Lines**: 309-322 (14 lines)
-
-### `_sort_social_ascending(a: RefCounted, b: RefCounted)`
-
-**Parameters**: `a: RefCounted, b: RefCounted`
-**Lines**: 323-324 (2 lines)
-
-## Formulas
-
-### Execute Tick Line 60
-
-Formula logic extracted from execute_tick
-
+**GDScript**:
 ```gdscript
 var explorer_chance: bool = _rng.randf() < GameConfig.MIGRATION_CHANCE
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `explorer_chance` | explorer chance |
+| `bool` | bool |
+| `_rng` |  rng |
+
 📄 source: `scripts/systems/migration_system.gd:L60`
 
-### Find Migration Site Line 265
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _find_migration_site
+$$
+absi(other_settlement.center_x - x) + absi(other_settlement.center_y - y)
+$$
 
-$$absi(other_settlement.center_x - x) + absi(other_settlement.center_y - y)$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 var dist_to_settlement: int = absi(other_settlement.center_x - x) + absi(other_settlement.center_y - y)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `dist_to_settlement` | dist to settlement |
+| `other_settlement` | other settlement |
+| `center_x` | center x |
+| `x` | x |
+| `center_y` | center y |
+| `y` | y |
+
 📄 source: `scripts/systems/migration_system.gd:L265`
 
-## Dependencies
+## Configuration Reference (설정)
 
-### Imports
+| Constant | Default | Controls | Behavior Effect |
+| :-- | :-- | :-- | :-- |
+| `MAX_SETTLEMENTS` | 5 | Hard bound for safe state range. | Constrains extremes to stabilize the simulation. |
+| `MIGRATION_CHANCE` | 0.05 | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
+| `MIGRATION_COOLDOWN_TICKS` | 500 | Simulation-time conversion or cadence. | Adjusts baseline system behavior under this module. |
+| `MIGRATION_GROUP_SIZE_MAX` | 7 | Hard bound for safe state range. | Constrains extremes to stabilize the simulation. |
+| `MIGRATION_GROUP_SIZE_MIN` | 5 | Hard bound for safe state range. | Constrains extremes to stabilize the simulation. |
+| `MIGRATION_MIN_POP` | 40 | Hard bound for safe state range. | Constrains extremes to stabilize the simulation. |
+| `MIGRATION_SEARCH_RADIUS_MAX` | 80 | Hard bound for safe state range. | Constrains extremes to stabilize the simulation. |
+| `MIGRATION_SEARCH_RADIUS_MIN` | 30 | Hard bound for safe state range. | Constrains extremes to stabilize the simulation. |
+| `MIGRATION_STARTUP_FOOD` | 30.0 | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
+| `MIGRATION_STARTUP_STONE` | 3.0 | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
+| `MIGRATION_STARTUP_WOOD` | 10.0 | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
+| `MIGRATION_TICK_INTERVAL` | 100 | System update cadence. | Lower values increase update frequency and responsiveness. |
+| `SETTLEMENT_CLEANUP_INTERVAL` | 250 | Behavior tuning constant. | Lower values increase update frequency and responsiveness. |
+| `SETTLEMENT_MIN_DISTANCE` | 25 | Hard bound for safe state range. | Constrains extremes to stabilize the simulation. |
 
-- None
+## Cross-System Effects (시스템 간 상호작용)
 
-### Signals Emitted
+### Imported Modules (모듈 임포트)
 
-- None
+No import relationships extracted for this module.
 
-### Referenced By
+### Shared Entity Fields (공유 엔티티 필드)
 
-- None
+| Field | Access | Shared With |
+| :-- | :-- | :-- |
+| `action_target` | read/write (inferred) | [`behavior`](behavior.md), [`construction`](construction.md), [`movement`](movement.md) |
+| `action_timer` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`movement`](movement.md) |
+| `cached_path` | read/write (inferred) | [`behavior`](behavior.md), [`movement`](movement.md) |
+| `current_action` | read/write (inferred) | [`behavior`](behavior.md), [`construction`](construction.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`movement`](movement.md), [`needs`](needs.md), [`social_events`](social_events.md), [`stress`](stress.md) |
+| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md) |
+| `path_index` | read/write (inferred) | [`behavior`](behavior.md), [`movement`](movement.md) |
+| `settlement_id` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
+
+### Signals (시그널)
+
+No emitted signals extracted for this module.
+
+### Downstream Impact (다운스트림 영향)
+
+- No explicit downstream dependencies extracted.
+
+## Entity Data Model (엔티티 데이터 모델)
+
+| Field | Access | Type | Represents | Typical Values |
+| :-- | :-- | :-- | :-- | :-- |
+| `action_target` | read/write (inferred) | Variant | Current behavior intent used by schedulers and downstream systems. | System-defined value domain. |
+| `action_timer` | read/write (inferred) | int | Current behavior intent used by schedulers and downstream systems. | Non-negative tick counts. |
+| `cached_path` | read/write (inferred) | Variant | Cached path. | System-defined value domain. |
+| `current_action` | read/write (inferred) | String enum | Current behavior intent used by schedulers and downstream systems. | System-defined value domain. |
+| `id` | read/write (inferred) | int | Stable entity identity used for referencing across systems. | Positive integer identifiers. |
+| `path_index` | read/write (inferred) | Variant | Path index. | System-defined value domain. |
+| `settlement_id` | read/write (inferred) | int | Stable entity identity used for referencing across systems. | Positive integer identifiers. |

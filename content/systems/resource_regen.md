@@ -1,63 +1,60 @@
 ---
-title: "Resource Regen System"
+title: "Resource Regen"
 description: "Generated system documentation page."
 generated: true
 source_files:
   - "scripts/systems/resource_regen_system.gd"
 nav_order: 5
+system_name: "resource_regen"
 ---
 
-# Resource Regen System
-
-> No module-level documentation comment was extracted.
+# Resource Regen
 
 📄 source: `scripts/systems/resource_regen_system.gd` | Priority: 5 | Tick interval: config (GameConfig.RESOURCE_REGEN_TICK_INTERVAL)
 
-## Overview
+## Overview (개요)
 
-This page summarizes the extracted structure and runtime behavior for `Resource Regen`.
+The **Resource Regen** system implements a domain-specific simulation model to simulate resource regen dynamics for entities and world state.
+It runs on a **config-driven cadence** (`GameConfig.RESOURCE_REGEN_TICK_INTERVAL`) at priority **5**.
 
-The extractor found 2 functions, 4 configuration references, and 0 tracked entity fields.
+**Core entity data**: No entity fields were extracted.
 
-## Configuration
+## Tick Pipeline (틱 파이프라인)
 
-| Constant | Value | Description |
-| --- | --- | --- |
-| `FOOD_REGEN_RATE` | 1.0 | Resource regen rates (per regen tick) |
-| `RESOURCE_REGEN_TICK_INTERVAL` | 120 | Resource regen tick interval (time-based, 10 days) |
-| `ResourceType` | - | GameConfig function reference |
-| `WOOD_REGEN_RATE` | 0.3 | from GameConfig |
+1. Run per-entity tick update loop
+   📄 source: `scripts/systems/resource_regen_system.gd:L15`
 
-## Entity Fields Accessed
+## Formulas (수식)
 
-No entity field access metadata extracted.
+No extracted formulas for this module.
 
-## Functions
+## Configuration Reference (설정)
 
-### `init(resource_map: RefCounted, world_data: RefCounted)`
+| Constant | Default | Controls | Behavior Effect |
+| :-- | :-- | :-- | :-- |
+| `FOOD_REGEN_RATE` | 1.0 | Rate coefficient for change per tick. | Directly scales accumulation/decay velocity each tick. |
+| `RESOURCE_REGEN_TICK_INTERVAL` | 120 | System update cadence. | Lower values increase update frequency and responsiveness. |
+| `ResourceType` | (not found) | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
+| `WOOD_REGEN_RATE` | 0.3 | Rate coefficient for change per tick. | Directly scales accumulation/decay velocity each tick. |
 
-**Parameters**: `resource_map: RefCounted, world_data: RefCounted`
-**Lines**: 7-14 (8 lines)
+## Cross-System Effects (시스템 간 상호작용)
 
-### `execute_tick(tick: int)`
+### Imported Modules (모듈 임포트)
 
-**Parameters**: `tick: int`
-**Lines**: 15-33 (19 lines)
+No import relationships extracted for this module.
 
-## Formulas
+### Shared Entity Fields (공유 엔티티 필드)
 
-No formulas extracted for this module.
+No cross-system shared entity field usage was inferred.
 
-## Dependencies
+### Signals (시그널)
 
-### Imports
+No emitted signals extracted for this module.
 
-- None
+### Downstream Impact (다운스트림 영향)
 
-### Signals Emitted
+- No explicit downstream dependencies extracted.
 
-- None
+## Entity Data Model (엔티티 데이터 모델)
 
-### Referenced By
-
-- None
+No entity field metadata extracted for this module.

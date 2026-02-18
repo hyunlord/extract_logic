@@ -1,137 +1,142 @@
 ---
-title: "Movement System"
+title: "Movement"
 description: "Generated system documentation page."
 generated: true
 source_files:
   - "scripts/systems/movement_system.gd"
 nav_order: 30
+system_name: "movement"
 ---
 
-# Movement System
-
-> No module-level documentation comment was extracted.
+# Movement
 
 📄 source: `scripts/systems/movement_system.gd` | Priority: 30 | Tick interval: config (GameConfig.MOVEMENT_TICK_INTERVAL)
 
-## Overview
+## Overview (개요)
 
-This page summarizes the extracted structure and runtime behavior for `Movement`.
+The **Movement** system implements a domain-specific simulation model to simulate movement dynamics for entities and world state.
+It runs on a **config-driven cadence** (`GameConfig.MOVEMENT_TICK_INTERVAL`) at priority **30**.
 
-The extractor found 9 functions, 4 configuration references, and 14 tracked entity fields.
+**Core entity data**: `action_target` (read/write (inferred)), `action_timer` (read/write (inferred)), `age_stage` (read/write (inferred)), `cached_path` (read/write (inferred)), `current_action` (read/write (inferred)), `energy` (read/write (inferred)), `entity_name` (read/write (inferred)), `hunger` (read/write (inferred)), `id` (read/write (inferred)), `inventory` (read/write (inferred)), `path_index` (read/write (inferred)), `position` (read/write (inferred)), `remove_item` (read/write (inferred)), `social` (read/write (inferred))
 
-## Configuration
+## Tick Pipeline (틱 파이프라인)
 
-| Constant | Value | Description |
-| --- | --- | --- |
-| `CHILD_MOVE_SKIP_MOD` | { 	"infant": 2, 	"toddler": 2, 	"child": 3, 	"teen": 10, 	"elder": 3, } | Movement skip modulo by age stage (skip 1 in N ticks; higher N = faster) infant/toddler: skip every other tick → 50%, child: skip 1/3 → 70% teen: skip 1/10 → 90%, elder: skip 1/3 → 67% |
-| `FOOD_HUNGER_RESTORE` | 0.3 | Eating constants |
-| `HUNGER_EAT_THRESHOLD` | 0.5 | from GameConfig |
-| `MOVEMENT_TICK_INTERVAL` | 3 | from GameConfig |
+1. Run per-entity tick update loop
+   📄 source: `scripts/systems/movement_system.gd:L23`
+2. Apply arrival effect
+   📄 source: `scripts/systems/movement_system.gd:L140`
 
-## Entity Fields Accessed
+## Formulas (수식)
 
-| Field | Access | Description |
-| --- | --- | --- |
-| `action_target` | read | Current behavior/action state. |
-| `action_timer` | read | Current behavior/action state. |
-| `age_stage` | read | Age or stage lifecycle state. |
-| `cached_path` | read | World-space movement data. |
-| `current_action` | read | Current behavior/action state. |
-| `energy` | read | Energy or fatigue state. |
-| `entity_name` | read | entity name |
-| `hunger` | read | Hunger/food state. |
-| `id` | read | Entity identity reference. |
-| `inventory` | read | inventory |
-| `path_index` | read | World-space movement data. |
-| `position` | read | World-space movement data. |
-| `remove_item` | read | remove item |
-| `social` | read | Social interaction state. |
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-## Functions
+$$
+absi(entity.position.x - stockpile.tile_x) + absi(entity.position.y - stockpile.tile_y)
+$$
 
-### `_init()`
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
-**Parameters**: `(none)`
-**Lines**: 9-15 (7 lines)
-
-### `init(entity_manager: RefCounted, world_data: RefCounted, pathfinder: RefCounted = null, building_manager: RefCounted = null)`
-
-Initialize (pathfinder and building_manager optional for backward compat)
-
-**Parameters**: `entity_manager: RefCounted, world_data: RefCounted, pathfinder: RefCounted = null, building_manager: RefCounted = null`
-**Lines**: 16-22 (7 lines)
-
-### `execute_tick(tick: int)`
-
-**Parameters**: `tick: int`
-**Lines**: 23-61 (39 lines)
-
-### `_move_with_pathfinding(entity: RefCounted, tick: int)`
-
-**Parameters**: `entity: RefCounted, tick: int`
-**Lines**: 62-106 (45 lines)
-
-### `_move_toward_target(entity: RefCounted, tick: int)`
-
-**Parameters**: `entity: RefCounted, tick: int`
-**Lines**: 107-139 (33 lines)
-
-### `_apply_arrival_effect(entity: RefCounted, tick: int)`
-
-**Parameters**: `entity: RefCounted, tick: int`
-**Lines**: 140-193 (54 lines)
-
-### `_try_auto_eat(entity: RefCounted, tick: int)`
-
-**Parameters**: `entity: RefCounted, tick: int`
-**Lines**: 194-211 (18 lines)
-
-### `_deliver_to_stockpile(entity: RefCounted, tick: int)`
-
-**Parameters**: `entity: RefCounted, tick: int`
-**Lines**: 212-241 (30 lines)
-
-### `_take_from_stockpile(entity: RefCounted, tick: int)`
-
-**Parameters**: `entity: RefCounted, tick: int`
-**Lines**: 242-265 (24 lines)
-
-## Formulas
-
-### Deliver To Stockpile Line 220
-
-Formula logic extracted from _deliver_to_stockpile
-
-$$absi(entity.position.x - stockpile.tile_x) + absi(entity.position.y - stockpile.tile_y)$$
-
+**GDScript**:
 ```gdscript
 var dist: int = absi(entity.position.x - stockpile.tile_x) + absi(entity.position.y - stockpile.tile_y)
 ```
+
+| Variable | Meaning |
+| :-- | :-- |
+| `dist` | dist |
+| `entity` | entity |
+| `position` | position |
+| `x` | x |
+| `stockpile` | stockpile |
+| `tile_x` | tile x |
+| `y` | y |
+| `tile_y` | tile y |
 
 📄 source: `scripts/systems/movement_system.gd:L220`
 
-### Take From Stockpile Line 250
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _take_from_stockpile
+$$
+absi(entity.position.x - stockpile.tile_x) + absi(entity.position.y - stockpile.tile_y)
+$$
 
-$$absi(entity.position.x - stockpile.tile_x) + absi(entity.position.y - stockpile.tile_y)$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 var dist: int = absi(entity.position.x - stockpile.tile_x) + absi(entity.position.y - stockpile.tile_y)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `dist` | dist |
+| `entity` | entity |
+| `position` | position |
+| `x` | x |
+| `stockpile` | stockpile |
+| `tile_x` | tile x |
+| `y` | y |
+| `tile_y` | tile y |
+
 📄 source: `scripts/systems/movement_system.gd:L250`
 
-## Dependencies
+## Configuration Reference (설정)
 
-### Imports
+| Constant | Default | Controls | Behavior Effect |
+| :-- | :-- | :-- | :-- |
+| `CHILD_MOVE_SKIP_MOD` | { 	"infant": 2, 	"toddler": 2, 	"child": 3, 	"teen": 10, 	"elder": 3, } | Movement skip modulo by age stage (skip 1 in N ticks; higher N = faster) infant/toddler: skip every other tick → 50%, child: skip 1/3 → 70% teen: skip 1/10 → 90%, elder: skip 1/3 → 67% | Adjusts baseline system behavior under this module. |
+| `FOOD_HUNGER_RESTORE` | 0.3 | Eating constants | Adjusts baseline system behavior under this module. |
+| `HUNGER_EAT_THRESHOLD` | 0.5 | Threshold gate for state transitions. | Changing this moves trigger points for behavior changes. |
+| `MOVEMENT_TICK_INTERVAL` | 3 | System update cadence. | Lower values increase update frequency and responsiveness. |
 
-- None
+## Cross-System Effects (시스템 간 상호작용)
 
-### Signals Emitted
+### Imported Modules (모듈 임포트)
 
-- None
+No import relationships extracted for this module.
 
-### Referenced By
+### Shared Entity Fields (공유 엔티티 필드)
 
-- None
+| Field | Access | Shared With |
+| :-- | :-- | :-- |
+| `action_target` | read/write (inferred) | [`behavior`](behavior.md), [`construction`](construction.md), [`migration`](migration.md) |
+| `action_timer` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`migration`](migration.md) |
+| `age_stage` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`childcare`](childcare.md), [`construction`](construction.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mortality`](mortality.md), [`needs`](needs.md) |
+| `cached_path` | read/write (inferred) | [`behavior`](behavior.md), [`migration`](migration.md) |
+| `current_action` | read/write (inferred) | [`behavior`](behavior.md), [`construction`](construction.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`needs`](needs.md), [`social_events`](social_events.md), [`stress`](stress.md) |
+| `energy` | read/write (inferred) | [`behavior`](behavior.md), [`building_effect`](building_effect.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`needs`](needs.md), [`stress`](stress.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
+| `hunger` | read/write (inferred) | [`behavior`](behavior.md), [`childcare`](childcare.md), [`family`](family.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`needs`](needs.md), [`stress`](stress.md) |
+| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md) |
+| `inventory` | read/write (inferred) | [`behavior`](behavior.md), [`needs`](needs.md) |
+| `path_index` | read/write (inferred) | [`behavior`](behavior.md), [`migration`](migration.md) |
+| `position` | read/write (inferred) | [`behavior`](behavior.md), [`construction`](construction.md), [`gathering`](gathering.md), [`social_events`](social_events.md) |
+| `remove_item` | read/write (inferred) | [`behavior`](behavior.md), [`needs`](needs.md) |
+| `social` | read/write (inferred) | [`behavior`](behavior.md), [`building_effect`](building_effect.md), [`needs`](needs.md), [`stress`](stress.md) |
+
+### Signals (시그널)
+
+No emitted signals extracted for this module.
+
+### Downstream Impact (다운스트림 영향)
+
+- No explicit downstream dependencies extracted.
+
+## Entity Data Model (엔티티 데이터 모델)
+
+| Field | Access | Type | Represents | Typical Values |
+| :-- | :-- | :-- | :-- | :-- |
+| `action_target` | read/write (inferred) | Variant | Current behavior intent used by schedulers and downstream systems. | System-defined value domain. |
+| `action_timer` | read/write (inferred) | int | Current behavior intent used by schedulers and downstream systems. | Non-negative tick counts. |
+| `age_stage` | read/write (inferred) | String enum | Lifecycle progression used for stage-specific behavior and events. | Named categorical states. |
+| `cached_path` | read/write (inferred) | Variant | Cached path. | System-defined value domain. |
+| `current_action` | read/write (inferred) | String enum | Current behavior intent used by schedulers and downstream systems. | System-defined value domain. |
+| `energy` | read/write (inferred) | float | Fatigue/rest capacity controlling action readiness. | Normalized scalar (commonly 0.0-1.0 or 0-100 by system). |
+| `entity_name` | read/write (inferred) | Variant | Entity name. | System-defined value domain. |
+| `hunger` | read/write (inferred) | float | Nutritional deprivation level driving survival and action priorities. | Normalized scalar (commonly 0.0-1.0 or 0-100 by system). |
+| `id` | read/write (inferred) | int | Stable entity identity used for referencing across systems. | Positive integer identifiers. |
+| `inventory` | read/write (inferred) | Variant | Inventory. | System-defined value domain. |
+| `path_index` | read/write (inferred) | Variant | Path index. | System-defined value domain. |
+| `position` | read/write (inferred) | Vector2 / Vector2i | World-space location used for movement and proximity checks. | Grid/world vectors. |
+| `remove_item` | read/write (inferred) | Variant | Remove item. | System-defined value domain. |
+| `social` | read/write (inferred) | float | Social fulfillment/deficit level affecting mood and stress. | Normalized scalar (commonly 0.0-1.0 or 0-100 by system). |

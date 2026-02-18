@@ -9,59 +9,53 @@ nav_order: 10
 
 # proto_nature
 
-📄 source: `data/species/human/cultures/proto_nature.json` | Category: species/human/cultures | Type: object
+📄 source (출처): `data/species/human/cultures/proto_nature.json` | Category (분류): species/human/cultures | Type (유형): object
 
-## Schema
+## 개요 (Overview)
 
-| Key | Type | Description |
-|-----|------|-------------|
-| `culture_id` | string | "proto_nature" |
-| `culture_name` | string | "자연 원시" |
-| `emotion_modifiers` | object | object with 4 keys |
-| `emotion_modifiers.anticipation` | float | 1.1 |
-| `emotion_modifiers.comment` | string | "Emotion sensitivity multiplier" |
-| `emotion_modifiers.fear` | float | 1.2 |
-| `emotion_modifiers.trust` | float | 0.9 |
-| `naming_culture` | string | "proto_nature" |
-| `personality_shift` | object | object with 7 keys |
-| `personality_shift.A` | float | 0.1 |
-| `personality_shift.C` | float | -0.1 |
-| `personality_shift.E` | float | 0.1 |
-| `personality_shift.H` | float | 0.0 |
-| `personality_shift.O` | float | 0.2 |
-| `personality_shift.X` | float | -0.1 |
-| `personality_shift.comment` | string | "z-score shift per axis, +/- 0.1~0.3 recommended" |
+- Configures (설정 내용): `species/human/cultures` 데이터 도메인 설정 값. Configuration values for the `species/human/cultures` data domain.
+- Read by systems/modules (읽는 시스템/모듈): species_manager
+- Related documentation (관련 문서): [`species_manager`](../../../../core/species_manager.md)
 
-## Full Content
+## 해석된 파라미터 (Interpreted Parameters)
 
-```json
-{
-  "culture_id": "proto_nature",
-  "culture_name": "자연 원시",
-  "personality_shift": {
-    "comment": "z-score shift per axis, +/- 0.1~0.3 recommended",
-    "H": 0.0,
-    "E": 0.1,
-    "X": -0.1,
-    "A": 0.1,
-    "C": -0.1,
-    "O": 0.2
-  },
-  "emotion_modifiers": {
-    "comment": "Emotion sensitivity multiplier",
-    "fear": 1.2,
-    "anticipation": 1.1,
-    "trust": 0.9
-  },
-  "naming_culture": "proto_nature"
-}
-```
+### Thresholds & Bounds (임계/경계)
 
-## Referenced By
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `naming_culture` | proto_nature | string | Activation boundary used by game logic. (작동 임계값) |
+
+### Stress & Emotion (스트레스/감정)
+
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `emotion_modifiers.anticipation` | 1.1 | float | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
+| `emotion_modifiers.fear` | 1.2 | float | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
+| `emotion_modifiers.trust` | 0.9 | float | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
+
+### Identifiers & Labels (식별자/라벨)
+
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `culture_id` | proto_nature | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `culture_name` | 자연 원시 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+
+### Other Parameters (기타)
+
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `personality_shift.A` | 0.1 | float | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `personality_shift.C` | -0.1 | float | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `personality_shift.E` | 0.1 | float | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `personality_shift.H` | 0 | float | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `personality_shift.O` | 0.2 | float | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `personality_shift.X` | -0.1 | float | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+
+## 참조하는 시스템 (Referenced By)
 
 - [`species_manager`](../../../../core/species_manager.md) - references data under `data/species/`
 
-## Manual Notes
+## 수동 노트 (Manual Notes)
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

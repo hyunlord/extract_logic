@@ -1,74 +1,68 @@
 ---
-title: "Building Effect System"
+title: "Building Effect"
 description: "Generated system documentation page."
 generated: true
 source_files:
   - "scripts/systems/building_effect_system.gd"
 nav_order: 15
+system_name: "building_effect"
 ---
 
-# Building Effect System
-
-> No module-level documentation comment was extracted.
+# Building Effect
 
 📄 source: `scripts/systems/building_effect_system.gd` | Priority: 15 | Tick interval: config (GameConfig.BUILDING_EFFECT_TICK_INTERVAL)
 
-## Overview
+## Overview (개요)
 
-This page summarizes the extracted structure and runtime behavior for `Building Effect`.
+The **Building Effect** system implements a domain-specific simulation model to simulate building effect dynamics for entities and world state.
+It runs on a **config-driven cadence** (`GameConfig.BUILDING_EFFECT_TICK_INTERVAL`) at priority **15**.
 
-The extractor found 4 functions, 2 configuration references, and 2 tracked entity fields.
+**Core entity data**: `energy` (read/write (inferred)), `social` (read/write (inferred))
 
-## Configuration
+## Tick Pipeline (틱 파이프라인)
 
-| Constant | Value | Description |
-| --- | --- | --- |
-| `BUILDING_EFFECT_TICK_INTERVAL` | 10 | from GameConfig |
-| `BUILDING_TYPES` | { 	"stockpile": {"cost": {"wood": 2.0}, "build_ticks": 36, "radius": 8}, 	"shelter": {"cost": {"wood": 4.0, "stone": 1.0}, "build_ticks": 60, "radius": 0}, 	"campfire": {"cost": {"wood": 1.0}, "build_ticks": 24, "radius": 5}, } | Building type definitions |
+1. Run per-entity tick update loop
+   📄 source: `scripts/systems/building_effect_system.gd:L17`
+2. Apply campfire
+   📄 source: `scripts/systems/building_effect_system.gd:L30`
+3. Apply shelter
+   📄 source: `scripts/systems/building_effect_system.gd:L44`
 
-## Entity Fields Accessed
+## Formulas (수식)
 
-| Field | Access | Description |
-| --- | --- | --- |
-| `energy` | read | Energy or fatigue state. |
-| `social` | read | Social interaction state. |
+No extracted formulas for this module.
 
-## Functions
+## Configuration Reference (설정)
 
-### `init(entity_manager: RefCounted, building_manager: RefCounted, sim_engine: RefCounted)`
+| Constant | Default | Controls | Behavior Effect |
+| :-- | :-- | :-- | :-- |
+| `BUILDING_EFFECT_TICK_INTERVAL` | 10 | System update cadence. | Lower values increase update frequency and responsiveness. |
+| `BUILDING_TYPES` | { 	"stockpile": {"cost": {"wood": 2.0}, "build_ticks": 36, "radius": 8}, 	"shelter": {"cost": {"wood": 4.0, "stone": 1.0}, "build_ticks": 60, "radius": 0}, 	"campfire": {"cost": {"wood": 1.0}, "build_ticks": 24, "radius": 5}, } | Building type definitions | Adjusts baseline system behavior under this module. |
 
-**Parameters**: `entity_manager: RefCounted, building_manager: RefCounted, sim_engine: RefCounted`
-**Lines**: 8-16 (9 lines)
+## Cross-System Effects (시스템 간 상호작용)
 
-### `execute_tick(tick: int)`
+### Imported Modules (모듈 임포트)
 
-**Parameters**: `tick: int`
-**Lines**: 17-29 (13 lines)
+No import relationships extracted for this module.
 
-### `_apply_campfire(building: RefCounted)`
+### Shared Entity Fields (공유 엔티티 필드)
 
-**Parameters**: `building: RefCounted`
-**Lines**: 30-43 (14 lines)
+| Field | Access | Shared With |
+| :-- | :-- | :-- |
+| `energy` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
+| `social` | read/write (inferred) | [`behavior`](behavior.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
 
-### `_apply_shelter(building: RefCounted)`
+### Signals (시그널)
 
-**Parameters**: `building: RefCounted`
-**Lines**: 44-50 (7 lines)
+No emitted signals extracted for this module.
 
-## Formulas
+### Downstream Impact (다운스트림 영향)
 
-No formulas extracted for this module.
+- No explicit downstream dependencies extracted.
 
-## Dependencies
+## Entity Data Model (엔티티 데이터 모델)
 
-### Imports
-
-- None
-
-### Signals Emitted
-
-- None
-
-### Referenced By
-
-- None
+| Field | Access | Type | Represents | Typical Values |
+| :-- | :-- | :-- | :-- | :-- |
+| `energy` | read/write (inferred) | float | Fatigue/rest capacity controlling action readiness. | Normalized scalar (commonly 0.0-1.0 or 0-100 by system). |
+| `social` | read/write (inferred) | float | Social fulfillment/deficit level affecting mood and stress. | Normalized scalar (commonly 0.0-1.0 or 0-100 by system). |

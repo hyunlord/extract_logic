@@ -89,6 +89,95 @@ _COMMON_CALLS = {
     "sqrt",
     "str",
 }
+_SYSTEM_CATEGORY_PREFERENCES = {
+    "emotion_system": "emotion",
+    "stress_system": "stress",
+    "mortality_system": "mortality",
+    "trait_system": "personality",
+}
+_MODEL_METADATA = {
+    "siler_mortality": {
+        "name": "Siler (1979) bathtub-curve mortality",
+        "formula": "μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}",
+        "reference": "Siler, W. (1979). A Competing-Risk Model for Animal Mortality",
+        "purpose": "Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.",
+    },
+    "ornstein_uhlenbeck": {
+        "name": "Uhlenbeck & Ornstein (1930) mean-reverting process",
+        "formula": "dX = θ(μ - X)dt + σdW",
+        "reference": "Uhlenbeck, G. E., & Ornstein, L. S. (1930). On the Theory of the Brownian Motion",
+        "purpose": "Updates a latent state by mean-reverting toward baseline while injecting stochastic fluctuation.",
+    },
+    "plutchik_emotion": {
+        "name": "Plutchik (1980) emotion impulse dynamics",
+        "formula": "impulse_e = f(appraisal, personality, context)",
+        "reference": "Plutchik, R. (1980). A general psychoevolutionary theory of emotion; Lazarus, R. S. (1991). Emotion and Adaptation",
+        "purpose": "Computes emotion impulses from appraisal dimensions and personality-coupled sensitivity weights.",
+    },
+    "lazarus_stress": {
+        "name": "Lazarus & Folkman (1984) cognitive appraisal stress model",
+        "formula": "stress_scale = f(demand, resources, appraisal)",
+        "reference": "Lazarus, R. S., & Folkman, S. (1984). Stress, Appraisal, and Coping",
+        "purpose": "Computes stress amplification by comparing perceived demands against available coping resources.",
+    },
+    "exponential_decay": {
+        "name": "Standard exponential decay",
+        "formula": "x(t) = x₀·e^{-λt}",
+        "reference": "Standard first-order decay dynamics",
+        "purpose": "Applies time-based exponential decay using half-life or decay-rate parameters.",
+    },
+    "yerkes_dodson": {
+        "name": "Yerkes & Dodson (1908) arousal-performance law",
+        "formula": "efficiency = f(stress)",
+        "reference": "Yerkes, R. M., & Dodson, J. D. (1908). The relation of strength of stimulus to rapidity of habit-formation",
+        "purpose": "Maps stress arousal to task efficiency with a bounded performance response curve.",
+    },
+    "cor_loss_aversion": {
+        "name": "Hobfoll (1989) COR loss aversion weighting",
+        "formula": "impact = base × loss_multiplier",
+        "reference": "Hobfoll, S. E. (1989). Conservation of Resources: A New Attempt at Conceptualizing Stress",
+        "purpose": "Applies stronger weighting to losses than gains when converting events into stress impact.",
+    },
+    "gas_resistance": {
+        "name": "Selye (1956) General Adaptation Syndrome resistance",
+        "formula": "reserve(t+1) = clamp(reserve(t) - drain + recovery)",
+        "reference": "Selye, H. (1956). The Stress of Life",
+        "purpose": "Updates resistance reserves as prolonged stress drains capacity toward exhaustion and recovery restores it.",
+    },
+    "allostatic_load": {
+        "name": "McEwen (1998) allostatic load model",
+        "formula": "load(t+1) = clamp(load(t) + chronic_stress - recovery)",
+        "reference": "McEwen, B. S. (1998). Protective and Damaging Effects of Stress Mediators",
+        "purpose": "Accumulates chronic stress burden over time and models recovery-driven load reduction.",
+    },
+}
+_SILER_VARIABLE_MEANINGS = {
+    "a1": "infant mortality amplitude (rapid decline after birth)",
+    "b1": "infant mortality decline rate",
+    "a2": "age-independent background mortality",
+    "a3": "senescent mortality amplitude (exponential aging)",
+    "b3": "senescent mortality acceleration rate (Gompertz parameter)",
+    "mu": "instantaneous hazard rate μ(x)",
+}
+_EMOTION_VARIABLE_MEANINGS = {
+    "fast": "fast (episodic) emotion layer - rapid decay",
+    "slow": "slow (mood/baseline) layer - Ornstein-Uhlenbeck process",
+    "gamma": "opposite emotion inhibition strength",
+    "kappa": "emotional contagion coefficient",
+    "sensitivity": "personality->emotion coupling exp(coeff * z_axis)",
+    "sens": "personality->emotion coupling exp(coeff * z_axis)",
+    "theta": "mean reversion coefficient toward emotional baseline",
+    "mu": "emotion baseline target level",
+}
+_STRESS_VARIABLE_MEANINGS = {
+    "d": "demand composite (weighted HEXACO modulation)",
+    "r": "resource composite",
+    "reserve": "GAS resistance reserve (0-100)",
+    "allostatic": "allostatic load (chronic wear, 0-100)",
+    "resilience": "recovery resilience factor (CD-RISC based)",
+    "loss_mult": "loss-side stress amplifier from COR loss aversion",
+}
+_SUBSCRIPT_DIGIT_MAP = str.maketrans("₀₁₂₃₄₅₆₇₈₉", "0123456789")
 
 
 def _indent_size(line: str) -> int:
@@ -213,11 +302,30 @@ def _description_from_context(comment_text: str, func_name: str, snippet: str) -
     return f"Formula logic extracted from {func_name}"
 
 
-def _category_from_context(module: dict, func_name: str, snippet: str) -> str:
+def _system_name_from_module(module: dict) -> str:
     raw_name = module.get("system_name", "")
-    if not raw_name:
-        base = os.path.splitext(os.path.basename(module.get("file", "")))[0]
-        raw_name = base.replace("_system", "")
+    if raw_name:
+        return raw_name
+    base = os.path.splitext(os.path.basename(module.get("file", "")))[0]
+    return base.replace("_system", "")
+
+
+def _system_category_preference(module: dict) -> str | None:
+    base = os.path.splitext(os.path.basename(module.get("file", "")))[0].lower()
+    if base in _SYSTEM_CATEGORY_PREFERENCES:
+        return _SYSTEM_CATEGORY_PREFERENCES[base]
+    normalized = _system_name_from_module(module).strip().lower()
+    if normalized in _SYSTEM_CATEGORY_PREFERENCES:
+        return _SYSTEM_CATEGORY_PREFERENCES[normalized]
+    return None
+
+
+def _category_from_context(module: dict, func_name: str, snippet: str) -> str:
+    preferred = _system_category_preference(module)
+    if preferred:
+        return preferred
+
+    raw_name = _system_name_from_module(module)
 
     text = " ".join([raw_name, func_name, snippet]).lower()
     if any(key in text for key in ("mortality", "siler", "hazard")):
@@ -256,36 +364,162 @@ def _name_from_context(func_name: str, snippet_lines: list[str], description: st
     return f"{func_name}_line_{line_start}"
 
 
-def _guess_variable_meaning(name: str) -> str:
-    lower = name.lower()
-    if lower in {"a1", "a2", "a3"}:
+def _normalize_variable_token(name: str) -> str:
+    normalized = name.strip().lstrip("_").lower()
+    normalized = normalized.translate(_SUBSCRIPT_DIGIT_MAP)
+    normalized = normalized.replace("μ", "mu").replace("θ", "theta").replace("λ", "lambda")
+    normalized = normalized.replace("σ", "sigma")
+    return normalized
+
+
+def _matches_any(text: str, patterns: tuple[str, ...]) -> bool:
+    return any(re.search(pattern, text, re.IGNORECASE | re.DOTALL) for pattern in patterns)
+
+
+def _detect_model_id(
+    module: dict,
+    func_name: str,
+    description: str,
+    snippet: str,
+    category: str,
+) -> str | None:
+    text = " ".join(
+        [
+            module.get("file", ""),
+            _system_name_from_module(module),
+            func_name,
+            description,
+            snippet,
+        ]
+    ).lower()
+    is_stress_context = category == "stress" or "stress" in text
+
+    if _matches_any(text, (r"\bsiler\b", r"\bhazard\b", r"a1\s*.*exp", r"\bmortality\b")):
+        return "siler_mortality"
+    if _matches_any(text, (r"\bornstein\b", r"\bou_", r"mean[_\s-]?revert", r"theta\s*.*mu")):
+        return "ornstein_uhlenbeck"
+    if _matches_any(text, (r"\byerkes\b", r"\beustress\b", r"efficien\w*.*stress", r"stress.*efficien\w*")):
+        return "yerkes_dodson"
+    if is_stress_context and _matches_any(text, (r"loss_mult", r"\bcor_", r"\b2\.5\b")):
+        return "cor_loss_aversion"
+    if _matches_any(text, (r"allostatic", r"chronic.*stress", r"stress.*chronic")):
+        return "allostatic_load"
+    if _matches_any(text, (r"\bgas_stage\b", r"\bexhaustion\b")):
+        return "gas_resistance"
+    if _matches_any(text, (r"\breserve\b",)) and is_stress_context:
+        return "gas_resistance"
+    if _matches_any(
+        text,
+        (r"\blazarus\b", r"appraisal.*scale", r"demand.*resource", r"resource.*demand"),
+    ):
+        return "lazarus_stress"
+    if _matches_any(text, (r"\bplutchik\b", r"emotion.*impulse", r"\bapprais")):
+        return "plutchik_emotion"
+    if _matches_any(text, (r"exp\(-", r"half_life", r"decay_rate", r"\blambda\b")):
+        return "exponential_decay"
+    return None
+
+
+def _model_ref(model_id: str | None) -> dict | None:
+    if not model_id:
+        return None
+    metadata = _MODEL_METADATA.get(model_id)
+    if not metadata:
+        return None
+    return {
+        "name": metadata["name"],
+        "formula": metadata["formula"],
+        "reference": metadata["reference"],
+    }
+
+
+def _purpose_from_context(model_id: str | None, category: str, func_name: str, snippet: str) -> str:
+    metadata = _MODEL_METADATA.get(model_id or "")
+    if metadata:
+        return str(metadata["purpose"])
+
+    text = " ".join([func_name, snippet]).lower()
+    if category == "mortality":
+        return "Computes mortality-related rates or probabilities used to resolve survival outcomes."
+    if category == "emotion" and ("impulse" in text or "apprais" in text):
+        return "Computes emotion impulse from appraisal and context signals before blending into layered affect state."
+    if category == "emotion":
+        return "Updates emotional state dynamics across fast, slow, or memory-trace layers."
+    if category == "stress":
+        return "Updates stress burden, coping reserve, or resilience from current pressure and recovery signals."
+    if category == "decay":
+        return "Applies decay dynamics to attenuate accumulated state over time."
+    if category == "personality":
+        return "Transforms personality traits into downstream modulation coefficients."
+    return "Computes a gameplay state update from mathematical relationships in the source logic."
+
+
+def _guess_variable_meaning(
+    name: str,
+    *,
+    model_id: str | None = None,
+    category: str = "",
+    snippet: str = "",
+) -> str:
+    normalized = _normalize_variable_token(name)
+    snippet_lower = snippet.lower()
+
+    if model_id == "siler_mortality":
+        if normalized in _SILER_VARIABLE_MEANINGS:
+            return _SILER_VARIABLE_MEANINGS[normalized]
+        if normalized.startswith("mu"):
+            return _SILER_VARIABLE_MEANINGS["mu"]
+
+    if model_id in {"plutchik_emotion", "ornstein_uhlenbeck"} and normalized in _EMOTION_VARIABLE_MEANINGS:
+        return _EMOTION_VARIABLE_MEANINGS[normalized]
+
+    if model_id in {"lazarus_stress", "cor_loss_aversion", "gas_resistance", "allostatic_load"}:
+        if normalized in _STRESS_VARIABLE_MEANINGS:
+            return _STRESS_VARIABLE_MEANINGS[normalized]
+
+    if category == "mortality" and normalized in _SILER_VARIABLE_MEANINGS:
+        return _SILER_VARIABLE_MEANINGS[normalized]
+    if category == "emotion" and normalized in _EMOTION_VARIABLE_MEANINGS:
+        return _EMOTION_VARIABLE_MEANINGS[normalized]
+    if category == "stress" and normalized in _STRESS_VARIABLE_MEANINGS:
+        return _STRESS_VARIABLE_MEANINGS[normalized]
+
+    if "exp(" in snippet_lower and normalized in {"fast", "slow", "sensitivity"}:
+        return _EMOTION_VARIABLE_MEANINGS.get(normalized, name.replace("_", " "))
+
+    if normalized in {"a1", "a2", "a3"}:
         return "coefficient term"
-    if lower in {"b1", "b2", "b3"}:
+    if normalized in {"b1", "b2", "b3"}:
         return "rate coefficient"
-    if lower.startswith("mu"):
+    if normalized.startswith("mu"):
         return "hazard or mean term"
-    if lower.startswith("q_") or "prob" in lower:
+    if normalized.startswith("q_") or "prob" in normalized:
         return "probability term"
-    if "decay" in lower:
+    if "decay" in normalized:
         return "decay factor"
-    if "growth" in lower:
+    if "growth" in normalized:
         return "growth factor"
-    if "rate" in lower:
+    if "rate" in normalized:
         return "rate parameter"
-    if "half_life" in lower:
+    if "half_life" in normalized:
         return "half-life value"
-    if "sigma" in lower:
+    if "sigma" in normalized:
         return "standard deviation/noise scale"
-    if "theta" in lower:
+    if "theta" in normalized:
         return "mean reversion coefficient"
-    if "age" in lower:
+    if "age" in normalized:
         return "age-related input"
-    if "hunger" in lower or "nutrition" in lower:
+    if "hunger" in normalized or "nutrition" in normalized:
         return "nutrition state input"
     return name.replace("_", " ")
 
 
-def _extract_variables(snippet: str) -> dict[str, str]:
+def _extract_variables(
+    snippet: str,
+    *,
+    model_id: str | None = None,
+    category: str = "",
+) -> dict[str, str]:
     cleaned_lines: list[str] = []
     for line in snippet.splitlines():
         code = line.split("#", 1)[0]
@@ -301,12 +535,22 @@ def _extract_variables(snippet: str) -> dict[str, str]:
             continue
         if token in callables:
             continue
-        if token.isupper():
+        normalized = _normalize_variable_token(token)
+        allow_upper = normalized in _STRESS_VARIABLE_MEANINGS and (
+            category == "stress"
+            or model_id in {"lazarus_stress", "cor_loss_aversion", "gas_resistance", "allostatic_load"}
+        )
+        if token.isupper() and not allow_upper:
             continue
-        if re.fullmatch(r"[A-Z][A-Za-z0-9_]*", token):
+        if re.fullmatch(r"[A-Z][A-Za-z0-9_]*", token) and not allow_upper:
             continue
         if token not in variables:
-            variables[token] = _guess_variable_meaning(token)
+            variables[token] = _guess_variable_meaning(
+                token,
+                model_id=model_id,
+                category=category,
+                snippet=snippet,
+            )
         if len(variables) >= 16:
             break
     return variables
@@ -377,19 +621,22 @@ def _extract_doc_formulas(
             continue
         description = snippet.split("\n", 1)[0]
         name = _name_from_context("doc", [snippet], description, start + 1)
+        category = _category_from_context(module, "doc", snippet)
+        model_id = _detect_model_id(module, "doc", description, snippet, category)
         formulas.append(
             {
-                "system": module.get("system_name")
-                or os.path.splitext(os.path.basename(module.get("file", "")))[0].replace("_system", ""),
+                "system": _system_name_from_module(module),
                 "file": module.get("file", ""),
                 "name": name,
                 "description": description,
                 "line_start": start + 1,
                 "line_end": min(start + len(block), len(lines)),
                 "code_snippet": snippet,
-                "variables": _extract_variables(snippet),
+                "variables": _extract_variables(snippet, model_id=model_id, category=category),
                 "references": references,
-                "category": _category_from_context(module, "doc", snippet),
+                "category": category,
+                "model_ref": _model_ref(model_id),
+                "purpose": _purpose_from_context(model_id, category, "doc", snippet),
             }
         )
     return formulas
@@ -455,19 +702,22 @@ def _extract_function_formulas(
                 comment_context = _collect_comment_context(lines, body[block_start][0] - 1)
                 description = _description_from_context(comment_context, func_name, snippet)
                 name = _name_from_context(func_name, snippet_lines, description, body[block_start][0])
+                category = _category_from_context(module, func_name, snippet)
+                model_id = _detect_model_id(module, func_name, description, snippet, category)
                 formulas.append(
                     {
-                        "system": module.get("system_name")
-                        or os.path.splitext(os.path.basename(module.get("file", "")))[0].replace("_system", ""),
+                        "system": _system_name_from_module(module),
                         "file": module.get("file", ""),
                         "name": name,
                         "description": description,
                         "line_start": body[block_start][0],
                         "line_end": body[block_end][0],
                         "code_snippet": snippet,
-                        "variables": _extract_variables(snippet),
+                        "variables": _extract_variables(snippet, model_id=model_id, category=category),
                         "references": references,
-                        "category": _category_from_context(module, func_name, snippet),
+                        "category": category,
+                        "model_ref": _model_ref(model_id),
+                        "purpose": _purpose_from_context(model_id, category, func_name, snippet),
                     }
                 )
 

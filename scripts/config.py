@@ -40,6 +40,7 @@ CONTENT_DATA = os.path.join(CONTENT_DIR, "data")
 CONTENT_INTERACTIONS = os.path.join(CONTENT_DIR, "interactions")
 CONTENT_GLOSSARY = os.path.join(CONTENT_DIR, "glossary")
 CONTENT_CORE = os.path.join(CONTENT_DIR, "core")
+CONTENT_TRAITS = os.path.join(CONTENT_DIR, "traits")
 CONTENT_MANUAL = os.path.join(CONTENT_DIR, "_manual")
 
 # ── Export Settings ────────────────────────────────────────────────────
@@ -123,8 +124,10 @@ MKDOCS_STATIC_CONFIG = {
 # Pages within each section are sorted by nav_order from frontmatter.
 NAV_SECTION_ORDER = [
     ("개요", "index.md"),  # Single page, not a directory
+    ("시스템 파이프라인", "pipeline.md"),  # Master pipeline page
     ("설정 레퍼런스", "config-reference.md"),  # Single page
     ("시스템", "systems"),
+    ("성격 특성", "traits"),
     ("데이터", "data"),
     ("시스템 상호작용", "interactions"),
     ("용어 사전", "glossary"),
@@ -153,6 +156,7 @@ def ensure_all_dirs() -> None:
         CONTENT_INTERACTIONS,
         CONTENT_GLOSSARY,
         CONTENT_CORE,
+        CONTENT_TRAITS,
         CONTENT_MANUAL,
         EXPORTS_DIR,
     ]:

@@ -1,107 +1,71 @@
 ---
-title: "Chronicle System"
+title: "Chronicle"
 description: "Chronicles significant events in the simulation for historical viewing."
 generated: true
 source_files:
   - "scripts/systems/chronicle_system.gd"
 nav_order: 999
+system_name: "chronicle"
 ---
 
-# Chronicle System
-
-> Chronicles significant events in the simulation for historical viewing. Events are categorized by type and importance for memory management. Event type constants Memory limits Storage
+# Chronicle
 
 📄 source: `scripts/systems/chronicle_system.gd` | Priority: n/a | Tick interval: n/a
 
-## Overview
+## Overview (개요)
 
-Chronicles significant events in the simulation for historical viewing. Events are categorized by type and importance for memory management. Event type constants Memory limits Storage
+The **Chronicle** system implements a domain-specific simulation model to simulate chronicles significant events in the simulation for historical viewing.
+It runs **at an unspecified cadence** at priority **n/a**.
 
-The extractor found 8 functions, 1 configuration references, and 2 tracked entity fields.
+**Core entity data**: `entity_name` (read/write (inferred)), `is_alive` (read/write (inferred))
 
-## Configuration
+> Chronicles significant events in the simulation for historical viewing.
 
-| Constant | Value | Description |
-| --- | --- | --- |
-| `TICKS_PER_YEAR` | 4380 | from GameConfig |
+## Tick Pipeline (틱 파이프라인)
 
-## Entity Fields Accessed
+1. Resolve world events
+   📄 source: `scripts/systems/chronicle_system.gd:L80`
+2. Resolve personal events
+   📄 source: `scripts/systems/chronicle_system.gd:L93`
+3. Resolve event count
+   📄 source: `scripts/systems/chronicle_system.gd:L98`
+4. Resolve entity name
+   📄 source: `scripts/systems/chronicle_system.gd:L148`
 
-| Field | Access | Description |
-| --- | --- | --- |
-| `entity_name` | read | entity name |
-| `is_alive` | read | is alive |
+## Formulas (수식)
 
-## Functions
+No extracted formulas for this module.
 
-### `init(entity_manager: RefCounted)`
+## Configuration Reference (설정)
 
-**Parameters**: `entity_manager: RefCounted`
-**Lines**: 34-38 (5 lines)
+| Constant | Default | Controls | Behavior Effect |
+| :-- | :-- | :-- | :-- |
+| `TICKS_PER_YEAR` | 4380 | Simulation-time conversion or cadence. | Adjusts baseline system behavior under this module. |
 
-### `get_world_events(filter_type: String = "", limit: int = 100)`
+## Cross-System Effects (시스템 간 상호작용)
 
-Get world events (newest first), optionally filtered by type
+### Imported Modules (모듈 임포트)
 
-**Parameters**: `filter_type: String = "", limit: int = 100`
-**Lines**: 80-92 (13 lines)
+- `scripts/core/game_calendar.gd` via `preload` at `scripts/systems/chronicle_system.gd:L6`
 
-### `get_personal_events(entity_id: int)`
+### Shared Entity Fields (공유 엔티티 필드)
 
-Get personal events for an entity
+| Field | Access | Shared With |
+| :-- | :-- | :-- |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
+| `is_alive` | read/write (inferred) | [`family`](family.md) |
 
-**Parameters**: `entity_id: int`
-**Lines**: 93-97 (5 lines)
+### Signals (시그널)
 
-### `get_event_count()`
+No emitted signals extracted for this module.
 
-Get total event count
+### Downstream Impact (다운스트림 영향)
 
-**Parameters**: `(none)`
-**Lines**: 98-102 (5 lines)
+- No explicit downstream dependencies extracted.
 
-### `prune_old_events(current_tick: int)`
+## Entity Data Model (엔티티 데이터 모델)
 
-Periodic memory management
-
-**Parameters**: `current_tick: int`
-**Lines**: 103-147 (45 lines)
-
-### `_get_entity_name(entity_id: int)`
-
-Helper: get entity name by ID
-
-**Parameters**: `entity_id: int`
-**Lines**: 148-163 (16 lines)
-
-### `to_save_data()`
-
-Serialize for save/load
-
-**Parameters**: `(none)`
-**Lines**: 164-171 (8 lines)
-
-### `load_save_data(data: Dictionary)`
-
-Load from saved data
-
-**Parameters**: `data: Dictionary`
-**Lines**: 172-174 (3 lines)
-
-## Formulas
-
-No formulas extracted for this module.
-
-## Dependencies
-
-### Imports
-
-- [`game_calendar.gd`](../core/game_calendar.md) - via `preload` (line 6)
-
-### Signals Emitted
-
-- None
-
-### Referenced By
-
-- None
+| Field | Access | Type | Represents | Typical Values |
+| :-- | :-- | :-- | :-- | :-- |
+| `entity_name` | read/write (inferred) | Variant | Entity name. | System-defined value domain. |
+| `is_alive` | read/write (inferred) | bool | Is alive. | System-defined value domain. |

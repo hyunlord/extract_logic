@@ -25,6 +25,11 @@ def run(manifest: dict) -> dict:
         ("gdscript_references", "scripts.extractors.gdscript_references"),
         ("json_data", "scripts.extractors.json_data"),
         ("locale", "scripts.extractors.locale"),
+        # v2 semantic extractors
+        ("trait_data", "scripts.extractors.trait_data"),
+        ("stressor_data", "scripts.extractors.stressor_data"),
+        ("emotion_presets", "scripts.extractors.emotion_presets"),
+        ("decay_config", "scripts.extractors.decay_config"),
     ]
 
     all_files = []

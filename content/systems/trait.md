@@ -1,167 +1,110 @@
 ---
-title: "Trait System"
+title: "Trait"
 description: "Discrete trait emergence and effects system."
 generated: true
 source_files:
   - "scripts/systems/trait_system.gd"
 nav_order: 100
+system_name: "trait"
 ---
 
-# Trait System
-
-> Discrete trait emergence and effects system. Use preload("res://scripts/systems/trait_system.gd") for access.
+# Trait
 
 📄 source: `scripts/systems/trait_system.gd` | Priority: 100 | Tick interval: n/a
 
-## Overview
+## Overview (개요)
 
-Discrete trait emergence and effects system. Use preload("res://scripts/systems/trait_system.gd") for access.
+The **Trait** system implements a domain-specific simulation model to simulate discrete trait emergence and effects system.
+It runs **at an unspecified cadence** at priority **100**.
 
-The extractor found 16 functions, 0 configuration references, and 6 tracked entity fields.
+**Core entity data**: `active_traits` (read/write (inferred)), `display_traits` (read/write (inferred)), `emotion_data` (read/write (inferred)), `emotions` (read/write (inferred)), `personality` (read/write (inferred)), `traits_dirty` (read/write (inferred))
 
-## Configuration
+> Discrete trait emergence and effects system.
+
+## Tick Pipeline (틱 파이프라인)
+
+1. Check traits
+   📄 source: `scripts/systems/trait_system.gd:L51`
+2. Apply axis cap
+   📄 source: `scripts/systems/trait_system.gd:L124`
+3. Resolve behavior weight
+   📄 source: `scripts/systems/trait_system.gd:L223`
+4. Resolve emotion modifier
+   📄 source: `scripts/systems/trait_system.gd:L235`
+5. Resolve violation stress
+   📄 source: `scripts/systems/trait_system.gd:L247`
+6. Resolve effect mult
+   📄 source: `scripts/systems/trait_system.gd:L260`
+7. Resolve trait effects
+   📄 source: `scripts/systems/trait_system.gd:L284`
+8. Resolve trait definition
+   📄 source: `scripts/systems/trait_system.gd:L306`
+9. Resolve trait sentiment
+   📄 source: `scripts/systems/trait_system.gd:L312`
+
+### Pipeline Diagram (파이프라인 다이어그램)
+
+```mermaid
+flowchart TD
+  step1["1. Check traits"]
+  step2["2. Apply axis cap"]
+  step1 --> step2
+  step3["3. Resolve behavior weight"]
+  step2 --> step3
+  step4["4. Resolve emotion modifier"]
+  step3 --> step4
+  step5["5. Resolve violation stress"]
+  step4 --> step5
+  step6["6. Resolve effect mult"]
+  step5 --> step6
+  step7["7. Resolve trait effects"]
+  step6 --> step7
+  step8["8. Resolve trait definition"]
+  step7 --> step8
+  step9["9. Resolve trait sentiment"]
+  step8 --> step9
+```
+
+## Formulas (수식)
+
+No extracted formulas for this module.
+
+## Configuration Reference (설정)
 
 No explicit `GameConfig` references extracted.
 
-## Entity Fields Accessed
+## Cross-System Effects (시스템 간 상호작용)
 
-| Field | Access | Description |
-| --- | --- | --- |
-| `active_traits` | read | Personality and trait state. |
-| `display_traits` | read | Personality and trait state. |
-| `emotion_data` | read | Emotion-related state. |
-| `emotions` | read | Emotion-related state. |
-| `personality` | read | Personality and trait state. |
-| `traits_dirty` | read | Personality and trait state. |
+### Imported Modules (모듈 임포트)
 
-## Functions
+- [`trait`](trait.md) via `preload` at `scripts/systems/trait_system.gd:L4`
 
-### `_ensure_loaded()`
+### Shared Entity Fields (공유 엔티티 필드)
 
-**Parameters**: `(none)`
-**Lines**: 11-50 (40 lines)
+| Field | Access | Shared With |
+| :-- | :-- | :-- |
+| `active_traits` | read/write (inferred) | [`stress`](stress.md) |
+| `emotion_data` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`mental_break`](mental_break.md), [`stress`](stress.md) |
+| `emotions` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md) |
+| `personality` | read/write (inferred) | [`aging`](aging.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`stress`](stress.md) |
 
-### `check_traits(pd: RefCounted)`
+### Signals (시그널)
 
-Check which traits are active for a given PersonalityData. Returns Array of trait ID strings (all matching, before display filtering).
+No emitted signals extracted for this module.
 
-**Parameters**: `pd: RefCounted`
-**Lines**: 51-63 (13 lines)
+### Downstream Impact (다운스트림 영향)
 
-### `_evaluate_condition(condition: Dictionary, pd: RefCounted)`
+- [`personality_generator`](personality_generator.md) depends on this system's outputs.
+- [`personality_maturation`](personality_maturation.md) depends on this system's outputs.
+- [`trait`](trait.md) depends on this system's outputs.
 
-Evaluate a trait condition against PersonalityData. Supports single conditions (facet/axis) and composite conditions ("all" array).
+## Entity Data Model (엔티티 데이터 모델)
 
-**Parameters**: `condition: Dictionary, pd: RefCounted`
-**Lines**: 64-76 (13 lines)
-
-### `_evaluate_single(cond: Dictionary, pd: RefCounted)`
-
-Evaluate a single facet/axis condition. "facet" key is used for both axes ("H") and facets ("H_sincerity").
-
-**Parameters**: `cond: Dictionary, pd: RefCounted`
-**Lines**: 77-94 (18 lines)
-
-### `evaluate_traits(entity: RefCounted)`
-
-Evaluate entity traits and cache full/display trait dictionaries on entity_data.
-
-**Parameters**: `entity: RefCounted`
-**Lines**: 95-123 (29 lines)
-
-### `_apply_axis_cap(traits: Array, pd: RefCounted)`
-
-Apply per-axis cap: max 2 facet traits per HEXACO axis. Composite traits bypass this cap.
-
-**Parameters**: `traits: Array, pd: RefCounted`
-**Lines**: 124-163 (40 lines)
-
-### `_sort_and_cap_display(traits: Array)`
-
-Sort traits for display priority (no cap — show all). Priority: Dark > Composite > Facet.
-
-**Parameters**: `traits: Array`
-**Lines**: 164-203 (40 lines)
-
-### `filter_display_traits(all_trait_ids: Array)`
-
-Backward-compatible display filtering for ID arrays. Returns sorted/capped trait IDs.
-
-**Parameters**: `all_trait_ids: Array`
-**Lines**: 204-222 (19 lines)
-
-### `get_behavior_weight(entity: RefCounted, action: String)`
-
-Get combined behavior_weight multiplier for an action (multiplicative stacking).
-
-**Parameters**: `entity: RefCounted, action: String`
-**Lines**: 223-234 (12 lines)
-
-### `get_emotion_modifier(entity: RefCounted, modifier_key: String)`
-
-Get combined emotion_modifier (additive stacking around 1.0 base).
-
-**Parameters**: `entity: RefCounted, modifier_key: String`
-**Lines**: 235-246 (12 lines)
-
-### `get_violation_stress(entity: RefCounted, action: String)`
-
-Get total violation_stress for an action.
-
-**Parameters**: `entity: RefCounted, action: String`
-**Lines**: 247-259 (13 lines)
-
-### `get_effect_mult(entity: RefCounted, category: String, key: String)`
-
-Get multiplier from any effects category (multiplicative stacking).
-
-**Parameters**: `entity: RefCounted, category: String, key: String`
-**Lines**: 260-272 (13 lines)
-
-### `on_action_performed(entity: RefCounted, action: String)`
-
-Called when entity performs an action — applies violation stress. Phase C1 will call this from behavior_system.
-
-**Parameters**: `entity: RefCounted, action: String`
-**Lines**: 273-283 (11 lines)
-
-### `get_trait_effects(trait_ids: Array)`
-
-Backward compatibility helper. Returns flattened combined behavior_weights across trait IDs.
-
-**Parameters**: `trait_ids: Array`
-**Lines**: 284-305 (22 lines)
-
-### `get_trait_definition(trait_id: String)`
-
-Get trait definition by ID (for UI display).
-
-**Parameters**: `trait_id: String`
-**Lines**: 306-311 (6 lines)
-
-### `get_trait_sentiment(trait_id: String)`
-
-Get valence for a trait ("positive", "negative", "neutral").
-
-**Parameters**: `trait_id: String`
-**Lines**: 312-314 (3 lines)
-
-## Formulas
-
-No formulas extracted for this module.
-
-## Dependencies
-
-### Imports
-
-- [`trait_system.gd`](trait.md) - via `preload` (line 4)
-
-### Signals Emitted
-
-- None
-
-### Referenced By
-
-- [`personality_generator`](personality_generator.md) - depends on this module
-- [`personality_maturation`](personality_maturation.md) - depends on this module
-- [`trait`](trait.md) - depends on this module
+| Field | Access | Type | Represents | Typical Values |
+| :-- | :-- | :-- | :-- | :-- |
+| `active_traits` | read/write (inferred) | Variant | Trait/axis profile used for sensitivity and decision weighting. | System-defined value domain. |
+| `display_traits` | read/write (inferred) | Variant | Trait/axis profile used for sensitivity and decision weighting. | System-defined value domain. |
+| `emotion_data` | read/write (inferred) | Dictionary / custom data object | Affective state used for behavior modulation and social propagation. | Structured object with nested metrics/axes. |
+| `emotions` | read/write (inferred) | Dictionary / custom data object | Affective state used for behavior modulation and social propagation. | System-defined value domain. |
+| `personality` | read/write (inferred) | Dictionary / custom data object | Trait/axis profile used for sensitivity and decision weighting. | Structured object with nested metrics/axes. |
+| `traits_dirty` | read/write (inferred) | Variant | Trait/axis profile used for sensitivity and decision weighting. | System-defined value domain. |
