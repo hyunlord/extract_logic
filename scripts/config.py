@@ -6,12 +6,12 @@ All scripts import this module. No hardcoded paths anywhere else.
 import os
 
 # ── Source Repository (READ ONLY) ──────────────────────────────────────
-# Default: sibling directory ../new-world relative to this repo root
+# Default: new-world-wt/lead worktree
 # Override: set WORLDSIM_SOURCE environment variable
 _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SOURCE_REPO = os.environ.get(
     "WORLDSIM_SOURCE",
-    os.path.join(_REPO_ROOT, "..", "new-world"),
+    os.path.join(_REPO_ROOT, "..", "new-world-wt", "lead"),
 )
 
 # ── Discovery Glob Patterns (relative to SOURCE_REPO) ─────────────────

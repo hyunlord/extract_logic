@@ -26,7 +26,7 @@ nav_order: 0
 
 총 8개 카테고리 | Total 8 categories
 
-총 1359개 항목 | Total 1359 entries
+총 1465개 항목 | Total 1465 entries
 
 ## 카테고리별 통계 / Category Stats
 
@@ -39,7 +39,7 @@ nav_order: 0
 | [game](game.md) | 300 | 300 |
 | [traits](traits.md) | 374 | 374 |
 | [tutorial](tutorial.md) | 7 | 7 |
-| [ui](ui.md) | 596 | 596 |
+| [ui](ui.md) | 702 | 702 |
 
 ## 수동 메모 / Manual Notes
 

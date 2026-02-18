@@ -42,7 +42,7 @@ graph TD
     I --> J[Yerkes-Dodson Efficiency]
 ```
 
-📄 source: `scripts/systems/stress_system.gd:L55`
+📄 source: `scripts/systems/stress_system.gd:L60`
 
 ## Lazarus Appraisal Scale
 
@@ -63,7 +63,7 @@ Where:
 | 1.0 - 2.0 | Demand exceeds resources | Distress |
 | > 2.0 | Overwhelmed | Severe stress, GAS alarm |
 
-📄 source: `scripts/systems/stress_system.gd:L124`
+📄 source: `scripts/systems/stress_system.gd:L129`
 
 ## Continuous Stressors
 
@@ -76,7 +76,7 @@ These stressors accumulate every tick based on entity state:
 | Social isolation | social_need < threshold | `stress += (threshold - social) * social_mult` | Social system |
 | Overcrowding | density > threshold | `stress += (density - threshold) * crowd_mult` | Settlement |
 
-📄 source: `scripts/systems/stress_system.gd:L155`
+📄 source: `scripts/systems/stress_system.gd:L160`
 
 ## Emotion → Stress Contribution
 
@@ -92,13 +92,16 @@ Where:
 
 | Emotion | Weight | Rationale |
 |:--------|------:|:----------|
-| Fear | 1 | High arousal, negative valence |
-| Anger | 0.9 | High arousal, negative valence |
-| Sadness | 1.1 | Low arousal, negative valence |
-| Disgust | 0.6 | Moderate contribution |
-| Joy | n/a | Negative valence-pressure term (stress reduction pathway) |
+| Fear | 0.090 | 최고 스트레스 기여 — 고각성 부정 감정 (highest stress contribution, high arousal negative) |
+| Anger | 0.060 | 고각성 부정 감정 (high arousal, negative valence) |
+| Sadness | 0.050 | 저각성 부정 감정 (low arousal, negative valence) |
+| Disgust | 0.040 | 중간 기여 부정 감정 (moderate negative contribution) |
+| Surprise | 0.030 | 낮은 기여 (low contribution, valence-neutral) |
+| Joy | -0.050 | 스트레스 감소 경로 (stress reduction pathway, negative weight) |
+| Trust | -0.040 | 스트레스 감소 경로 (stress reduction pathway, negative weight) |
+| Anticipation | -0.020 | 미약한 스트레스 감소 (mild stress reduction, anticipatory) |
 
-📄 source: `scripts/systems/stress_system.gd:L208`
+📄 source: `scripts/systems/stress_system.gd:L213`
 📄 source: `data/species/human/emotions/decay_parameters.json`
 
 ## Stress Recovery
@@ -119,7 +122,7 @@ $$
 Base recovery term:
 - `BASE_DECAY_PER_TICK` = 1.2
 
-📄 source: `scripts/systems/stress_system.gd:L235`
+📄 source: `scripts/systems/stress_system.gd:L240`
 
 ## Allostatic Load (Chronic Stress)
 
@@ -138,7 +141,7 @@ $$
 - Parameters: `alpha=0.035`, `beta=0.003`
 - High allostatic load increases mortality risk (feeds into Siler model)
 
-📄 source: `scripts/systems/stress_system.gd:L279`
+📄 source: `scripts/systems/stress_system.gd:L284`
 
 ## General Adaptation Syndrome (Selye 1956)
 
@@ -155,7 +158,7 @@ $$
 - Reserve range: 0-100
 - Stage transitions are driven by reserve and prolonged stress exposure
 
-📄 source: `scripts/systems/stress_system.gd:L257`
+📄 source: `scripts/systems/stress_system.gd:L262`
 
 ## Yerkes-Dodson Efficiency Curve
 
@@ -170,7 +173,7 @@ $$
 - Optimal stress → peak performance
 - Too much stress → impaired performance
 
-📄 source: `scripts/systems/stress_system.gd:L373`
+📄 source: `scripts/systems/stress_system.gd:L381`
 
 ## Stressor Events
 
@@ -344,7 +347,7 @@ Each stressor's impact is modulated by HEXACO personality:
 | childbirth_father | d_psychopath_primary | 0.2 | -80% stress |
 | childbirth_mother | c_caregiver | 1.2 | +20% stress |
 
-📄 source: `scripts/systems/stress_system.gd:L495`
+📄 source: `scripts/systems/stress_system.gd:L508`
 
 <!-- MANUAL:START -->
 

@@ -186,6 +186,45 @@ def _semantic_group(parameter: str) -> str:
 def _infer_control_description(parameter: str) -> str:
     key = parameter.lower()
 
+    # Mental break domain keys
+    if "duration_base" in key:
+        return "기본 지속 시간 (틱) — mental break 지속 틱 수 기준값. Base duration in ticks for this mental break type."
+    if "duration_variance" in key:
+        return "지속 시간 분산 (틱) — 기준값에 더해지는 무작위 분산 범위. Random variance range added to base duration."
+    if "break_scale" in key:
+        return "발동 확률 분모 — p = (stress - threshold) / break_scale. Higher = rarer breaks. 확률 계산 분모."
+    if "break_cap" in key or "cap_per_tick" in key:
+        return "틱당 최대 발동 확률 상한. Maximum mental break probability per simulation tick."
+    if "shaken_work_penalty" in key:
+        return "흔들린 상태 작업 효율 패널티. Work efficiency penalty applied during the shaken aftermath state."
+    if "shaken_duration" in key:
+        return "흔들린 상태 지속 시간 (틱). Duration of shaken aftermath state in simulation ticks."
+    if "catharsis" in key:
+        return "카타르시스 회복 비율 — mental break 종료 후 스트레스 회복 계수. Stress recovery factor on break resolution."
+    if "weight" in key and (
+        "break" in key
+        or any(
+            bt in key
+            for bt in (
+                "panic",
+                "rage",
+                "grief",
+                "fugue",
+                "outrage",
+                "paranoia",
+                "purge",
+                "ritual",
+                "bonding",
+                "shutdown",
+            )
+        )
+    ):
+        return "이 유형의 mental break 선택 가중치. Selection weight for this break type during break selection."
+    if "contagion" in key:
+        return "감정 전파 계수 (κ) — 주변 엔티티로의 감정 전파 강도. Emotional contagion coefficient to nearby entities."
+    if "duration" in key and "ticks" in key:
+        return "지속 시간 (틱). Duration in simulation ticks."
+
     if "siler" in key:
         return "Siler mortality hazard component. (Siler 사망 위험도 구성요소)"
     if "care_protection" in key:

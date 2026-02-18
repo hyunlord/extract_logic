@@ -134,6 +134,22 @@ def _constant_number(constants: dict[str, dict[str, Any]], name: str) -> float |
     return _to_float(entry.get("value"))
 
 
+def _parse_gd_dict_const(gd_text: str, const_name: str) -> dict[str, float]:
+    pattern = re.compile(
+        rf"const\s+{re.escape(const_name)}\s*:\s*Dictionary\s*=\s*\{{(.*?)\}}",
+        flags=re.DOTALL,
+    )
+    match = pattern.search(gd_text)
+    if not match:
+        return {}
+
+    parsed: dict[str, float] = {}
+    body = match.group(1)
+    for pair in re.finditer(r'"([A-Za-z_]\w*)"\s*:\s*(-?(?:\d+(?:\.\d+)?|\.\d+))', body):
+        parsed[pair.group(1)] = float(pair.group(2))
+    return parsed
+
+
 def _collect_stress_model_refs(
     stressor_data: dict[str, Any],
     formulas_data: dict[str, Any],
@@ -175,15 +191,22 @@ def _collect_stress_model_refs(
     return refs
 
 
-def _collect_emotion_weights(decay_config: dict[str, Any]) -> dict[str, float]:
-    stress = _as_dict(decay_config.get("stress"))
-    weights: dict[str, float] = {}
-    for emotion, value in _as_dict(stress.get("weights")).items():
-        numeric = _to_float(value)
-        if numeric is None:
-            continue
-        if isinstance(emotion, str) and emotion:
-            weights[emotion] = numeric
+def _collect_emotion_weights(stress_path: str, warnings: list[str]) -> dict[str, float]:
+    source_file = stress_path if os.path.isabs(stress_path) else config.source_path(stress_path)
+    if not os.path.exists(source_file):
+        warnings.append(f"missing stress source file for emotion weights: {source_file}")
+        return {}
+
+    try:
+        with open(source_file, "r", encoding="utf-8") as handle:
+            gd_text = handle.read()
+    except OSError as exc:
+        warnings.append(f"failed to read stress source file for emotion weights ({source_file}): {exc}")
+        return {}
+
+    weights = _parse_gd_dict_const(gd_text, "EMOTION_WEIGHTS")
+    if not weights:
+        warnings.append(f"EMOTION_WEIGHTS not found in {source_file}")
     return weights
 
 
@@ -330,7 +353,7 @@ def _render_markdown(
 
     hunger_eat_threshold = _constant_number(game_constants, "HUNGER_EAT_THRESHOLD")
 
-    emotion_weights = _collect_emotion_weights(decay_config)
+    emotion_weights = _collect_emotion_weights(stress_path, warnings)
 
     ordered_categories, events_by_category, _ = _collect_events_by_category(stressor_data)
     ordered_events: list[dict[str, Any]] = []
@@ -460,21 +483,22 @@ def _render_markdown(
     )
 
     rationale_by_emotion = {
-        "fear": "High arousal, negative valence",
-        "anger": "High arousal, negative valence",
-        "sadness": "Low arousal, negative valence",
-        "disgust": "Moderate contribution",
-        "joy": "Negative valence-pressure term (stress reduction pathway)",
+        "fear": "최고 스트레스 기여 — 고각성 부정 감정 (highest stress contribution, high arousal negative)",
+        "anger": "고각성 부정 감정 (high arousal, negative valence)",
+        "sadness": "저각성 부정 감정 (low arousal, negative valence)",
+        "disgust": "중간 기여 부정 감정 (moderate negative contribution)",
+        "surprise": "낮은 기여 (low contribution, valence-neutral)",
+        "joy": "스트레스 감소 경로 (stress reduction pathway, negative weight)",
+        "trust": "스트레스 감소 경로 (stress reduction pathway, negative weight)",
+        "anticipation": "미약한 스트레스 감소 (mild stress reduction, anticipatory)",
     }
 
-    preferred_emotions = ["fear", "anger", "sadness", "disgust", "joy"]
+    preferred_emotions = ["fear", "anger", "sadness", "disgust", "surprise", "joy", "trust", "anticipation"]
     emitted: set[str] = set()
     for emotion in preferred_emotions:
         emitted.add(emotion)
         if emotion in emotion_weights:
-            weight_text = _format_number(emotion_weights[emotion], 3)
-        elif emotion == "joy":
-            weight_text = "n/a"
+            weight_text = f"{emotion_weights[emotion]:.3f}"
         else:
             weight_text = "n/a"
         lines.append(
@@ -497,7 +521,7 @@ def _render_markdown(
             + " | ".join(
                 [
                     _escape_md_cell(_title_from_category(emotion)),
-                    _escape_md_cell(_format_number(emotion_weights[emotion], 3)),
+                    _escape_md_cell(f"{emotion_weights[emotion]:.3f}"),
                     "Extracted emotion weight",
                 ]
             )

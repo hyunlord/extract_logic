@@ -48,7 +48,7 @@ graph LR
 - 📄 source: `scripts/systems/mortality_system.gd:L290`
 - 📄 source: `scripts/core/emotion_data.gd:L37`
 - 📄 source: `scripts/core/species_manager.gd:L29`
-- 📄 source: `scripts/systems/mental_break_system.gd:L94`
+- 📄 source: `scripts/systems/mental_break_system.gd:L99`
 - 📄 source: `scripts/systems/mortality_system.gd:L3`
 - 📄 source: `scripts/systems/mortality_system.gd:L133`
 - 📄 source: `scripts/systems/mortality_system.gd:L134`

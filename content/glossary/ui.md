@@ -10,7 +10,7 @@ nav_order: 8
 
 # ui 용어 / Glossary
 
-총 596개 항목 | Total 596 entries
+총 702개 항목 | Total 702 entries
 
 ## 용어 목록
 
@@ -22,6 +22,8 @@ nav_order: 8
 | `BUILDING_TYPE_STOCKPILE` | 보관소 | Stockpile |
 | `CHRONICLE_MENTAL_BREAK_END` | {name}(이)가 {break_type}에서 회복되었습니다. | {name} recovered from {break_type}. |
 | `CHRONICLE_MENTAL_BREAK_START` | {name}(이)가 {break_type}에 빠졌습니다. | {name} fell into {break_type}. |
+| `CHRONICLE_SCAR_ACQUIRED` | {name}에게 '{scar}' 흉터가 생겼습니다 | {name} developed a '{scar}' scar |
+| `CHRONICLE_SCAR_REACTIVATED` | {name}의 '{scar}' 흉터가 재활성화되었습니다 | {name}'s '{scar}' scar was reactivated |
 | `EVT_BORN` | {name} 태어남 | {name} born |
 | `EVT_BORN_PARENTS` | {name} 태어남 (부모: {parents}) | {name} born (parents: {parents}) |
 | `EVT_DIED` | {name} 사망 ({cause}, {age}세) | {name} died ({cause}, age {age}) |
@@ -78,6 +80,15 @@ nav_order: 8
 | `MENTAL_BREAK_TYPE_SHUTDOWN` | 셧다운 | Shutdown |
 | `RESERVE_LABEL` | 저항력 | Reserve |
 | `RESILIENCE_LABEL` | 회복탄력성 | Resilience |
+| `SCAR_anger_dysregulation` | 분노 조절 장애 | Anger Dysregulation |
+| `SCAR_anxious_attachment` | 불안 애착 | Anxious Attachment |
+| `SCAR_chronic_paranoia` | 만성 편집증 | Chronic Paranoia |
+| `SCAR_complicated_grief` | 복잡성 애도 | Complicated Grief |
+| `SCAR_compulsive_consumption` | 강박적 소비 | Compulsive Consumption |
+| `SCAR_dissociative_tendency` | 해리 경향 | Dissociative Tendency |
+| `SCAR_emotional_numbness` | 감정 마비 | Emotional Numbness |
+| `SCAR_hypervigilance` | 과각성 | Hypervigilance |
+| `SCAR_violence_imprint` | 폭력 각인 | Violence Imprint |
 | `SHAKEN_STATUS` | 동요 상태 ({ticks}틱 남음) | Shaken ({ticks} ticks remaining) |
 | `STRESSOR_CHILD_DEATH` | 자녀 사망 | Child Death |
 | `STRESSOR_COMBAT` | 전투 | Combat |
@@ -305,75 +316,141 @@ nav_order: 8
 | `TRAIT_F_TRADITIONALIST` | 보수적인 | Traditionalist |
 | `TRAIT_F_UTILITARIAN` | 실용적인 | Utilitarian |
 | `TRAIT_F_VENGEFUL` | 앙심 품은 | Vengeful |
+| `TRAIT_KEY_ACCIDENT_COST_MULT` | 사고 비용 | Accident Cost |
+| `TRAIT_KEY_AGGRESSION_MULT` | 공격성 | Aggression |
+| `TRAIT_KEY_AMBUSH_PROPENSITY_MULT` | 매복 성향 | Ambush Propensity |
 | `TRAIT_KEY_ANGER_BASELINE` | 분노 기본선 | Anger Baseline |
 | `TRAIT_KEY_ANGER_CHALLENGE_SENSITIVITY` | 분노 도전 민감도 | Anger Challenge Sensitivity |
-| `TRAIT_KEY_ANGER_DECAY_MULT` | 분노 감쇠 배율 | Anger Decay Mult |
+| `TRAIT_KEY_ANGER_DECAY_MULT` | 분노 감쇠 | Anger Decay |
 | `TRAIT_KEY_ANGER_DISRESPECT_SENSITIVITY` | 분노 무례 민감도 | Anger Disrespect Sensitivity |
 | `TRAIT_KEY_ANGER_INJUSTICE_SENSITIVITY` | 분노 불의 민감도 | Anger Injustice Sensitivity |
 | `TRAIT_KEY_ANGER_SENSITIVITY` | 분노 민감도 | Anger Sensitivity |
 | `TRAIT_KEY_ANXIETY_BASELINE` | 불안 기본선 | Anxiety Baseline |
+| `TRAIT_KEY_APPROVAL_SEEKING_MULT` | 인정 추구 | Approval Seeking |
 | `TRAIT_KEY_ASSASSINATE` | 암살 | Assassinate |
+| `TRAIT_KEY_ATTACHMENT_GAIN_MULT` | 애착 형성 | Attachment Gain |
 | `TRAIT_KEY_AWE_SENSITIVITY` | 경외 민감도 | Awe Sensitivity |
 | `TRAIT_KEY_BETRAY` | 배신 | Betray |
+| `TRAIT_KEY_BETRAYAL_PROPENSITY_MULT` | 배신 성향 | Betrayal Propensity |
+| `TRAIT_KEY_BONDING_THROUGH_ART_MULT` | 예술적 유대 | Artistic Bonding |
 | `TRAIT_KEY_BOREDOM_SENSITIVITY` | 권태 민감도 | Boredom Sensitivity |
+| `TRAIT_KEY_BREAK_THRESHOLD_MULT` | 붕괴 임계값 | Break Threshold |
 | `TRAIT_KEY_BUILD` | 건설 | Build |
+| `TRAIT_KEY_CARE_TASK_QUALITY_MULT` | 돌봄 품질 | Care Task Quality |
+| `TRAIT_KEY_CHANGE_STRESS_MULT` | 변화 스트레스 | Change Stress |
 | `TRAIT_KEY_COLLECT` | 수집 | Collect |
 | `TRAIT_KEY_COMBAT` | 전투 | Combat |
 | `TRAIT_KEY_COMPASSION_SENSITIVITY` | 연민 민감도 | Compassion Sensitivity |
+| `TRAIT_KEY_CONFLICT_AVOIDANCE_MULT` | 갈등 회피 | Conflict Avoidance |
+| `TRAIT_KEY_CONFLICT_MULT` | 갈등 | Conflict |
+| `TRAIT_KEY_CONFLICT_RESOLUTION_MULT` | 갈등 해결 | Conflict Resolution |
 | `TRAIT_KEY_CONSTRAINT_ANGER_SENSITIVITY` | 속박 분노 민감도 | Constraint Anger Sensitivity |
 | `TRAIT_KEY_CONSTRAINT_FRUSTRATION_SENSITIVITY` | 속박 좌절 민감도 | Constraint Frustration Sensitivity |
+| `TRAIT_KEY_CONVERSATION_ENGAGEMENT_MULT` | 대화 참여 | Conversation Engagement |
 | `TRAIT_KEY_COOK` | 요리 | Cook |
 | `TRAIT_KEY_COOPERATE` | 협력 | Cooperate |
 | `TRAIT_KEY_CRAFT` | 제작 | Craft |
+| `TRAIT_KEY_CREATIVITY_MULT` | 창의성 | Creativity |
+| `TRAIT_KEY_CRITICISM_GIVEN_MULT` | 비판 성향 | Criticism Given |
 | `TRAIT_KEY_DEBATE` | 토론 | Debate |
+| `TRAIT_KEY_DISCIPLINE_MULT` | 규율 | Discipline |
 | `TRAIT_KEY_DOMINATE` | 지배 | Dominate |
 | `TRAIT_KEY_DRAMATIZE` | 과장 | Dramatize |
 | `TRAIT_KEY_EMBARRASSMENT_SENSITIVITY` | 당혹 민감도 | Embarrassment Sensitivity |
+| `TRAIT_KEY_EMPATHY_MULT` | 공감 | Empathy |
+| `TRAIT_KEY_ENDURANCE_MULT` | 지구력 | Endurance |
 | `TRAIT_KEY_ENTERTAIN` | 오락 | Entertain |
 | `TRAIT_KEY_ENVY_SENSITIVITY` | 질투 민감도 | Envy Sensitivity |
+| `TRAIT_KEY_ERROR_CORRECTION_MULT` | 오류 수정 | Error Correction |
+| `TRAIT_KEY_ERROR_RATE_MULT` | 오류율 | Error Rate |
 | `TRAIT_KEY_EXCITABILITY_SENSITIVITY` | 흥분 민감도 | Excitability Sensitivity |
 | `TRAIT_KEY_EXCITEMENT_SENSITIVITY` | 기대 민감도 | Excitement Sensitivity |
 | `TRAIT_KEY_EXPLORE` | 탐험 | Explore |
 | `TRAIT_KEY_FEAR_BASELINE` | 공포 기본선 | Fear Baseline |
-| `TRAIT_KEY_FEAR_DECAY_MULT` | 공포 감쇠 배율 | Fear Decay Mult |
+| `TRAIT_KEY_FEAR_DECAY_MULT` | 공포 감쇠 | Fear Decay |
+| `TRAIT_KEY_FEAR_INDUCED_COMPLIANCE_MULT` | 공포 복종 | Fear Compliance |
 | `TRAIT_KEY_FEAR_SENSITIVITY` | 공포 민감도 | Fear Sensitivity |
+| `TRAIT_KEY_FIRST_IMPRESSION_MULT` | 첫인상 | First Impression |
 | `TRAIT_KEY_FLEE` | 도주 | Flee |
+| `TRAIT_KEY_FLEE_THRESHOLD_MULT` | 도주 임계값 | Flee Threshold |
 | `TRAIT_KEY_FRUSTRATION_SENSITIVITY` | 좌절 민감도 | Frustration Sensitivity |
 | `TRAIT_KEY_GATHER` | 채집 | Gather |
+| `TRAIT_KEY_GROUP_COHESION_MULT` | 집단 결속 | Group Cohesion |
+| `TRAIT_KEY_GRUDGE_DECAY_MULT` | 원한 감쇠 | Grudge Decay |
 | `TRAIT_KEY_GUILT_IDLE_SENSITIVITY` | 죄책감 나태 민감도 | Guilt Idle Sensitivity |
 | `TRAIT_KEY_GUILT_SENSITIVITY` | 죄책감 민감도 | Guilt Sensitivity |
 | `TRAIT_KEY_HEAL` | 치유 | Heal |
 | `TRAIT_KEY_HELP` | 도움 | Help |
+| `TRAIT_KEY_HELP_SEEKING_MULT` | 도움 요청 | Help Seeking |
 | `TRAIT_KEY_HOARD` | 비축 | Hoard |
-| `TRAIT_KEY_IMPULSE_CONTROL_MULT` | 충동 조절 배율 | Impulse Control Mult |
+| `TRAIT_KEY_HOLD_LINE_MULT` | 전선 고수 | Hold Line |
+| `TRAIT_KEY_IMPULSE_CONTROL_MULT` | 충동 조절 | Impulse Control |
 | `TRAIT_KEY_INCITE` | 선동 | Incite |
 | `TRAIT_KEY_INDOCTRINATE` | 세뇌 | Indoctrinate |
+| `TRAIT_KEY_INFO_SHARING_MULT` | 정보 공유 | Info Sharing |
+| `TRAIT_KEY_INGROUP_TRUST_MULT` | 내집단 신뢰 | Ingroup Trust |
+| `TRAIT_KEY_INITIATIVE_MULT` | 주도성 | Initiative |
+| `TRAIT_KEY_INSPIRE_OTHERS_MULT` | 영감 부여 | Inspire Others |
 | `TRAIT_KEY_INTEREST_SENSITIVITY` | 흥미 민감도 | Interest Sensitivity |
+| `TRAIT_KEY_INTIMACY_GAIN_MULT` | 친밀감 형성 | Intimacy Gain |
+| `TRAIT_KEY_INTIMACY_LOSS_MULT` | 친밀감 상실 | Intimacy Loss |
 | `TRAIT_KEY_INTIMIDATE` | 위협 | Intimidate |
+| `TRAIT_KEY_INTIMIDATION_BIAS_MULT` | 위협 편향 | Intimidation Bias |
+| `TRAIT_KEY_INTIMIDATION_RESISTANCE_MULT` | 위협 저항 | Intimidation Resistance |
 | `TRAIT_KEY_INVEST` | 투자 | Invest |
 | `TRAIT_KEY_IRRITABILITY_CROWD_SENSITIVITY` | 군중 짜증 민감도 | Irritability Crowd Sensitivity |
+| `TRAIT_KEY_ISOLATION_STRESS_MULT` | 고립 스트레스 | Isolation Stress |
+| `TRAIT_KEY_JEALOUSY_MULT` | 질투 | Jealousy |
 | `TRAIT_KEY_JOY_BASELINE` | 기쁨 기본선 | Joy Baseline |
 | `TRAIT_KEY_JOY_BONDING_SENSITIVITY` | 기쁨 유대 민감도 | Joy Bonding Sensitivity |
 | `TRAIT_KEY_JOY_CREATION_SENSITIVITY` | 기쁨 창조 민감도 | Joy Creation Sensitivity |
 | `TRAIT_KEY_JOY_GAIN_SENSITIVITY` | 기쁨 획득 민감도 | Joy Gain Sensitivity |
 | `TRAIT_KEY_LEADERSHIP` | 리더십 | Leadership |
+| `TRAIT_KEY_LEARNING_FROM_FAILURE_MULT` | 실패 학습 | Learning from Failure |
+| `TRAIT_KEY_LEARNING_SPEED_MULT` | 학습 속도 | Learning Speed |
 | `TRAIT_KEY_LONELINESS_SENSITIVITY` | 외로움 민감도 | Loneliness Sensitivity |
+| `TRAIT_KEY_LOOT_MOTIVATION_MULT` | 약탈 동기 | Loot Motivation |
 | `TRAIT_KEY_LOSS_SENSITIVITY` | 상실 민감도 | Loss Sensitivity |
+| `TRAIT_KEY_LOSS_STRESS_MULT` | 상실 스트레스 | Loss Stress |
 | `TRAIT_KEY_LOYALTY` | 충성 | Loyalty |
+| `TRAIT_KEY_MOOD_CONTAGION_POSITIVE_MULT` | 긍정 기분 전염 | Positive Mood Contagion |
+| `TRAIT_KEY_MORALE_MULT` | 사기 | Morale |
+| `TRAIT_KEY_MORALE_WHEN_GROUPED_MULT` | 집단 시 사기 | Grouped Morale |
+| `TRAIT_KEY_MORALE_WHEN_ISOLATED_MULT` | 고립 시 사기 | Isolated Morale |
 | `TRAIT_KEY_NEGOTIATE` | 협상 | Negotiate |
+| `TRAIT_KEY_NORM_BREAKING_TOLERANCE_MULT` | 규범 위반 관용 | Norm-Breaking Tolerance |
 | `TRAIT_KEY_NOVELTY_ANXIETY_SENSITIVITY` | 새로움 불안 민감도 | Novelty Anxiety Sensitivity |
 | `TRAIT_KEY_NOVELTY_FEAR_SENSITIVITY` | 새로움 공포 민감도 | Novelty Fear Sensitivity |
 | `TRAIT_KEY_NURTURE` | 양육 | Nurture |
 | `TRAIT_KEY_ORDERLINESS_SATISFACTION` | 질서 만족감 | Orderliness Satisfaction |
+| `TRAIT_KEY_ORGANIZATION_MULT` | 조직력 | Organization |
+| `TRAIT_KEY_OUTGROUP_BONDING_MULT` | 외집단 유대 | Outgroup Bonding |
+| `TRAIT_KEY_OUTGROUP_SUSPICION_MULT` | 외집단 의심 | Outgroup Suspicion |
 | `TRAIT_KEY_PATROL` | 순찰 | Patrol |
+| `TRAIT_KEY_PERSISTENCE_MULT` | 끈기 | Persistence |
 | `TRAIT_KEY_PLAN` | 계획 | Plan |
+| `TRAIT_KEY_PRAGMATIC_RELIABILITY_MULT` | 실용적 신뢰성 | Pragmatic Reliability |
 | `TRAIT_KEY_PRIDE_BASELINE` | 자부심 기본선 | Pride Baseline |
+| `TRAIT_KEY_PROBLEM_SOLVING_MULT` | 문제 해결 | Problem Solving |
+| `TRAIT_KEY_PROTECT_SEEKING_MULT` | 보호 요청 | Protection Seeking |
+| `TRAIT_KEY_QUALITY_MULT` | 품질 | Quality |
+| `TRAIT_KEY_REACTION_SPEED_MULT` | 반응 속도 | Reaction Speed |
+| `TRAIT_KEY_REASSURANCE_SEEKING_MULT` | 안심 추구 | Reassurance Seeking |
+| `TRAIT_KEY_RECIPROCITY_MULT` | 상호성 | Reciprocity |
 | `TRAIT_KEY_RECORD` | 기록 | Record |
+| `TRAIT_KEY_RELIABILITY_MULT` | 신뢰성 | Reliability |
 | `TRAIT_KEY_REPAIR` | 수리 | Repair |
 | `TRAIT_KEY_RESEARCH` | 연구 | Research |
+| `TRAIT_KEY_RESEARCH_SPEED_MULT` | 연구 속도 | Research Speed |
+| `TRAIT_KEY_RESISTANCE_TO_PERSUASION_MULT` | 설득 저항 | Persuasion Resistance |
+| `TRAIT_KEY_RESOURCE_CONFLICT_MULT` | 자원 갈등 | Resource Conflict |
+| `TRAIT_KEY_RESPECT_GAIN_MULT` | 존경 획득 | Respect Gain |
 | `TRAIT_KEY_REST` | 휴식 | Rest |
 | `TRAIT_KEY_REVENGE` | 복수 | Revenge |
+| `TRAIT_KEY_RISK_SHARING_MULT` | 위험 분담 | Risk Sharing |
+| `TRAIT_KEY_RISK_TAKING_MULT` | 위험 감수 | Risk Taking |
 | `TRAIT_KEY_RITUAL` | 의식 | Ritual |
+| `TRAIT_KEY_RULE_STRESS_MULT` | 규칙 스트레스 | Rule Stress |
 | `TRAIT_KEY_SABOTAGE` | 방해 | Sabotage |
 | `TRAIT_KEY_SADISM_REWARD_SENSITIVITY` | 가학 보상 민감도 | Sadism Reward Sensitivity |
 | `TRAIT_KEY_SADNESS_BASELINE` | 슬픔 기본선 | Sadness Baseline |
@@ -381,15 +458,42 @@ nav_order: 8
 | `TRAIT_KEY_SATISFACTION_QUALITY_SENSITIVITY` | 만족감 품질 민감도 | Satisfaction Quality Sensitivity |
 | `TRAIT_KEY_SHAME_SENSITIVITY` | 수치심 민감도 | Shame Sensitivity |
 | `TRAIT_KEY_SHARE` | 공유 | Share |
+| `TRAIT_KEY_SKIRMISH_PREFERENCE_MULT` | 소규모 전투 선호 | Skirmish Preference |
 | `TRAIT_KEY_SMUGGLE` | 밀수 | Smuggle |
 | `TRAIT_KEY_SOCIAL` | 사교 | Social |
+| `TRAIT_KEY_SOCIAL_ENERGY_COST_MULT` | 사교 에너지 소모 | Social Energy Cost |
+| `TRAIT_KEY_SOCIAL_STRESS_MULT` | 사교 스트레스 | Social Stress |
+| `TRAIT_KEY_SOLO_EFFICIENCY_MULT` | 단독 효율 | Solo Efficiency |
+| `TRAIT_KEY_SPEED_MULT` | 속도 | Speed |
 | `TRAIT_KEY_SPY` | 첩보 | Spy |
+| `TRAIT_KEY_STAMINA_EFFICIENCY_MULT` | 체력 효율 | Stamina Efficiency |
+| `TRAIT_KEY_STATUS_SEEKING_MULT` | 지위 추구 | Status Seeking |
+| `TRAIT_KEY_STAY_NEAR_ALLIES_MULT` | 동료 근접 | Stay Near Allies |
 | `TRAIT_KEY_STEAL` | 절도 | Steal |
+| `TRAIT_KEY_STRESS_FROM_OTHERS_HARM_MULT` | 타인 피해 스트레스 | Others' Harm Stress |
+| `TRAIT_KEY_STRESS_GAIN_MULT` | 스트레스 증가 | Stress Gain |
+| `TRAIT_KEY_STRESS_RECOVERY_ART_MULT` | 예술 회복 | Art Recovery |
+| `TRAIT_KEY_STRESS_RECOVERY_CREATIVE_MULT` | 창의 회복 | Creative Recovery |
+| `TRAIT_KEY_STRESS_RECOVERY_MULT` | 스트레스 회복 | Stress Recovery |
+| `TRAIT_KEY_STRESS_RECOVERY_ROUTINE_MULT` | 일과 회복 | Routine Recovery |
+| `TRAIT_KEY_STRESS_RECOVERY_SOCIAL_MULT` | 사교 회복 | Social Recovery |
+| `TRAIT_KEY_SUPPLY_MANAGEMENT_MULT` | 보급 관리 | Supply Management |
+| `TRAIT_KEY_TACTIC_ADAPT_MULT` | 전술 적응 | Tactic Adaptation |
+| `TRAIT_KEY_TACTIC_IMPROV_MULT` | 전술 즉흥 | Tactic Improvisation |
+| `TRAIT_KEY_TACTIC_PLANNING_MULT` | 전술 계획 | Tactic Planning |
 | `TRAIT_KEY_TAKE_BRIBE` | 뇌물 수수 | Take Bribe |
 | `TRAIT_KEY_TAME_ANIMAL` | 동물 조련 | Tame Animal |
+| `TRAIT_KEY_TASK_SWITCHING_EFFICIENCY_MULT` | 과업 전환 효율 | Task Switching |
 | `TRAIT_KEY_TEACH` | 교육 | Teach |
+| `TRAIT_KEY_TEAMWORK_EFFICIENCY_MULT` | 팀워크 효율 | Teamwork |
 | `TRAIT_KEY_TORTURE` | 고문 | Torture |
 | `TRAIT_KEY_TRADE` | 교역 | Trade |
+| `TRAIT_KEY_TRUST_GAIN_MULT` | 신뢰 획득 | Trust Gain |
+| `TRAIT_KEY_TRUST_LOSS_MULT` | 신뢰 상실 | Trust Loss |
+| `TRAIT_KEY_TRUST_REPAIR_MULT` | 신뢰 회복 | Trust Repair |
+| `TRAIT_KEY_UNCERTAINTY_STRESS_MULT` | 불확실성 스트레스 | Uncertainty Stress |
+| `TRAIT_KEY_UNCONVENTIONAL_TACTICS_MULT` | 비관습 전술 | Unconventional Tactics |
+| `TRAIT_KEY_WAR_CRIME_PROPENSITY_MULT` | 전쟁 범죄 성향 | War Crime Propensity |
 | `TRAIT_KEY_WASTE_RESOURCES` | 자원 낭비 | Waste Resources |
 | `UI_ACTION` | 행동 | Action |
 | `UI_ACTIVE_DYADS` | 활성 Dyad | Active Dyads |
@@ -603,7 +707,9 @@ nav_order: 8
 | `UI_TRAIT_BEHAVIOR_WEIGHTS` | 행동 수정 | Behavior Modifiers |
 | `UI_TRAIT_EFFECT_SUMMARY` | 특성 효과 요약 | Trait Effect Summary |
 | `UI_TRAIT_EMOTION_MODIFIERS` | 감정 수정 | Emotion Modifiers |
+| `UI_TRAIT_RELATIONSHIP_MODIFIERS` | 관계 수정 | Relationship Modifiers |
 | `UI_TRAIT_SYNERGIES` | 시너지 활성 | Active Synergies |
+| `UI_TRAUMA_SCARS` | 트라우마 흉터 | Trauma Scars |
 | `UI_TRUST` | 신뢰 | T |
 | `UI_UNDER_CONSTRUCTION_FMT` | 건설 중: {pct}% | Under construction: {pct}% |
 | `UI_UNKNOWN` | 불명 | Unknown |
