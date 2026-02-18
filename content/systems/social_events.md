@@ -135,7 +135,7 @@ No explicit `GameConfig` references extracted.
 | Field | Access | Shared With |
 | :-- | :-- | :-- |
 | `current_action` | read | [`behavior`](behavior.md), [`construction`](construction.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
-| `id` | read | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md) |
+| `id` | read | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`trauma_scar`](trauma_scar.md) |
 | `position` | read | [`behavior`](behavior.md), [`construction`](construction.md), [`gathering`](gathering.md), [`movement`](movement.md) |
 
 Reads shared fields: `current_action`, `id`, `position`

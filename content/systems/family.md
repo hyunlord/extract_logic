@@ -374,11 +374,11 @@ var mother_nutrition: float = clampf(entity.hunger, 0.0, 1.0)
 | `age` | read/write (inferred) | [`aging`](aging.md), [`mortality`](mortality.md), [`needs`](needs.md) |
 | `age_stage` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`childcare`](childcare.md), [`construction`](construction.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md) |
 | `emotion_data` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`stress`](stress.md), [`trait`](trait.md) |
-| `emotions` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`trait`](trait.md) |
-| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
+| `emotions` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`trait`](trait.md), [`trauma_scar`](trauma_scar.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md), [`trauma_scar`](trauma_scar.md) |
 | `hunger` | read/write (inferred) | [`behavior`](behavior.md), [`childcare`](childcare.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
-| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md) |
-| `is_alive` | read/write (inferred) | [`chronicle`](chronicle.md) |
+| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md), [`trauma_scar`](trauma_scar.md) |
+| `is_alive` | read/write (inferred) | [`chronicle`](chronicle.md), [`trauma_scar`](trauma_scar.md) |
 | `partner_id` | read/write (inferred) | [`behavior`](behavior.md) |
 | `settlement_id` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`migration`](migration.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
 

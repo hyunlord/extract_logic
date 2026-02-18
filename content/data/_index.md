@@ -14,7 +14,7 @@ nav_order: 1
 
 # 데이터 (Data)
 
-Total files (총 파일 수): **19**
+Total files (총 파일 수): **20**
 
 ## 도메인 요약 (Domain Summary)
 
@@ -26,6 +26,7 @@ Total files (총 파일 수): **19**
 | Personality (성격) | 5 |
 | Species (종족) | 5 |
 | Stress (스트레스) | 1 |
+| Trauma Scars.Json | 1 |
 
 ## Emotions (감정)
 
@@ -75,6 +76,12 @@ Total files (총 파일 수): **19**
 | File (파일) | Category (분류) | Type (유형) | Key Count (키 수) | Items (항목 수) |
 |-------------|----------------|------------|------------------|----------------|
 | [stressor_events](data/stressor_events.md) | data | object | 42 | - |
+
+## Trauma Scars.Json
+
+| File (파일) | Category (분류) | Type (유형) | Key Count (키 수) | Items (항목 수) |
+|-------------|----------------|------------|------------------|----------------|
+| [trauma_scars](data/trauma_scars.md) | data | object | 9 | - |
 
 ## 수동 노트 (Manual Notes)
 

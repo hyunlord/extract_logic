@@ -11,7 +11,7 @@ nav_order: 6
 
 > No module documentation found.
 
-📄 source: `scripts/core/entity_data.gd` | 237 lines | extends: RefCounted
+📄 source: `scripts/core/entity_data.gd` | 243 lines | extends: RefCounted
 
 ## 개요 (Overview)
 No summary available.

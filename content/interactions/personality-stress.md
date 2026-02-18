@@ -72,7 +72,7 @@ graph LR
 - 📄 source: `scripts/core/emotion_data.gd:L253`
 - 📄 source: `scripts/core/emotion_data.gd:L353`
 - 📄 source: `scripts/core/entity_data.gd:L50`
-- 📄 source: `scripts/core/entity_data.gd:L228`
+- 📄 source: `scripts/core/entity_data.gd:L233`
 - 📄 source: `scripts/core/personality_data.gd:L62`
 
 ## Manual Notes

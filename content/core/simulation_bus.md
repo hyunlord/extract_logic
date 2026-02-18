@@ -11,7 +11,7 @@ nav_order: 22
 
 > Core simulation events
 
-📄 source: `scripts/core/simulation_bus.gd` | 42 lines | extends: Node
+📄 source: `scripts/core/simulation_bus.gd` | 46 lines | extends: Node
 
 ## 개요 (Overview)
 Core simulation events

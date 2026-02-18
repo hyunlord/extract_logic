@@ -25,7 +25,7 @@ It runs on a **config-driven cadence** (`GameConfig.NEEDS_TICK_INTERVAL`) at pri
    📄 source: `scripts/systems/needs_system.gd:L20`
    Math context: x(t) = x₀·e^{-λt}, Computes a gameplay state update from mathematical relationships in the source logic., exponential decay dynamics
 2. Resolve settlement food
-   📄 source: `scripts/systems/needs_system.gd:L106`
+   📄 source: `scripts/systems/needs_system.gd:L114`
 
 ## Formulas (수식)
 
@@ -124,9 +124,9 @@ No import relationships extracted for this module.
 | `birth_tick` | read/write (inferred) | [`mortality`](mortality.md) |
 | `current_action` | read/write (inferred) | [`behavior`](behavior.md), [`construction`](construction.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`movement`](movement.md), [`social_events`](social_events.md), [`stress`](stress.md) |
 | `energy` | read/write (inferred) | [`behavior`](behavior.md), [`building_effect`](building_effect.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`movement`](movement.md), [`stress`](stress.md) |
-| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`population`](population.md), [`stress`](stress.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`population`](population.md), [`stress`](stress.md), [`trauma_scar`](trauma_scar.md) |
 | `hunger` | read/write (inferred) | [`behavior`](behavior.md), [`childcare`](childcare.md), [`family`](family.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`stress`](stress.md) |
-| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`population`](population.md), [`social_events`](social_events.md) |
+| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`population`](population.md), [`social_events`](social_events.md), [`trauma_scar`](trauma_scar.md) |
 | `inventory` | read/write (inferred) | [`behavior`](behavior.md), [`movement`](movement.md) |
 | `remove_item` | read/write (inferred) | [`behavior`](behavior.md), [`movement`](movement.md) |
 | `settlement_id` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`migration`](migration.md), [`population`](population.md), [`stress`](stress.md) |

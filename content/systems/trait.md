@@ -85,7 +85,7 @@ No explicit `GameConfig` references extracted.
 | :-- | :-- | :-- |
 | `active_traits` | read/write (inferred) | [`stress`](stress.md) |
 | `emotion_data` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`mental_break`](mental_break.md), [`stress`](stress.md) |
-| `emotions` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md) |
+| `emotions` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`trauma_scar`](trauma_scar.md) |
 | `personality` | read/write (inferred) | [`aging`](aging.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`stress`](stress.md) |
 
 ### Signals (시그널)

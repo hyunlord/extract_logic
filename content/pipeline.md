@@ -155,8 +155,8 @@ Traits activate when facet scores exceed thresholds (e.g., `H_sincerity > 0.92` 
 - GAS stage (alarm/resistance/exhaustion)
 - Yerkes-Dodson efficiency multiplier
 
-📄 source: `scripts/systems/stress_system.gd:L66`
-📄 source: `scripts/systems/stress_system.gd:L208`
+📄 source: `scripts/systems/stress_system.gd:L71`
+📄 source: `scripts/systems/stress_system.gd:L213`
 📄 source: `data/stressor_events.json`
 
 ---
@@ -186,7 +186,7 @@ $$
 - Death event (triggers bereavement stressors on survivors)
 
 📄 source: `scripts/systems/mortality_system.gd:L130`
-📄 source: `scripts/systems/mortality_system.gd:L378`
+📄 source: `scripts/systems/mortality_system.gd`
 📄 source: `data/species/human/mortality/siler_parameters.json`
 
 ## Feedback Loops / 피드백 루프

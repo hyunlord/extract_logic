@@ -24,31 +24,31 @@ It runs every **2 ticks** (0.0 game-years) at priority **34**.
 ## Tick Pipeline (틱 파이프라인)
 
 1. Calculate Lazarus appraisal scale (demand/resource ratio)
-   📄 source: `scripts/systems/stress_system.gd:L124`
+   📄 source: `scripts/systems/stress_system.gd:L129`
    Math context: stress_scale = f(demand, resources, appraisal), appraisal scaling
 2. Process continuous stressors (hunger, energy, social)
-   📄 source: `scripts/systems/stress_system.gd:L124`
+   📄 source: `scripts/systems/stress_system.gd:L129`
    Math context: Updates stress burden, coping reserve, or resilience from current pressure and recovery signals., stress_scale = f(demand, resources, appraisal)
 3. Convert emotions to stress contribution
-   📄 source: `scripts/systems/stress_system.gd:L55`
+   📄 source: `scripts/systems/stress_system.gd:L60`
    Math context: Updates stress burden, coping reserve, or resilience from current pressure and recovery signals., stress_scale = f(demand, resources, appraisal), x(t) = x₀·e^{-λt}, reserve(t+1) = clamp(reserve(t) - drain + recovery), load(t+1) = clamp(load(t) + chronic_stress - recovery), efficiency = f(stress)
 4. Apply personality modifiers to stress sensitivity
-   📄 source: `scripts/systems/stress_system.gd:L66`
+   📄 source: `scripts/systems/stress_system.gd:L71`
    Math context: Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 5. Calculate recovery from sleep/safety/support
-   📄 source: `scripts/systems/stress_system.gd:L235`
+   📄 source: `scripts/systems/stress_system.gd:L240`
    Math context: Updates stress burden, coping reserve, or resilience from current pressure and recovery signals., stress_scale = f(demand, resources, appraisal), reserve(t+1) = clamp(reserve(t) - drain + recovery), load(t+1) = clamp(load(t) + chronic_stress - recovery), x(t) = x₀·e^{-λt}
 6. Update allostatic load (chronic stress accumulation)
-   📄 source: `scripts/systems/stress_system.gd:L279`
+   📄 source: `scripts/systems/stress_system.gd:L284`
    Math context: load(t+1) = clamp(load(t) + chronic_stress - recovery), allostatic accumulation model
 7. Update GAS stage (alarm -> resistance -> exhaustion)
-   📄 source: `scripts/systems/stress_system.gd:L257`
+   📄 source: `scripts/systems/stress_system.gd:L262`
    Math context: reserve(t+1) = clamp(reserve(t) - drain + recovery)
 8. Calculate Yerkes-Dodson eustress efficiency
-   📄 source: `scripts/systems/stress_system.gd:L373`
+   📄 source: `scripts/systems/stress_system.gd:L381`
    Math context: efficiency = f(stress), stress-performance curve
 9. Emit stress update signals
-   📄 source: `scripts/systems/stress_system.gd:L66`
+   📄 source: `scripts/systems/stress_system.gd:L71`
    Math context: Updates stress burden, coping reserve, or resilience from current pressure and recovery signals., stress_scale = f(demand, resources, appraisal), x(t) = x₀·e^{-λt}, reserve(t+1) = clamp(reserve(t) - drain + recovery), load(t+1) = clamp(load(t) + chronic_stress - recovery), efficiency = f(stress)
 
 ### Pipeline Diagram (파이프라인 다이어그램)
@@ -97,7 +97,7 @@ var delta: float = continuous_input + trace_input + emotion_input - recovery
 | `emotion_input` | emotion input |
 | `recovery` | recovery |
 
-📄 source: `scripts/systems/stress_system.gd:L88`
+📄 source: `scripts/systems/stress_system.gd:L93`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -118,7 +118,7 @@ ed.stress = clampf(ed.stress + delta, 0.0, STRESS_CLAMP_MAX)
 | `stress` | stress |
 | `delta` | delta |
 
-📄 source: `scripts/systems/stress_system.gd:L92`
+📄 source: `scripts/systems/stress_system.gd:L97`
 
 ### Computes stress amplification by comparing perceived demands against available coping resources.
 
@@ -145,7 +145,7 @@ var D_dep: float = 0.45 * (1.0 - hunger) + 0.35 * (1.0 - energy) + 0.20 * (1.0 -
 | `threat` | threat |
 | `conflict` | conflict |
 
-📄 source: `scripts/systems/stress_system.gd:L131`
+📄 source: `scripts/systems/stress_system.gd:L136`
 
 ### Computes stress amplification by comparing perceived demands against available coping resources.
 
@@ -169,7 +169,7 @@ var R_physical: float = 0.5 * hunger + 0.5 * energy
 | `energy` | energy |
 | `threat` | threat |
 
-📄 source: `scripts/systems/stress_system.gd:L134`
+📄 source: `scripts/systems/stress_system.gd:L139`
 
 ### Computes stress amplification by comparing perceived demands against available coping resources.
 
@@ -190,7 +190,7 @@ var R: float = clampf(0.30 * R_physical + 0.30 * R_safety + 0.25 * R_support + 0
 | :-- | :-- |
 | `R` | resource composite |
 
-📄 source: `scripts/systems/stress_system.gd:L137`
+📄 source: `scripts/systems/stress_system.gd:L142`
 
 ### Computes stress amplification by comparing perceived demands against available coping resources.
 
@@ -214,7 +214,7 @@ var threat_appraisal: float = D * (1.0 + 0.55 * (E_axis - 0.5) * 2.0 + 0.25 * (f
 | `fear_val` | fear val |
 | `trust_val` | trust val |
 
-📄 source: `scripts/systems/stress_system.gd:L143`
+📄 source: `scripts/systems/stress_system.gd:L148`
 
 ### Computes stress amplification by comparing perceived demands against available coping resources.
 
@@ -237,7 +237,7 @@ var coping_appraisal: float = R * (1.0 + 0.35 * (C_axis - 0.5) * 2.0 + 0.20 * (O
 | `R` | resource composite |
 | `reserve_ratio` | reserve ratio |
 
-📄 source: `scripts/systems/stress_system.gd:L148`
+📄 source: `scripts/systems/stress_system.gd:L153`
 
 ### Computes stress amplification by comparing perceived demands against available coping resources.
 
@@ -258,7 +258,7 @@ return clampf(1.0 + 0.8 * imbalance, 0.7, 1.9)
 | :-- | :-- |
 | `imbalance` | imbalance |
 
-📄 source: `scripts/systems/stress_system.gd:L151`
+📄 source: `scripts/systems/stress_system.gd:L156`
 
 ### Computes stress amplification by comparing perceived demands against available coping resources.
 
@@ -283,7 +283,7 @@ var h_def: float = clampf((0.35 - hunger) / 0.35, 0.0, 1.0)
 | `s_hunger` | nutrition state input |
 | `appraisal_scale` | appraisal scale |
 
-📄 source: `scripts/systems/stress_system.gd:L161`
+📄 source: `scripts/systems/stress_system.gd:L166`
 
 ### Computes stress amplification by comparing perceived demands against available coping resources.
 
@@ -308,7 +308,7 @@ var e_def: float = clampf((0.40 - energy) / 0.40, 0.0, 1.0)
 | `s_energy` | s energy |
 | `appraisal_scale` | appraisal scale |
 
-📄 source: `scripts/systems/stress_system.gd:L167`
+📄 source: `scripts/systems/stress_system.gd:L172`
 
 ### Computes stress amplification by comparing perceived demands against available coping resources.
 
@@ -333,7 +333,7 @@ var soc_def: float = clampf((0.25 - social) / 0.25, 0.0, 1.0)
 | `s_social` | s social |
 | `appraisal_scale` | appraisal scale |
 
-📄 source: `scripts/systems/stress_system.gd:L173`
+📄 source: `scripts/systems/stress_system.gd:L178`
 
 ### Applies time-based exponential decay using half-life or decay-rate parameters.
 
@@ -357,7 +357,7 @@ var decay: float = trace.get("decay_rate", 0.05)
 | `trace` | trace |
 | `contribution` | contribution |
 
-📄 source: `scripts/systems/stress_system.gd:L192`
+📄 source: `scripts/systems/stress_system.gd:L197`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -382,7 +382,7 @@ var neg: float = clampf(-valence / 100.0, 0.0, 1.0)
 | `arousal` | arousal |
 | `va_contrib` | va contrib |
 
-📄 source: `scripts/systems/stress_system.gd:L224`
+📄 source: `scripts/systems/stress_system.gd:L229`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -402,7 +402,7 @@ decay *= 1.0 + 0.10 * (resilience - 0.5) * 2.0
 | `decay` | decay factor |
 | `resilience` | recovery resilience factor (CD-RISC based) |
 
-📄 source: `scripts/systems/stress_system.gd:L247`
+📄 source: `scripts/systems/stress_system.gd:L252`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -429,7 +429,7 @@ var drain: float = maxf(0.0, (ed.stress - 150.0) / 350.0) * (0.7 + 0.6 * (1.0 - 
 | `recover` | recover |
 | `is_sleeping` | is sleeping |
 
-📄 source: `scripts/systems/stress_system.gd:L260`
+📄 source: `scripts/systems/stress_system.gd:L265`
 
 ### Updates resistance reserves as prolonged stress drains capacity toward exhaustion and recovery restores it.
 
@@ -453,7 +453,7 @@ ed.reserve = clampf(ed.reserve - drain + recover, 0.0, RESERVE_MAX)
 | `drain` | drain |
 | `recover` | recover |
 
-📄 source: `scripts/systems/stress_system.gd:L264`
+📄 source: `scripts/systems/stress_system.gd:L269`
 
 ### Accumulates chronic stress burden over time and models recovery-driven load reduction.
 
@@ -476,7 +476,7 @@ var allo_inc: float = ALLO_RATE * maxf(0.0, ed.stress - ALLO_STRESS_THRESHOLD) /
 | `ed` | ed |
 | `stress` | stress |
 
-📄 source: `scripts/systems/stress_system.gd:L281`
+📄 source: `scripts/systems/stress_system.gd:L286`
 
 ### Accumulates chronic stress burden over time and models recovery-driven load reduction.
 
@@ -499,7 +499,7 @@ ed.allostatic = clampf(ed.allostatic + allo_inc, 0.0, 100.0)
 | `allostatic` | allostatic load (chronic wear, 0-100) |
 | `allo_inc` | allo inc |
 
-📄 source: `scripts/systems/stress_system.gd:L283`
+📄 source: `scripts/systems/stress_system.gd:L288`
 
 ### Accumulates chronic stress burden over time and models recovery-driven load reduction.
 
@@ -521,7 +521,7 @@ ed.allostatic = clampf(ed.allostatic - ALLO_RECOVERY_RATE, 0.0, 100.0)
 | `ed` | ed |
 | `allostatic` | allostatic load (chronic wear, 0-100) |
 
-📄 source: `scripts/systems/stress_system.gd:L286`
+📄 source: `scripts/systems/stress_system.gd:L291`
 
 ### Accumulates chronic stress burden over time and models recovery-driven load reduction.
 
@@ -543,7 +543,7 @@ $$
 | `ed` | ed |
 | `allostatic` | allostatic load (chronic wear, 0-100) |
 
-📄 source: `scripts/systems/stress_system.gd:L323`
+📄 source: `scripts/systems/stress_system.gd:L328`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -566,7 +566,7 @@ var fatigue_penalty: float = clampf((0.3 - energy) / 0.3, 0.0, 0.3) + clampf((0.
 | `hunger` | nutrition state input |
 | `r` | resource composite |
 
-📄 source: `scripts/systems/stress_system.gd:L327`
+📄 source: `scripts/systems/stress_system.gd:L332`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -583,7 +583,7 @@ ed.resilience = clampf(r, 0.05, 1.0)
 | `resilience` | recovery resilience factor (CD-RISC based) |
 | `r` | resource composite |
 
-📄 source: `scripts/systems/stress_system.gd:L330`
+📄 source: `scripts/systems/stress_system.gd:L338`
 
 ### Accumulates chronic stress burden over time and models recovery-driven load reduction.
 
@@ -611,7 +611,7 @@ var s1: float = clampf((ed.stress - 100.0) / 400.0, 0.0, 1.0)
 | `allo_ratio` | allo ratio |
 | `allostatic` | allostatic load (chronic wear, 0-100) |
 
-📄 source: `scripts/systems/stress_system.gd:L335`
+📄 source: `scripts/systems/stress_system.gd:L343`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -636,7 +636,7 @@ ed.set_meta("stress_mu_sadness", 6.0 * s1 + 10.0 * allo_ratio)
 | `s1` | s1 |
 | `allo_ratio` | allo ratio |
 
-📄 source: `scripts/systems/stress_system.gd:L339`
+📄 source: `scripts/systems/stress_system.gd:L347`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -658,7 +658,7 @@ var blunt_denom: float = 1.0 + 0.9 * allo_ratio * (2.0 if allo_ratio > 0.6 else 
 | `allo_ratio` | allo ratio |
 | `ed` | ed |
 
-📄 source: `scripts/systems/stress_system.gd:L348`
+📄 source: `scripts/systems/stress_system.gd:L356`
 
 ### Applies time-based exponential decay using half-life or decay-rate parameters.
 
@@ -680,7 +680,7 @@ return clampf(0.65 * strong + 0.35 * (1.0 - exp(-weak_sum / 1.5)), 0.0, 1.0)
 | `strong` | strong |
 | `weak_sum` | weak sum |
 
-📄 source: `scripts/systems/stress_system.gd:L369`
+📄 source: `scripts/systems/stress_system.gd:L377`
 
 ### Maps stress arousal to task efficiency with a bounded performance response curve.
 
@@ -702,7 +702,7 @@ perf = 1.09 - 0.0004 * (s - 150.0)
 | `perf` | perf |
 | `s` | s |
 
-📄 source: `scripts/systems/stress_system.gd:L379`
+📄 source: `scripts/systems/stress_system.gd:L387`
 
 ### Maps stress arousal to task efficiency with a bounded performance response curve.
 
@@ -724,7 +724,7 @@ perf = 1.01 - 0.0012 * (s - 350.0)
 | `perf` | perf |
 | `s` | s |
 
-📄 source: `scripts/systems/stress_system.gd:L381`
+📄 source: `scripts/systems/stress_system.gd:L389`
 
 ### Maps stress arousal to task efficiency with a bounded performance response curve.
 
@@ -745,7 +745,7 @@ return clampf(perf, 0.35, 1.10)
 | :-- | :-- |
 | `perf` | perf |
 
-📄 source: `scripts/systems/stress_system.gd:L385`
+📄 source: `scripts/systems/stress_system.gd:L393`
 
 ### Computes stress amplification by comparing perceived demands against available coping resources.
 
@@ -772,7 +772,7 @@ per_tick: float = 0.0, decay_rate: float = 0.05,
 | `appraisal_scale` | appraisal scale |
 | `void` | void |
 
-📄 source: `scripts/systems/stress_system.gd:L390`
+📄 source: `scripts/systems/stress_system.gd:L398`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -793,7 +793,7 @@ ed.stress = clampf(ed.stress + final_instant, 0.0, STRESS_CLAMP_MAX)
 | `stress` | stress |
 | `final_instant` | final instant |
 
-📄 source: `scripts/systems/stress_system.gd:L395`
+📄 source: `scripts/systems/stress_system.gd:L403`
 
 ### Applies time-based exponential decay using half-life or decay-rate parameters.
 
@@ -814,7 +814,7 @@ $$
 | :-- | :-- |
 | `decay_rate` | decay factor |
 
-📄 source: `scripts/systems/stress_system.gd:L401`
+📄 source: `scripts/systems/stress_system.gd:L409`
 
 ### Applies time-based exponential decay using half-life or decay-rate parameters.
 
@@ -836,7 +836,7 @@ var decay_rate = float(sdef.get("base_decay_rate", 0.05))
 | `decay_rate` | decay factor |
 | `sdef` | sdef |
 
-📄 source: `scripts/systems/stress_system.gd:L448`
+📄 source: `scripts/systems/stress_system.gd:L456`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -857,7 +857,7 @@ ed.stress = clampf(ed.stress + final_instant, 0.0, STRESS_CLAMP_MAX)
 | `stress` | stress |
 | `final_instant` | final instant |
 
-📄 source: `scripts/systems/stress_system.gd:L472`
+📄 source: `scripts/systems/stress_system.gd:L485`
 
 ### Applies time-based exponential decay using half-life or decay-rate parameters.
 
@@ -878,7 +878,7 @@ $$
 | :-- | :-- |
 | `decay_rate` | decay factor |
 
-📄 source: `scripts/systems/stress_system.gd:L478`
+📄 source: `scripts/systems/stress_system.gd:L491`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -893,7 +893,7 @@ return clampf(scale, 0.05, 4.0)
 | :-- | :-- |
 | `scale` | scale |
 
-📄 source: `scripts/systems/stress_system.gd:L536`
+📄 source: `scripts/systems/stress_system.gd:L549`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -914,7 +914,7 @@ return clampf(min_m + (max_m - min_m) * bond, min_m, max_m)
 | `max_m` | max m |
 | `bond` | bond |
 
-📄 source: `scripts/systems/stress_system.gd:L547`
+📄 source: `scripts/systems/stress_system.gd:L560`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -929,7 +929,7 @@ return clampf(scale, 0.1, 5.0)
 | :-- | :-- |
 | `scale` | scale |
 
-📄 source: `scripts/systems/stress_system.gd:L556`
+📄 source: `scripts/systems/stress_system.gd:L572`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -951,7 +951,7 @@ ed.fast[emo_name] = clampf(ed.fast.get(emo_name, 0.0) + raw_val, 0.0, 100.0)
 | `emo_name` | emo name |
 | `raw_val` | raw val |
 
-📄 source: `scripts/systems/stress_system.gd:L577`
+📄 source: `scripts/systems/stress_system.gd:L593`
 
 ### Updates stress burden, coping reserve, or resilience from current pressure and recovery signals.
 
@@ -973,7 +973,7 @@ ed.slow[emo_name] = clampf(ed.slow.get(emo_name, 0.0) + raw_val, -50.0, 100.0)
 | `emo_name` | emo name |
 | `raw_val` | raw val |
 
-📄 source: `scripts/systems/stress_system.gd:L580`
+📄 source: `scripts/systems/stress_system.gd:L596`
 
 ## Configuration Reference (설정)
 
@@ -993,7 +993,7 @@ No import relationships extracted for this module.
 | `current_action` | read/write (inferred) | [`behavior`](behavior.md), [`construction`](construction.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`movement`](movement.md), [`needs`](needs.md), [`social_events`](social_events.md) |
 | `emotion_data` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`mental_break`](mental_break.md), [`trait`](trait.md) |
 | `energy` | read/write (inferred) | [`behavior`](behavior.md), [`building_effect`](building_effect.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`movement`](movement.md), [`needs`](needs.md) |
-| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`trauma_scar`](trauma_scar.md) |
 | `hunger` | read/write (inferred) | [`behavior`](behavior.md), [`childcare`](childcare.md), [`family`](family.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md) |
 | `personality` | read/write (inferred) | [`aging`](aging.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`trait`](trait.md) |
 | `settlement_id` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`migration`](migration.md), [`needs`](needs.md), [`population`](population.md) |

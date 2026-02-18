@@ -22,15 +22,15 @@ It runs every **1 ticks** (0.0 game-years) at priority **35**.
 ## Tick Pipeline (틱 파이프라인)
 
 1. Run per-entity tick update loop
-   📄 source: `scripts/systems/mental_break_system.gd:L55`
+   📄 source: `scripts/systems/mental_break_system.gd:L60`
 2. Check mental break conditions
-   📄 source: `scripts/systems/mental_break_system.gd:L75`
+   📄 source: `scripts/systems/mental_break_system.gd:L80`
    Math context: allostatic accumulation model
 3. Calculate threshold
-   📄 source: `scripts/systems/mental_break_system.gd:L85`
+   📄 source: `scripts/systems/mental_break_system.gd:L90`
    Math context: load(t+1) = clamp(load(t) + chronic_stress - recovery), allostatic accumulation model
 4. Tick active break
-   📄 source: `scripts/systems/mental_break_system.gd:L177`
+   📄 source: `scripts/systems/mental_break_system.gd:L186`
 
 ## Formulas (수식)
 
@@ -65,7 +65,7 @@ threshold *= (1.0 + 0.40 * (ed.resilience - 0.5) * 2.0)
 | `energy` | energy |
 | `hunger` | nutrition state input |
 
-📄 source: `scripts/systems/mental_break_system.gd:L94`
+📄 source: `scripts/systems/mental_break_system.gd:L99`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -86,7 +86,7 @@ var p: float = clampf((stress - threshold) / BREAK_SCALE, 0.0, BREAK_CAP_PER_TIC
 | `stress` | stress |
 | `threshold` | threshold |
 
-📄 source: `scripts/systems/mental_break_system.gd:L116`
+📄 source: `scripts/systems/mental_break_system.gd:L125`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -107,7 +107,7 @@ w *= lerpf(1.0, 1.0 + axis_weight, axis_val)
 | `axis_weight` | axis weight |
 | `axis_val` | axis val |
 
-📄 source: `scripts/systems/mental_break_system.gd:L140`
+📄 source: `scripts/systems/mental_break_system.gd:L149`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -128,7 +128,7 @@ w *= lerpf(1.0, 1.0 + absf(axis_weight), 1.0 - axis_val)
 | `axis_weight` | axis weight |
 | `axis_val` | axis val |
 
-📄 source: `scripts/systems/mental_break_system.gd:L142`
+📄 source: `scripts/systems/mental_break_system.gd:L151`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -149,7 +149,7 @@ var roll: float = _rng.randf() * total
 | `_rng` |  rng |
 | `total` | total |
 
-📄 source: `scripts/systems/mental_break_system.gd:L149`
+📄 source: `scripts/systems/mental_break_system.gd:L158`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -170,7 +170,7 @@ var variance: int = bdef.get("duration_variance_ticks", 4)
 | `base` | base |
 | `_rng` |  rng |
 
-📄 source: `scripts/systems/mental_break_system.gd:L164`
+📄 source: `scripts/systems/mental_break_system.gd:L173`
 
 ## Configuration Reference (설정)
 
@@ -188,7 +188,7 @@ No import relationships extracted for this module.
 | :-- | :-- | :-- |
 | `emotion_data` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`stress`](stress.md), [`trait`](trait.md) |
 | `energy` | read/write (inferred) | [`behavior`](behavior.md), [`building_effect`](building_effect.md), [`emotions`](emotions.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
-| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md), [`trauma_scar`](trauma_scar.md) |
 | `hunger` | read/write (inferred) | [`behavior`](behavior.md), [`childcare`](childcare.md), [`family`](family.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
 | `personality` | read/write (inferred) | [`aging`](aging.md), [`emotions`](emotions.md), [`stress`](stress.md), [`trait`](trait.md) |
 
