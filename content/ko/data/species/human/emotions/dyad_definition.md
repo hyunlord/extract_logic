@@ -9,37 +9,37 @@ nav_order: 10
 
 # dyad_definition
 
-📄 source (출처): `data/species/human/emotions/dyad_definition.json` | Category (분류): species/human/emotions | Type (유형): object
+📄 소스: `data/species/human/emotions/dyad_definition.json` | 분류: species/human/emotions | 유형: object
 
-## 개요 (Overview)
+## 개요
 
-- Configures (설정 내용): `species/human/emotions` 데이터 도메인 설정 값. Configuration values for the `species/human/emotions` data domain.
-- Read by systems/modules (읽는 시스템/모듈): species_manager
-- Related documentation (관련 문서): [`species_manager`](../../../../core/species_manager.md)
+- 설정 내용: `species/human/emotions` 데이터 도메인 설정 값. Configuration values for the `species/human/emotions` data domain.
+- 읽는 시스템/모듈: species_manager
+- 관련 문서: [`species_manager`](../../../../core/species_manager.md)
 
-## 해석된 파라미터 (Interpreted Parameters)
+## 해석된 파라미터
 
-### Timing & Decay (시간/감쇠)
+### 타이밍 & 감쇠
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `dyads.sentimentality.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 | `dyads.sentimentality.components.sample` | trust | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 | `dyads.sentimentality.name_kr` | 감상 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 | `dyads.sentimentality.type` | tertiary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 
-### Thresholds & Bounds (임계/경계)
+### 임계 & 경계
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `dyads.dominance.components` | 2 items | array | Activation boundary used by game logic. (작동 임계값) |
 | `dyads.dominance.components.sample` | anger | string | Activation boundary used by game logic. (작동 임계값) |
 | `dyads.dominance.name_kr` | 지배 | string | Activation boundary used by game logic. (작동 임계값) |
 | `dyads.dominance.type` | tertiary | string | Activation boundary used by game logic. (작동 임계값) |
 
-### Identifiers & Labels (식별자/라벨)
+### 식별자 & 라벨
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `dyads.aggressiveness.name_kr` | 공격성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 | `dyads.aggressiveness.type` | primary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
@@ -90,9 +90,9 @@ nav_order: 10
 | `dyads.unbelief.name_kr` | 불신 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 | `dyads.unbelief.type` | secondary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 
-### Other Parameters (기타)
+### 기타 파라미터
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `dyads.aggressiveness.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 | `dyads.aggressiveness.components.sample` | anger | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
@@ -135,11 +135,11 @@ nav_order: 10
 | `dyads.unbelief.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 | `dyads.unbelief.components.sample` | surprise | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 
-## 참조하는 시스템 (Referenced By)
+## 레퍼런스
 
 - [`species_manager`](../../../../core/species_manager.md) - references data under `data/species/`
 
-## 수동 노트 (Manual Notes)
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

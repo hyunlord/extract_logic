@@ -7,6 +7,7 @@ import os
 from typing import Any
 
 import scripts.config as config
+from scripts.generators.strings import t
 
 _MANUAL_START = "<!-- MANUAL:START -->"
 _MANUAL_END = "<!-- MANUAL:END -->"
@@ -242,7 +243,12 @@ def _source_ref(path: str, line: int | None = None) -> str:
     return f"📄 source: `{path}:L{line}`"
 
 
-def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]], warnings: list[str]) -> str:
+def _build_markdown(
+    manifest: dict[str, Any],
+    sections: dict[str, dict[str, Any]],
+    warnings: list[str],
+    lang: str,
+) -> str:
     _ = manifest
 
     systems_list = [s for s in _as_list(sections["systems"].get("systems")) if isinstance(s, dict)]
@@ -415,7 +421,7 @@ def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]
             "",
             "# The WorldSim Pipeline: Personality → Emotion → Stress → Mortality",
             "",
-            "## 개요 / Overview",
+            f"## {t('section_overview', lang)}",
             "",
             "WorldSim simulates a complete psychophysiological pipeline for each entity:",
             "",
@@ -459,7 +465,7 @@ def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]
             "    DEATH -->|death event| EVT",
             "```",
             "",
-            "## Stage 1: Personality (Static Foundation) / 성격 (정적 기반)",
+            f"## {t('stage1_personality', lang)}",
             "",
             f"**Model**: {stage1_models}",
             "**Computation**: Once at entity creation + yearly maturation",
@@ -491,17 +497,17 @@ def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]
             "",
             "---",
             "",
-            "## Stage 2: Emotion (Fast Response) / 감정 (빠른 반응)",
+            f"## {t('stage2_emotion', lang)}",
             "",
             f"**Models**: {stage2_models}",
             f"**Tick interval**: {emotion_tick_interval} ticks",
             "",
-            "### Input / 입력",
+            f"### {t('subsection_input', lang)}",
             "- Game events with appraisal vectors (8 dimensions)",
             "- Personality sensitivity multipliers",
             "- Trait emotion modifiers",
             "",
-            "### Computation / 계산",
+            f"### {t('subsection_computation', lang)}",
             "1. **Appraisal**: emotion impulses from appraisal dimensions",
             "",
             "| Emotion | Formula |",
@@ -524,7 +530,7 @@ def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]
             f"{_fmt_num(_as_float(_as_dict(decay_config.get('inhibition')).get('gamma'), 0.3), 2)}",
             "6. **Contagion**: spatial spread with κ coefficients",
             "",
-            "### Output / 출력",
+            f"### {t('subsection_output', lang)}",
             "- 8 emotion values (0-100 each)",
             "- Valence-arousal coordinates",
             "- Mental break trigger probability update",
@@ -535,18 +541,18 @@ def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]
             "",
             "---",
             "",
-            "## Stage 3: Stress (Medium Accumulation) / 스트레스 (중간 축적)",
+            f"## {t('stage3_stress', lang)}",
             "",
             f"**Models**: {stage3_models}",
             f"**Tick interval**: {stress_tick_interval} ticks",
             "",
-            "### Input / 입력",
+            f"### {t('subsection_input', lang)}",
             "- Emotion values (from Stage 2)",
             "- Continuous need states (hunger, energy, social)",
             "- Stressor events",
             "- Personality modifiers",
             "",
-            "### Computation / 계산",
+            f"### {t('subsection_computation', lang)}",
             "1. **Emotion contribution**: `stress += γ_VA * Σ(w_e * emotion_e)`",
             "2. **Continuous stressors**: hunger/energy/social deficit → stress",
             "3. **Event stressors**: `severity = base_instant + per_tick/decay * 10; if loss: × 2.5`",
@@ -554,7 +560,7 @@ def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]
             "5. **Allostatic load**: chronic accumulation when stress exceeds reserve",
             "6. **GAS stages**: alarm → resistance → exhaustion",
             "",
-            "### Output / 출력",
+            f"### {t('subsection_output', lang)}",
             "- Current stress level (0-100)",
             "- Allostatic load (0-100)",
             "- GAS stage (alarm/resistance/exhaustion)",
@@ -566,17 +572,17 @@ def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]
             "",
             "---",
             "",
-            "## Stage 4: Mortality (Slow Selection) / 사망 (느린 선택)",
+            f"## {t('stage4_mortality', lang)}",
             "",
             f"**Model**: {stage4_models}",
             f"**Tick interval**: {mortality_tick_interval} ticks",
             "",
-            "### Input / 입력",
+            f"### {t('subsection_input', lang)}",
             "- Entity age",
             "- Allostatic load (from Stage 3)",
             "- Tech level, nutrition, care status, season",
             "",
-            "### Computation / 계산",
+            f"### {t('subsection_computation', lang)}",
             "$$",
             r"\mu(x) = a_1 e^{-b_1 x} + a_2 + a_3 e^{b_3 x}",
             "$$",
@@ -586,7 +592,7 @@ def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]
             r"P(\text{death}) = 1 - e^{-\mu_{\text{final}}(x) / \text{TICKS\_PER\_YEAR}}",
             "$$",
             "",
-            "### Output / 출력",
+            f"### {t('subsection_output', lang)}",
             "- Death probability per tick",
             "- Death event (triggers bereavement stressors on survivors)",
             "",
@@ -594,9 +600,9 @@ def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]
             _source_ref("scripts/systems/mortality_system.gd", _function_line(mortality_system, "_inject_bereavement_stress")),
             _source_ref("data/species/human/mortality/siler_parameters.json"),
             "",
-            "## Feedback Loops / 피드백 루프",
+            f"## {t('section_feedback_loops', lang)}",
             "",
-            "### Bereavement Cascade / 애도 연쇄",
+            f"### {t('subsection_bereavement_cascade', lang)}",
             "```mermaid",
             "graph LR",
             "    DEATH[Entity Death] -->|bereavement stressor| STRESS[Survivor Stress]",
@@ -604,7 +610,7 @@ def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]
             "    MORT -->|more deaths| DEATH",
             "```",
             "",
-            "### Mental Break Loop / 정신 붕괴 루프",
+            f"### {t('subsection_mental_break_loop', lang)}",
             "```mermaid",
             "graph LR",
             "    STRESS[High Stress] -->|threshold exceeded| BREAK[Mental Break]",
@@ -612,7 +618,7 @@ def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]
             "    EMOT -->|emotion contribution| STRESS",
             "```",
             "",
-            "## Example: Entity Loses Partner / 예시: 동반자 상실",
+            f"## {t('section_example_partner_loss', lang)}",
             "",
             "**Event**: `partner_death` (intensity=95, is_trauma=true, is_loss=true)",
             "",
@@ -645,7 +651,7 @@ def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]
             "- At allostatic_load=60: mortality hazard ×1.6",
             f"- 10-year survival (age 35, baseline Siler params): {_fmt_num(survival_base * 100.0, 1)}% → {_fmt_num(survival_stress * 100.0, 1)}%",
             "",
-            "## Pipeline Statistics / 파이프라인 통계",
+            f"## {t('section_pipeline_statistics', lang)}",
             "",
             "| Metric | Value |",
             "|--------|-------|",
@@ -668,7 +674,7 @@ def _build_markdown(manifest: dict[str, Any], sections: dict[str, dict[str, Any]
     return "\n".join(lines)
 
 
-def run(manifest: dict, extracted: dict) -> dict:
+def run(manifest: dict, extracted: dict | None = None, lang: str = "ko") -> dict:
     """Generate master pipeline documentation page.
 
     Args:
@@ -703,7 +709,7 @@ def run(manifest: dict, extracted: dict) -> dict:
     sections = _extract_sections(extracted, warnings)
 
     try:
-        markdown = _build_markdown(manifest, sections, warnings)
+        markdown = _build_markdown(manifest, sections, warnings, lang)
     except Exception as exc:  # pragma: no cover - defensive safety for pipeline
         errors.append(f"Failed to build pipeline page markdown: {exc}")
         return {
@@ -714,8 +720,9 @@ def run(manifest: dict, extracted: dict) -> dict:
             "errors": errors,
         }
 
-    output_path = os.path.join(config.CONTENT_KO, "pipeline.md")
-    config.ensure_dir(config.CONTENT_KO)
+    dirs = config.lang_dirs(lang)
+    output_path = os.path.join(dirs["base"], "pipeline.md")
+    config.ensure_dir(dirs["base"])
 
     try:
         if os.path.exists(output_path):

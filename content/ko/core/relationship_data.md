@@ -13,10 +13,10 @@ nav_order: 16
 
 📄 source: `scripts/core/relationship_data.gd` | 13 lines | extends: RefCounted
 
-## 개요 (Overview)
+## 개요
 Relationship between two entities.
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -28,6 +28,6 @@ Relationship between two entities.
 |--------|------------|
 | - | - |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: -
 - Used by: [`relationship_manager.gd`](relationship_manager.md), [`save_manager.gd`](save_manager.md)

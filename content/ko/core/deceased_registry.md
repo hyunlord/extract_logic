@@ -13,10 +13,10 @@ nav_order: 4
 
 📄 source: `scripts/core/deceased_registry.gd` | 103 lines | extends: Node
 
-## 개요 (Overview)
+## 개요
 Registry of deceased entities for historical viewing.
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -28,6 +28,6 @@ Registry of deceased entities for historical viewing.
 |--------|------------|
 | - | - |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: [`game_calendar.gd`](game_calendar.md)
 - Used by: -

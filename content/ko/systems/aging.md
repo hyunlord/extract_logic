@@ -10,29 +10,29 @@ system_name: "aging"
 
 # Aging
 
-📄 source: `scripts/systems/age_system.gd` | Priority: 48 | Tick interval: 50
+📄 소스: `scripts/systems/age_system.gd` | 우선순위: 48 | 틱 간격: 50
 
-## Overview (개요)
+## 개요
 
 The **Aging** system implements a domain-specific simulation model to simulate checks age stage transitions, emits growth notifications, and applies yearly personality maturation.
 It runs every **50 ticks** (0.0 game-years) at priority **48**.
 
-**Core entity data**: `age` (read/write (inferred)), `age_stage` (read/write (inferred)), `entity_name` (read/write (inferred)), `id` (read/write (inferred)), `job` (read/write (inferred)), `personality` (read/write (inferred))
+**핵심 엔티티 데이터**: `age` (read/write (inferred)), `age_stage` (read/write (inferred)), `entity_name` (read/write (inferred)), `id` (read/write (inferred)), `job` (read/write (inferred)), `personality` (read/write (inferred))
 
 > Checks age stage transitions, emits growth notifications, and applies yearly personality maturation.
 
-## Tick Pipeline (틱 파이프라인)
+## 틱 파이프라인
 
 1. Run per-entity tick update loop
    📄 source: `scripts/systems/age_system.gd:L26`
 2. Emit system signals: `ui_notification`
    📄 source: `scripts/systems/age_system.gd:L54`
 
-## Formulas (수식)
+## 수식
 
 No extracted formulas for this module.
 
-## Configuration Reference (설정)
+## 설정 레퍼런스
 
 | Constant | Default | Controls | Behavior Effect |
 | :-- | :-- | :-- | :-- |
@@ -40,24 +40,24 @@ No extracted formulas for this module.
 | `get_age_stage` | (not found) | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
 | `get_age_years` | (not found) | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
 
-## Cross-System Effects (시스템 간 상호작용)
+## 시스템 간 상호작용
 
-### Imported Modules (모듈 임포트)
+### 모듈 임포트
 
 - [`personality_maturation`](personality_maturation.md) via `preload` at `scripts/systems/age_system.gd:L7`
 
-### Shared Entity Fields (공유 엔티티 필드)
+### 공유 엔티티 필드
 
 | Field | Access | Shared With |
 | :-- | :-- | :-- |
 | `age` | read/write (inferred) | [`family`](family.md), [`mortality`](mortality.md), [`needs`](needs.md) |
 | `age_stage` | read/write (inferred) | [`behavior`](behavior.md), [`childcare`](childcare.md), [`construction`](construction.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md) |
-| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
-| `id` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
+| `id` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md) |
 | `job` | read/write (inferred) | [`behavior`](behavior.md), [`job_assignment`](job_assignment.md) |
-| `personality` | read/write (inferred) | [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`stress`](stress.md), [`trait`](trait.md), [`trait_violation`](trait_violation.md) |
+| `personality` | read/write (inferred) | [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`stress`](stress.md), [`trait`](trait.md) |
 
-### Signals (시그널)
+### 시그널
 
 | Signal | Parameters | Subscribers | Source Line |
 | :-- | :-- | :-- | :-- |
@@ -65,11 +65,11 @@ No extracted formulas for this module.
 | `ui_notification` | message: String, type: String | No known subscribers | L57 |
 | `ui_notification` | message: String, type: String | No known subscribers | L60 |
 
-### Downstream Impact (다운스트림 영향)
+### 다운스트림 영향
 
-- No explicit downstream dependencies extracted.
+- 다운스트림 의존성이 추출되지 않음
 
-## Entity Data Model (엔티티 데이터 모델)
+## 엔티티 데이터 모델
 
 | Field | Access | Type | Represents | Typical Values |
 | :-- | :-- | :-- | :-- | :-- |

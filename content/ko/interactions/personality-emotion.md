@@ -15,7 +15,7 @@ nav_order: 10
 
 한국어 / English: 계산 파이프라인 중심 상호작용 문서 / Calculation-pipeline interaction documentation.
 
-## Interaction Overview
+## 상호작용 개요
 Personality parameters flow directly into emotion sensitivity, baseline targets, and half-life controls before impulses are integrated.
 
 ## Personality -> Emotion System
@@ -42,7 +42,7 @@ Personality parameters flow directly into emotion sensitivity, baseline targets,
 | `joy_half_life_adj` | `entity.personality.X` | `emotion_system.half_life[joy]` | `base_half_life * exp(0.2*z_X)` | Adjust emotion persistence duration |
 | `anger_sensitivity` | `trait_data.traits[c_berserker].effects.emotion_modifiers` | `emotion_system.trait_sensitivity` | `value * 1.56` | Apply discrete personality trait multiplier |
 
-## Calculation Flow Diagram
+## 계산 흐름 다이어그램
 ```mermaid
 graph LR
     subgraph Personality
@@ -59,10 +59,10 @@ graph LR
     end
 ```
 
-## Feedback Loops
+## 피드백 루프
 - Personality alters emotion dynamics immediately; stronger negative emotion patterns later increase stress feedback risk.
 
-## Source References
+## 소스 노트
 - 📄 source: `scripts/systems/emotion_system.gd:L10`
 - 📄 source: `scripts/systems/personality_generator.gd:L5`
 - 📄 source: `scripts/systems/personality_generator.gd:L7`
@@ -77,9 +77,9 @@ graph LR
 - 📄 source: `scripts/core/emotion_data.gd:L237`
 - 📄 source: `scripts/core/emotion_data.gd:L353`
 - 📄 source: `scripts/core/entity_data.gd:L50`
-- 📄 source: `scripts/core/entity_data.gd:L244`
+- 📄 source: `scripts/core/entity_data.gd:L228`
 - 📄 source: `scripts/core/personality_data.gd:L62`
 
-## Manual Notes
+## 수동 노트
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

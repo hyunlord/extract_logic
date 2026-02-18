@@ -148,6 +148,21 @@ def ensure_dir(path: str) -> None:
     os.makedirs(path, exist_ok=True)
 
 
+def lang_dirs(lang: str) -> dict:
+    """Return content output directory paths for the given language."""
+    base = os.path.join(CONTENT_DIR, lang)
+    return {
+        "base": base,
+        "systems": os.path.join(base, "systems"),
+        "data": os.path.join(base, "data"),
+        "interactions": os.path.join(base, "interactions"),
+        "glossary": os.path.join(base, "glossary"),
+        "core": os.path.join(base, "core"),
+        "traits": os.path.join(base, "traits"),
+        "manual": os.path.join(base, "_manual"),
+    }
+
+
 def ensure_all_dirs() -> None:
     """Create all output directories."""
     for d in [

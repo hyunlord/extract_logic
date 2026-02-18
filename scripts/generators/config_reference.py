@@ -7,6 +7,7 @@ import os
 from collections import defaultdict
 
 import scripts.config as config
+from scripts.generators.strings import t
 
 _SOURCE_REL_PATH = "scripts/core/game_config.gd"
 _MANUAL_START = "<!-- MANUAL:START -->"
@@ -104,7 +105,7 @@ def _existing_manual_block(path: str) -> str | None:
     return text[start:end]
 
 
-def _render_markdown(manifest: dict, constants_data: dict, references: dict) -> str:
+def _render_markdown(manifest: dict, constants_data: dict, references: dict, lang: str) -> str:
     constants = [c for c in constants_data.get("constants", []) if isinstance(c, dict)]
     enums = [e for e in constants_data.get("enums", []) if isinstance(e, dict)]
     dictionaries = [d for d in constants_data.get("dictionaries", []) if isinstance(d, dict)]
@@ -126,7 +127,7 @@ def _render_markdown(manifest: dict, constants_data: dict, references: dict) -> 
         "",
         f"📄 source: `{_SOURCE_REL_PATH}` ({source_lines} lines)",
         "",
-        "## Constants",
+        f"## {t('section_constants', lang)}",
         "",
     ]
 
@@ -168,7 +169,7 @@ def _render_markdown(manifest: dict, constants_data: dict, references: dict) -> 
             )
         lines.append("")
 
-    lines.extend(["## Enums", ""])
+    lines.extend([f"## {t('section_enums', lang)}", ""])
     for enum in sorted(enums, key=lambda e: (int(e.get("line", 0)), str(e.get("name", "")))):
         enum_name = str(enum.get("name", ""))
         lines.append(f"### {enum_name}")
@@ -188,7 +189,7 @@ def _render_markdown(manifest: dict, constants_data: dict, references: dict) -> 
                 lines.append(f"| `{_escape_table_cell(key)}` | {_escape_table_cell(value)} |")
         lines.append("")
 
-    lines.extend(["## Dictionaries", ""])
+    lines.extend([f"## {t('section_dictionaries', lang)}", ""])
     constants_by_name = {str(c.get("name", "")): c for c in constants}
     for dictionary in sorted(dictionaries, key=lambda d: (int(d.get("line", 0)), str(d.get("name", "")))):
         name = str(dictionary.get("name", ""))
@@ -212,7 +213,7 @@ def _render_markdown(manifest: dict, constants_data: dict, references: dict) -> 
         lines.append("```")
         lines.append("")
 
-    lines.extend(["## Utility Functions", ""])
+    lines.extend([f"## {t('section_utility_functions', lang)}", ""])
     for function in sorted(functions, key=lambda f: (int(f.get("line", 0)), str(f.get("name", "")))):
         name = str(function.get("name", ""))
         params = str(function.get("params", ""))
@@ -232,7 +233,7 @@ def _render_markdown(manifest: dict, constants_data: dict, references: dict) -> 
     return "\n".join(lines)
 
 
-def run(manifest: dict) -> dict:
+def run(manifest: dict, extracted: dict | None = None, lang: str = "ko") -> dict:
     """Main entry point.
 
     Args:
@@ -248,6 +249,8 @@ def run(manifest: dict) -> dict:
     files_written: list[str] = []
     warnings: list[str] = []
     errors: list[str] = []
+    del extracted
+    dirs = config.lang_dirs(lang)
 
     constants_path = os.path.join(config.EXTRACTED_DIR, "constants.json")
     references_path = os.path.join(config.EXTRACTED_DIR, "references.json")
@@ -267,11 +270,11 @@ def run(manifest: dict) -> dict:
         warnings.append(f"Missing or invalid references.json, using empty references: {references_error}")
         references_data = {}
 
-    output_path = os.path.join(config.CONTENT_KO, "config-reference.md")
+    output_path = os.path.join(dirs["base"], "config-reference.md")
     manual_block = _existing_manual_block(output_path)
 
     try:
-        markdown = _render_markdown(manifest, constants_data, references_data)
+        markdown = _render_markdown(manifest, constants_data, references_data, lang)
     except Exception as exc:
         errors.append(f"Failed to render config reference: {exc}")
         return {
@@ -293,7 +296,7 @@ def run(manifest: dict) -> dict:
             )
 
     try:
-        config.ensure_dir(config.CONTENT_KO)
+        config.ensure_dir(dirs["base"])
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(markdown)
     except OSError as exc:

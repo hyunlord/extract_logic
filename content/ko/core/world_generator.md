@@ -13,10 +13,10 @@ nav_order: 27
 
 📄 source: `scripts/core/world_generator.gd` | 75 lines | extends: RefCounted
 
-## 개요 (Overview)
+## 개요
 Generate a procedural world using FastNoiseLite
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -28,6 +28,6 @@ Generate a procedural world using FastNoiseLite
 |--------|------------|
 | - | - |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: -
 - Used by: -

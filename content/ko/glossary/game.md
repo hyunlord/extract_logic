@@ -10,9 +10,9 @@ nav_order: 5
 
 # game 용어 / Glossary
 
-총 300개 항목 | Total 300 entries
+총 항목 수: 300
 
-## 용어 목록
+## 용어 사전
 
 | Key | 한국어 | English |
 |-----|--------|---------|
@@ -317,7 +317,7 @@ nav_order: 5
 | `STATUS_VISIT_PARTNER` | 파트너 방문 | Visit Partner |
 | `STATUS_WANDER` | 배회 | Wander |
 
-## 수동 메모 / Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

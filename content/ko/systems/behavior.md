@@ -10,21 +10,21 @@ system_name: "behavior"
 
 # Behavior
 
-📄 source: `scripts/ai/behavior_system.gd` | Priority: 20 | Tick interval: config (GameConfig.BEHAVIOR_TICK_INTERVAL)
+📄 소스: `scripts/ai/behavior_system.gd` | 우선순위: 20 | 틱 간격: config (GameConfig.BEHAVIOR_TICK_INTERVAL)
 
-## Overview (개요)
+## 개요
 
 The **Behavior** system implements a domain-specific simulation model to simulate behavior dynamics for entities and world state.
 It runs on a **config-driven cadence** (`GameConfig.BEHAVIOR_TICK_INTERVAL`) at priority **20**.
 
-**Core entity data**: `action_history` (read/write (inferred)), `action_target` (read/write (inferred)), `action_timer` (read/write (inferred)), `age_stage` (read/write (inferred)), `cached_path` (read/write (inferred)), `current_action` (read/write (inferred)), `emotion_data` (read/write (inferred)), `emotions` (read/write (inferred)), `energy` (read/write (inferred)), `entity_name` (read/write (inferred)), `get_total_carry` (read/write (inferred)), `hunger` (read/write (inferred)), `id` (read/write (inferred)), `inventory` (read/write (inferred)), `job` (read/write (inferred)), `partner_id` (read/write (inferred)), `path_index` (read/write (inferred)), `position` (read/write (inferred)), `remove_item` (read/write (inferred)), `settlement_id` (read/write (inferred)), `social` (read/write (inferred))
+**핵심 엔티티 데이터**: `action_history` (read/write (inferred)), `action_target` (read/write (inferred)), `action_timer` (read/write (inferred)), `age_stage` (read/write (inferred)), `cached_path` (read/write (inferred)), `current_action` (read/write (inferred)), `emotion_data` (read/write (inferred)), `emotions` (read/write (inferred)), `energy` (read/write (inferred)), `entity_name` (read/write (inferred)), `get_total_carry` (read/write (inferred)), `hunger` (read/write (inferred)), `id` (read/write (inferred)), `inventory` (read/write (inferred)), `job` (read/write (inferred)), `partner_id` (read/write (inferred)), `path_index` (read/write (inferred)), `position` (read/write (inferred)), `remove_item` (read/write (inferred)), `settlement_id` (read/write (inferred)), `social` (read/write (inferred))
 
-## Tick Pipeline (틱 파이프라인)
+## 틱 파이프라인
 
 1. Run per-entity tick update loop
-   📄 source: `scripts/ai/behavior_system.gd:L33`
+   📄 source: `scripts/ai/behavior_system.gd:L27`
 
-## Formulas (수식)
+## 수식
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -47,7 +47,7 @@ $$
 | `energy_deficit` | energy deficit |
 | `social_deficit` | social deficit |
 
-📄 source: `scripts/ai/behavior_system.gd:L66`
+📄 source: `scripts/ai/behavior_system.gd:L60`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -72,7 +72,7 @@ $$
 | `social_deficit` | social deficit |
 | `hunger_deficit` | nutrition state input |
 
-📄 source: `scripts/ai/behavior_system.gd:L74`
+📄 source: `scripts/ai/behavior_system.gd:L68`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -92,7 +92,7 @@ child_scores["gather_wood"] = (0.3 + _rng.randf() * 0.1) * 0.3
 | `child_scores` | child scores |
 | `_rng` |  rng |
 
-📄 source: `scripts/ai/behavior_system.gd:L80`
+📄 source: `scripts/ai/behavior_system.gd:L74`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -117,7 +117,7 @@ $$
 | `energy_deficit` | energy deficit |
 | `social_deficit` | social deficit |
 
-📄 source: `scripts/ai/behavior_system.gd:L84`
+📄 source: `scripts/ai/behavior_system.gd:L78`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -137,7 +137,7 @@ scores["visit_partner"] = 0.4 + _rng.randf() * 0.1
 | `scores` | scores |
 | `_rng` |  rng |
 
-📄 source: `scripts/ai/behavior_system.gd:L98`
+📄 source: `scripts/ai/behavior_system.gd:L92`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -157,7 +157,7 @@ scores["gather_wood"] = 0.3 + _rng.randf() * 0.1
 | `scores` | scores |
 | `_rng` |  rng |
 
-📄 source: `scripts/ai/behavior_system.gd:L112`
+📄 source: `scripts/ai/behavior_system.gd:L106`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -177,7 +177,7 @@ scores["gather_stone"] = 0.2 + _rng.randf() * 0.1
 | `scores` | scores |
 | `_rng` |  rng |
 
-📄 source: `scripts/ai/behavior_system.gd:L114`
+📄 source: `scripts/ai/behavior_system.gd:L108`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -197,7 +197,7 @@ scores["build"] = 0.4 + _rng.randf() * 0.1
 | `scores` | scores |
 | `_rng` |  rng |
 
-📄 source: `scripts/ai/behavior_system.gd:L139`
+📄 source: `scripts/ai/behavior_system.gd:L133`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -217,7 +217,7 @@ scores["build"] = 0.4 + _rng.randf() * 0.1
 | `scores` | scores |
 | `_rng` |  rng |
 
-📄 source: `scripts/ai/behavior_system.gd:L141`
+📄 source: `scripts/ai/behavior_system.gd:L135`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -236,7 +236,7 @@ return pow(deficit, 2.0)
 | :-- | :-- |
 | `deficit` | deficit |
 
-📄 source: `scripts/ai/behavior_system.gd:L178`
+📄 source: `scripts/ai/behavior_system.gd:L172`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -260,7 +260,7 @@ var dist: int = absi(other.position.x - entity.position.x) + absi(other.position
 | `entity` | entity |
 | `y` | y |
 
-📄 source: `scripts/ai/behavior_system.gd:L367`
+📄 source: `scripts/ai/behavior_system.gd:L347`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -285,7 +285,7 @@ var dist: int = absi(building.tile_x - pos.x) + absi(building.tile_y - pos.y)
 | `tile_y` | tile y |
 | `y` | y |
 
-📄 source: `scripts/ai/behavior_system.gd:L426`
+📄 source: `scripts/ai/behavior_system.gd:L406`
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -311,9 +311,9 @@ var dist: float = float(absi(building.tile_x - entity.position.x) + absi(buildin
 | `tile_y` | tile y |
 | `y` | y |
 
-📄 source: `scripts/ai/behavior_system.gd:L467`
+📄 source: `scripts/ai/behavior_system.gd:L447`
 
-## Configuration Reference (설정)
+## 설정 레퍼런스
 
 | Constant | Default | Controls | Behavior Effect |
 | :-- | :-- | :-- | :-- |
@@ -322,13 +322,13 @@ var dist: float = float(absi(building.tile_x - entity.position.x) + absi(buildin
 | `Biome` | (not found) | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
 | `ResourceType` | (not found) | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
 
-## Cross-System Effects (시스템 간 상호작용)
+## 시스템 간 상호작용
 
-### Imported Modules (모듈 임포트)
+### 모듈 임포트
 
-No import relationships extracted for this module.
+임포트 관계가 추출되지 않음
 
-### Shared Entity Fields (공유 엔티티 필드)
+### 공유 엔티티 필드
 
 | Field | Access | Shared With |
 | :-- | :-- | :-- |
@@ -338,12 +338,12 @@ No import relationships extracted for this module.
 | `cached_path` | read/write (inferred) | [`migration`](migration.md), [`movement`](movement.md) |
 | `current_action` | read/write (inferred) | [`construction`](construction.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`movement`](movement.md), [`needs`](needs.md), [`social_events`](social_events.md), [`stress`](stress.md) |
 | `emotion_data` | read/write (inferred) | [`emotions`](emotions.md), [`family`](family.md), [`mental_break`](mental_break.md), [`stress`](stress.md), [`trait`](trait.md) |
-| `emotions` | read/write (inferred) | [`emotions`](emotions.md), [`family`](family.md), [`trait`](trait.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
+| `emotions` | read/write (inferred) | [`emotions`](emotions.md), [`family`](family.md), [`trait`](trait.md) |
 | `energy` | read/write (inferred) | [`building_effect`](building_effect.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
-| `entity_name` | read/write (inferred) | [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
+| `entity_name` | read/write (inferred) | [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
 | `get_total_carry` | read/write (inferred) | [`gathering`](gathering.md) |
 | `hunger` | read/write (inferred) | [`childcare`](childcare.md), [`family`](family.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
-| `id` | read/write (inferred) | [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
+| `id` | read/write (inferred) | [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md) |
 | `inventory` | read/write (inferred) | [`movement`](movement.md), [`needs`](needs.md) |
 | `job` | read/write (inferred) | [`aging`](aging.md), [`job_assignment`](job_assignment.md) |
 | `partner_id` | read/write (inferred) | [`family`](family.md) |
@@ -353,15 +353,15 @@ No import relationships extracted for this module.
 | `settlement_id` | read/write (inferred) | [`emotions`](emotions.md), [`family`](family.md), [`migration`](migration.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
 | `social` | read/write (inferred) | [`building_effect`](building_effect.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
 
-### Signals (시그널)
+### 시그널
 
-No emitted signals extracted for this module.
+시그널 메타데이터가 추출되지 않음
 
-### Downstream Impact (다운스트림 영향)
+### 다운스트림 영향
 
-- No explicit downstream dependencies extracted.
+- 다운스트림 의존성이 추출되지 않음
 
-## Entity Data Model (엔티티 데이터 모델)
+## 엔티티 데이터 모델
 
 | Field | Access | Type | Represents | Typical Values |
 | :-- | :-- | :-- | :-- | :-- |

@@ -9,19 +9,19 @@ nav_order: 10
 
 # emotion_definition
 
-📄 source (출처): `data/species/human/emotions/emotion_definition.json` | Category (분류): species/human/emotions | Type (유형): object
+📄 소스: `data/species/human/emotions/emotion_definition.json` | 분류: species/human/emotions | 유형: object
 
-## 개요 (Overview)
+## 개요
 
-- Configures (설정 내용): `species/human/emotions` 데이터 도메인 설정 값. Configuration values for the `species/human/emotions` data domain.
-- Read by systems/modules (읽는 시스템/모듈): species_manager
-- Related documentation (관련 문서): [`species_manager`](../../../../core/species_manager.md)
+- 설정 내용: `species/human/emotions` 데이터 도메인 설정 값. Configuration values for the `species/human/emotions` data domain.
+- 읽는 시스템/모듈: species_manager
+- 관련 문서: [`species_manager`](../../../../core/species_manager.md)
 
-## 해석된 파라미터 (Interpreted Parameters)
+## 해석된 파라미터
 
-### Weights & Multipliers (가중/배수)
+### 가중치 & 배수
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `arousal_weights.anger` | 1 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
 | `arousal_weights.anticipation` | 1 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
@@ -35,42 +35,34 @@ nav_order: 10
 | `valence_weights.positive.joy` | 1 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
 | `valence_weights.positive.trust` | 1 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
 
-### Stress & Emotion (스트레스/감정)
+### 스트레스 & 감정
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `emotion_order` | 8 items | array | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotion_order.sample` | joy | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.anger.color` | #F44336 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
-| `emotions.anger.name_en` | Anger | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.anger.name_kr` | 분노 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.anger.opposite` | fear | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.anticipation.color` | #FF9800 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
-| `emotions.anticipation.name_en` | Anticipation | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.anticipation.name_kr` | 기대 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.anticipation.opposite` | surprise | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.disgust.color` | #9C27B0 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
-| `emotions.disgust.name_en` | Disgust | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.disgust.name_kr` | 혐오 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.disgust.opposite` | trust | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.fear.color` | #6BAF7B | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
-| `emotions.fear.name_en` | Fear | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.fear.name_kr` | 공포 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.fear.opposite` | anger | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.joy.color` | #FFE135 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
-| `emotions.joy.name_en` | Joy | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.joy.name_kr` | 기쁨 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.joy.opposite` | sadness | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.sadness.color` | #3F51B5 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
-| `emotions.sadness.name_en` | Sadness | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.sadness.name_kr` | 슬픔 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.sadness.opposite` | joy | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.surprise.color` | #5B9BD5 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
-| `emotions.surprise.name_en` | Surprise | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.surprise.name_kr` | 놀람 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.surprise.opposite` | anticipation | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.trust.color` | #7BC67E | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
-| `emotions.trust.name_en` | Trust | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.trust.name_kr` | 신뢰 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotions.trust.opposite` | disgust | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `intensity_labels.anger` | 3 items | array | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
@@ -110,9 +102,9 @@ nav_order: 10
 | `labels_kr.sadness` | 슬픔 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `labels_kr.trust` | 신뢰 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 
-### Identifiers & Labels (식별자/라벨)
+### 식별자 & 라벨
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `intensity_labels.anticipation` | 3 items | array | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 | `intensity_labels.anticipation.sample` | Interest | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
@@ -127,17 +119,17 @@ nav_order: 10
 | `labels_kr.anticipation` | 기대 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 | `labels_kr.surprise` | 놀람 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 
-### Other Parameters (기타)
+### 기타 파라미터
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `model` | plutchik | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 
-## 참조하는 시스템 (Referenced By)
+## 레퍼런스
 
 - [`species_manager`](../../../../core/species_manager.md) - references data under `data/species/`
 
-## 수동 노트 (Manual Notes)
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

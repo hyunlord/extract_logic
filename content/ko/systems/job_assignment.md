@@ -10,16 +10,16 @@ system_name: "job_assignment"
 
 # Job Assignment
 
-📄 source: `scripts/systems/job_assignment_system.gd` | Priority: 8 | Tick interval: config (GameConfig.JOB_ASSIGNMENT_TICK_INTERVAL)
+📄 소스: `scripts/systems/job_assignment_system.gd` | 우선순위: 8 | 틱 간격: config (GameConfig.JOB_ASSIGNMENT_TICK_INTERVAL)
 
-## Overview (개요)
+## 개요
 
 The **Job Assignment** system implements a domain-specific simulation model to simulate job assignment dynamics for entities and world state.
 It runs on a **config-driven cadence** (`GameConfig.JOB_ASSIGNMENT_TICK_INTERVAL`) at priority **8**.
 
-**Core entity data**: `age_stage` (read/write (inferred)), `current_action` (read/write (inferred)), `entity_name` (read/write (inferred)), `id` (read/write (inferred)), `job` (read/write (inferred))
+**핵심 엔티티 데이터**: `age_stage` (read/write (inferred)), `current_action` (read/write (inferred)), `entity_name` (read/write (inferred)), `id` (read/write (inferred)), `job` (read/write (inferred))
 
-## Tick Pipeline (틱 파이프라인)
+## 틱 파이프라인
 
 1. Run per-entity tick update loop
    📄 source: `scripts/systems/job_assignment_system.gd:L15`
@@ -28,42 +28,42 @@ It runs on a **config-driven cadence** (`GameConfig.JOB_ASSIGNMENT_TICK_INTERVAL
 3. Resolve total stockpile food
    📄 source: `scripts/systems/job_assignment_system.gd:L151`
 
-## Formulas (수식)
+## 수식
 
 No extracted formulas for this module.
 
-## Configuration Reference (설정)
+## 설정 레퍼런스
 
 | Constant | Default | Controls | Behavior Effect |
 | :-- | :-- | :-- | :-- |
 | `JOB_ASSIGNMENT_TICK_INTERVAL` | 24 | System update cadence. | Lower values increase update frequency and responsiveness. |
 | `JOB_RATIOS` | { 	"gatherer": 0.5, 	"lumberjack": 0.25, 	"builder": 0.15, 	"miner": 0.1, } | Job ratios (target distribution) | Adjusts baseline system behavior under this module. |
 
-## Cross-System Effects (시스템 간 상호작용)
+## 시스템 간 상호작용
 
-### Imported Modules (모듈 임포트)
+### 모듈 임포트
 
-No import relationships extracted for this module.
+임포트 관계가 추출되지 않음
 
-### Shared Entity Fields (공유 엔티티 필드)
+### 공유 엔티티 필드
 
 | Field | Access | Shared With |
 | :-- | :-- | :-- |
 | `age_stage` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`childcare`](childcare.md), [`construction`](construction.md), [`family`](family.md), [`gathering`](gathering.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md) |
 | `current_action` | read/write (inferred) | [`behavior`](behavior.md), [`construction`](construction.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`migration`](migration.md), [`movement`](movement.md), [`needs`](needs.md), [`social_events`](social_events.md), [`stress`](stress.md) |
-| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
-| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
+| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md) |
 | `job` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md) |
 
-### Signals (시그널)
+### 시그널
 
-No emitted signals extracted for this module.
+시그널 메타데이터가 추출되지 않음
 
-### Downstream Impact (다운스트림 영향)
+### 다운스트림 영향
 
-- No explicit downstream dependencies extracted.
+- 다운스트림 의존성이 추출되지 않음
 
-## Entity Data Model (엔티티 데이터 모델)
+## 엔티티 데이터 모델
 
 | Field | Access | Type | Represents | Typical Values |
 | :-- | :-- | :-- | :-- | :-- |

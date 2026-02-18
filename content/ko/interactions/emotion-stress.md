@@ -13,7 +13,7 @@ nav_order: 12
 
 한국어 / English: 계산 파이프라인 중심 상호작용 문서 / Calculation-pipeline interaction documentation.
 
-## Interaction Overview
+## 상호작용 개요
 Stress integrates weighted emotion channels plus valence-arousal amplification, then applies exponential decay over time.
 
 ## Emotion -> Stress System
@@ -34,7 +34,7 @@ Stress integrates weighted emotion channels plus valence-arousal amplification, 
 | `valence_arousal_term` | `emotion_data.valence, emotion_data.arousal` | `stress_system._calc_emotion_contribution()` | `gamma_VA * arousal * max(-valence, 0)` | Capture negative high-arousal stress amplification |
 | `stress_decay_tau` | `decay_parameters.stress.tau_hours` | `stress_system.integrator` | `stress(t+dt) = stress(t) * exp(-dt/48)` | Exponential stress decay between updates |
 
-## Calculation Flow Diagram
+## 계산 흐름 다이어그램
 ```mermaid
 graph LR
     subgraph Emotion
@@ -48,22 +48,22 @@ graph LR
     end
 ```
 
-## Feedback Loops
+## 피드백 루프
 - Elevated stress feeds back into emotion dynamics through stress-induced baseline shifts and mental-break pathways.
 
-## Source References
+## 소스 노트
 - 📄 source: `scripts/systems/emotion_system.gd:L10`
-- 📄 source: `scripts/ai/behavior_system.gd:L66`
+- 📄 source: `scripts/ai/behavior_system.gd:L60`
+- 📄 source: `scripts/ai/behavior_system.gd:L68`
 - 📄 source: `scripts/ai/behavior_system.gd:L74`
-- 📄 source: `scripts/ai/behavior_system.gd:L80`
-- 📄 source: `scripts/ai/behavior_system.gd:L84`
-- 📄 source: `scripts/ai/behavior_system.gd:L98`
-- 📄 source: `scripts/ai/behavior_system.gd:L112`
-- 📄 source: `scripts/ai/behavior_system.gd:L114`
-- 📄 source: `scripts/ai/behavior_system.gd:L139`
-- 📄 source: `scripts/ai/behavior_system.gd:L141`
-- 📄 source: `scripts/ai/behavior_system.gd:L367`
+- 📄 source: `scripts/ai/behavior_system.gd:L78`
+- 📄 source: `scripts/ai/behavior_system.gd:L92`
+- 📄 source: `scripts/ai/behavior_system.gd:L106`
+- 📄 source: `scripts/ai/behavior_system.gd:L108`
+- 📄 source: `scripts/ai/behavior_system.gd:L133`
+- 📄 source: `scripts/ai/behavior_system.gd:L135`
+- 📄 source: `scripts/ai/behavior_system.gd:L347`
 
-## Manual Notes
+## 수동 노트
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

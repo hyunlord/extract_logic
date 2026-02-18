@@ -10,16 +10,16 @@ system_name: "population"
 
 # Population
 
-📄 source: `scripts/systems/population_system.gd` | Priority: 50 | Tick interval: config (GameConfig.POPULATION_TICK_INTERVAL)
+📄 소스: `scripts/systems/population_system.gd` | 우선순위: 50 | 틱 간격: config (GameConfig.POPULATION_TICK_INTERVAL)
 
-## Overview (개요)
+## 개요
 
 The **Population** system implements Siler (1979) bathtub-curve mortality to simulate population dynamics for entities and world state.
 It runs on a **config-driven cadence** (`GameConfig.POPULATION_TICK_INTERVAL`) at priority **50**.
 
-**Core entity data**: `entity_name` (read/write (inferred)), `id` (read/write (inferred)), `settlement_id` (read/write (inferred))
+**핵심 엔티티 데이터**: `entity_name` (read/write (inferred)), `id` (read/write (inferred)), `settlement_id` (read/write (inferred))
 
-## Tick Pipeline (틱 파이프라인)
+## 틱 파이프라인
 
 1. Run per-entity tick update loop
    📄 source: `scripts/systems/population_system.gd:L24`
@@ -28,7 +28,7 @@ It runs on a **config-driven cadence** (`GameConfig.POPULATION_TICK_INTERVAL`) a
    📄 source: `scripts/systems/population_system.gd:L30`
    Math context: Computes a gameplay state update from mathematical relationships in the source logic., μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
 
-## Formulas (수식)
+## 수식
 
 ### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
@@ -110,7 +110,7 @@ Old natural death logic removed — replaced by MortalitySystem (Siler model, T-
 
 📄 source: `scripts/systems/population_system.gd:L106`
 
-## Configuration Reference (설정)
+## 설정 레퍼런스
 
 | Constant | Default | Controls | Behavior Effect |
 | :-- | :-- | :-- | :-- |
@@ -118,29 +118,29 @@ Old natural death logic removed — replaced by MortalitySystem (Siler model, T-
 | `MAX_ENTITIES` | 500 | Hard bound for safe state range. | Constrains extremes to stabilize the simulation. |
 | `POPULATION_TICK_INTERVAL` | 30 | System update cadence. | Lower values increase update frequency and responsiveness. |
 
-## Cross-System Effects (시스템 간 상호작용)
+## 시스템 간 상호작용
 
-### Imported Modules (모듈 임포트)
+### 모듈 임포트
 
-No import relationships extracted for this module.
+임포트 관계가 추출되지 않음
 
-### Shared Entity Fields (공유 엔티티 필드)
+### 공유 엔티티 필드
 
 | Field | Access | Shared With |
 | :-- | :-- | :-- |
-| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
-| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`social_events`](social_events.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
+| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`social_events`](social_events.md) |
 | `settlement_id` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`migration`](migration.md), [`needs`](needs.md), [`stress`](stress.md) |
 
-### Signals (시그널)
+### 시그널
 
-No emitted signals extracted for this module.
+시그널 메타데이터가 추출되지 않음
 
-### Downstream Impact (다운스트림 영향)
+### 다운스트림 영향
 
-- No explicit downstream dependencies extracted.
+- 다운스트림 의존성이 추출되지 않음
 
-## Entity Data Model (엔티티 데이터 모델)
+## 엔티티 데이터 모델
 
 | Field | Access | Type | Represents | Typical Values |
 | :-- | :-- | :-- | :-- | :-- |

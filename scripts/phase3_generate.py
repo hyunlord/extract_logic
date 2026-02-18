@@ -58,52 +58,65 @@ def run(manifest: dict) -> dict:
     """
     config.ensure_all_dirs()
 
-    # Load all extracted data for v2 generators
     extracted = _load_extracted()
 
-    generators = [
-        # v1 generators (use run(manifest))
+    # Content generators (run for both ko and en)
+    content_generators = [
         ("system_page", "scripts.generators.system_page"),
         ("data_page", "scripts.generators.data_page"),
         ("glossary_page", "scripts.generators.glossary_page"),
         ("config_reference", "scripts.generators.config_reference"),
         ("interaction_page", "scripts.generators.interaction_page"),
         ("core_page", "scripts.generators.core_page"),
-        # v2 generators (use run(manifest, extracted))
         ("trait_page", "scripts.generators.trait_page"),
         ("emotion_detail", "scripts.generators.emotion_detail"),
         ("stress_detail", "scripts.generators.stress_detail"),
         ("mortality_detail", "scripts.generators.mortality_detail"),
         ("pipeline_page", "scripts.generators.pipeline_page"),
-        # Always last
         ("index_page", "scripts.generators.index_page"),
-        ("nav_builder", "scripts.generators.nav_builder"),  # Must run last
     ]
 
-    all_files = []
-    all_items = 0
-    all_warnings = []
-    all_errors = []
+    # Nav builder runs once (ko scan only)
+    nav_generators = [
+        ("nav_builder", "scripts.generators.nav_builder"),
+    ]
 
-    for name, module_path in generators:
+    all_files, all_items, all_warnings, all_errors = [], 0, [], []
+
+    for lang in ["ko", "en"]:
+        print(f"  [phase3] === Generating lang={lang} ===")
+        for name, module_path in content_generators:
+            print(f"  [phase3] Running {name} [{lang}]...")
+            try:
+                mod = __import__(module_path, fromlist=["run"])
+                run_fn = mod.run
+                sig = inspect.signature(run_fn)
+                nparams = len(sig.parameters)
+                if nparams >= 3:
+                    result = run_fn(manifest, extracted, lang)
+                elif nparams >= 2:
+                    result = run_fn(manifest, extracted)
+                else:
+                    result = run_fn(manifest)
+                all_files.extend(result.get("files_written", []))
+                all_items += result.get("items_processed", 0)
+                all_warnings.extend(result.get("warnings", []))
+                all_errors.extend(result.get("errors", []))
+            except Exception as e:
+                msg = f"{name}[{lang}] failed: {e}"
+                print(f"  [phase3] ERROR: {msg}")
+                all_errors.append(msg)
+
+    # Nav builder once (after all langs generated)
+    for name, module_path in nav_generators:
         print(f"  [phase3] Running {name}...")
         try:
             mod = __import__(module_path, fromlist=["run"])
-            run_fn = mod.run
-
-            # Auto-detect signature: pass extracted if the generator accepts it
-            sig = inspect.signature(run_fn)
-            if len(sig.parameters) >= 2:
-                result = run_fn(manifest, extracted)
-            else:
-                result = run_fn(manifest)
-
+            result = mod.run(manifest)
             all_files.extend(result.get("files_written", []))
             all_items += result.get("items_processed", 0)
             all_warnings.extend(result.get("warnings", []))
             all_errors.extend(result.get("errors", []))
-            print(f"  [phase3] {name}: {result.get('items_processed', 0)} items, "
-                  f"{len(result.get('warnings', []))} warnings")
         except Exception as e:
             msg = f"{name} failed: {e}"
             print(f"  [phase3] ERROR: {msg}")

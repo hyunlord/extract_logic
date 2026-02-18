@@ -13,10 +13,10 @@ nav_order: 25
 
 📄 source: `scripts/core/species_manager.gd` | 82 lines | extends: Node
 
-## 개요 (Overview)
+## 개요
 Species data loader singleton (Autoload).
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -28,6 +28,6 @@ Species data loader singleton (Autoload).
 |--------|------------|
 | - | - |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: -
 - Used by: -

@@ -11,12 +11,12 @@ nav_order: 22
 
 > Core simulation events
 
-📄 source: `scripts/core/simulation_bus.gd` | 46 lines | extends: Node
+📄 source: `scripts/core/simulation_bus.gd` | 42 lines | extends: Node
 
-## 개요 (Overview)
+## 개요
 Core simulation events
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -29,6 +29,6 @@ Core simulation events
 | `simulation_event` | `-` |
 | `ui_notification` | `-` |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: -
 - Used by: [`event_logger.gd`](event_logger.md)

@@ -16,7 +16,7 @@ nav_order: 14
 
 한국어 / English: 계산 파이프라인 중심 상호작용 문서 / Calculation-pipeline interaction documentation.
 
-## Interaction Overview
+## 상호작용 개요
 Personality influences mortality indirectly through stress sensitivity and allostatic load buildup.
 
 ## Personality -> Mortality System (Indirect)
@@ -33,7 +33,7 @@ Personality influences mortality indirectly through stress sensitivity and allos
 | `chronic_stress` | `stress_system.event_scale accumulation` | `stress_system.allostatic` | `allostatic(t+1)=clamp(allostatic+inc-recovery)` | Accumulate long-term physiological wear |
 | `allostatic_to_hazard` | `stress_system.allostatic` | `mortality_system.hazard` | `mu_adj = mu_base * (1 + alpha * allostatic/100)` | Indirectly map personality to mortality risk |
 
-## Calculation Flow Diagram
+## 계산 흐름 다이어그램
 ```mermaid
 graph LR
     P[Personality Profile] --> ST[Stress Sensitivity]
@@ -41,10 +41,10 @@ graph LR
     AL --> HM[Mortality Hazard]
 ```
 
-## Feedback Loops
+## 피드백 루프
 - This path is indirect: personality has no direct mortality equation, but continuously shifts upstream stress dynamics.
 
-## Source References
+## 소스 노트
 - 📄 source: `scripts/systems/mortality_system.gd:L8`
 - 📄 source: `scripts/systems/mortality_system.gd:L131`
 - 📄 source: `scripts/systems/mortality_system.gd:L290`
@@ -62,6 +62,6 @@ graph LR
 - 📄 source: `scripts/core/emotion_data.gd:L253`
 - 📄 source: `scripts/core/emotion_data.gd:L353`
 
-## Manual Notes
+## 수동 노트
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

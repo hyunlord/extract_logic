@@ -194,3 +194,28 @@ MkDocs Material i18n 플러그인 기반 한/영 토글 구조 전환.
 check 4/5: Frontmatter  106 files OK
 check 5/5: Summary      PASS — 0 warnings
 ```
+
+---
+
+## 3단계: i18n 이중 언어 생성 (2026-02-18)
+
+Generator lang 파라미터 + content/en/ 자동 생성.
+
+| # | Title | Dispatch | Status |
+|---|-------|----------|--------|
+| t-I4 | generator 전체 `lang` 파라미터 추가, `content/en/` 생성 | ask_codex (Job 6c4d578f) + DIRECT | ✅ |
+| t-I5 | 검증: content/ko/+content/en/ 각 106파일, mkdocs build --strict | DIRECT | ✅ |
+
+**의존 관계:** t-I4 → t-I5
+
+**Results:**
+- t-I4: Codex가 signatures 수정 후 kill됨. DIRECT로 phase3_generate.py 이중 루프 완성. 12개 generator에 `lang="ko"` 파라미터 + `config.lang_dirs(lang)` 동적 경로 적용 확인. config.py `lang_dirs()` 함수 이미 존재.
+- t-I5: `python3 scripts/extract_all.py` → ko 107파일 + en 106파일 생성. gate 5/5 PASS (213 frontmatter). `mkdocs build --strict` exit 0 (INFO 경고만, errors 없음). Phase 5 PASS (1294 warnings, 0 errors).
+
+**최종 검증:**
+```
+content/ko/: 107 files
+content/en/: 106 files
+gate 5/5:    PASS — 0 warnings
+mkdocs build --strict: PASS (exit 0)
+```

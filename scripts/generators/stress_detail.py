@@ -7,6 +7,7 @@ import re
 from typing import Any
 
 import scripts.config as config
+from scripts.generators.strings import t
 
 
 _MANUAL_START = "<!-- MANUAL:START -->"
@@ -57,6 +58,22 @@ def _format_number(value: Any, digits: int = 3) -> str:
         return f"{int(round(number))}"
     formatted = f"{number:.{digits}f}".rstrip("0").rstrip(".")
     return formatted
+
+
+def _pick(item: dict[str, Any], field: str, lang: str, fallback_field: str | None = None) -> str:
+    """Select localized field: {field}_{lang} -> fallback_field -> field."""
+    value = item.get(f"{field}_{lang}", "")
+    if isinstance(value, str) and value:
+        return value
+    if fallback_field:
+        fallback = item.get(fallback_field, "")
+        if isinstance(fallback, str) and fallback:
+            return fallback
+    for key in (f"{field}_kr", f"{field}_en", field):
+        candidate = item.get(key, "")
+        if isinstance(candidate, str) and candidate:
+            return candidate
+    return ""
 
 
 def _title_from_category(category: str) -> str:
@@ -301,6 +318,7 @@ def _render_markdown(
     manifest: dict[str, Any],
     extracted: dict[str, Any],
     warnings: list[str],
+    lang: str,
 ) -> str:
     del manifest  # Reserved for future ticket extensions.
 
@@ -397,7 +415,7 @@ def _render_markdown(
             "",
             "# Stress System — Detailed Documentation",
             "",
-            "## Overview",
+            f"## {t('section_overview', lang)}",
             "",
             "The stress system implements a **multi-source stress accumulation and recovery model** based on:",
             f"- **{model_refs['lazarus']}**",
@@ -408,7 +426,7 @@ def _render_markdown(
             "",
             "Localization: 한국어 / English labels are shown where source data provides both.",
             "",
-            "## Stress Pipeline (per tick)",
+            f"## {t('section_stress_pipeline', lang)} (per tick)",
             "",
             "```mermaid",
             "graph TD",
@@ -425,7 +443,7 @@ def _render_markdown(
             "",
             f"📄 source: {_source_ref(stress_path, _function_line(stress_system, 'execute_tick'))}",
             "",
-            "## Lazarus Appraisal Scale",
+            f"## {t('section_lazarus_appraisal_scale', lang)}",
             "",
             "The demand/resource ratio determines stress:",
             "",
@@ -446,7 +464,7 @@ def _render_markdown(
             "",
             f"📄 source: {_source_ref(stress_path, _function_line(stress_system, '_calc_appraisal_scale'))}",
             "",
-            "## Continuous Stressors",
+            f"## {t('section_continuous_stressors', lang)}",
             "",
             "These stressors accumulate every tick based on entity state:",
             "",
@@ -461,7 +479,7 @@ def _render_markdown(
             "",
             f"📄 source: {_source_ref(stress_path, _function_line(stress_system, '_calc_continuous_stressors'))}",
             "",
-            "## Emotion → Stress Contribution",
+            f"## {t('section_emotion_stress_contribution', lang)}",
             "",
             "Negative emotions contribute to stress via weighted sum:",
             "",
@@ -534,7 +552,7 @@ def _render_markdown(
             f"📄 source: {_source_ref(stress_path, _function_line(stress_system, '_calc_emotion_contribution'))}",
             f"📄 source: {_source_ref(decay_source)}",
             "",
-            "## Stress Recovery",
+            f"## {t('section_stress_recovery', lang)}",
             "",
             "Recovery occurs when conditions are met:",
             "",
@@ -560,7 +578,7 @@ def _render_markdown(
             "",
             f"📄 source: {_source_ref(stress_path, _function_line(stress_system, '_calc_recovery'))}",
             "",
-            "## Allostatic Load (Chronic Stress)",
+            f"## {t('section_allostatic_load', lang)} (Chronic Stress)",
             "",
             "Allostatic load represents cumulative physiological wear from chronic stress:",
             "",
@@ -579,7 +597,7 @@ def _render_markdown(
             "",
             f"📄 source: {_source_ref(stress_path, _function_line(stress_system, '_update_allostatic'))}",
             "",
-            "## General Adaptation Syndrome (Selye 1956)",
+            f"## {t('section_gas', lang)} (Selye 1956)",
             "",
             "| Stage | Condition | Reserve Effect | Duration |",
             "|:------|:----------|:---------------|:---------|",
@@ -596,7 +614,7 @@ def _render_markdown(
             "",
             f"📄 source: {_source_ref(stress_path, _function_line(stress_system, '_update_reserve'))}",
             "",
-            "## Yerkes-Dodson Efficiency Curve",
+            f"## {t('section_yerkes_dodson', lang)}",
             "",
             "Moderate stress improves performance (eustress):",
             "",
@@ -611,9 +629,9 @@ def _render_markdown(
             "",
             f"📄 source: {_source_ref(stress_path, _function_line(stress_system, 'get_work_efficiency'))}",
             "",
-            "## Stressor Events",
+            f"## {t('section_stressor_events', lang)}",
             "",
-            "### By Category",
+            f"### {t('section_by_category', lang)}",
             "",
             f"📄 source: {_source_ref(stressor_source)}",
             "",
@@ -631,24 +649,24 @@ def _render_markdown(
             [
                 f"#### {title} Events{suffix}",
                 "",
-                "| Event | Name (EN) | Name (KR) | Severity | Instant | Per-tick | Is Loss |",
-                "|:------|:----------|:----------|---------:|--------:|---------:|:-------:|",
+                "| Event | Name | Severity | Instant | Per-tick | Is Loss |",
+                "|:------|:-----|---------:|--------:|---------:|:-------:|",
             ]
         )
         events = events_by_category.get(category, [])
         if not events:
-            lines.append("| - | - | - | - | - | - | - |")
+            lines.append("| - | - | - | - | - | - |")
             lines.append("")
             continue
 
         for event in events:
+            event_name = _pick(event, "name", lang)
             lines.append(
                 "| "
                 + " | ".join(
                     [
                         _escape_md_cell(event.get("id", "")),
-                        _escape_md_cell(event.get("name_en", "")),
-                        _escape_md_cell(event.get("name_kr", "")),
+                        _escape_md_cell(event_name),
                         _escape_md_cell(_format_number(event.get("severity_score"), 3)),
                         _escape_md_cell(_format_number(event.get("base_instant"), 3)),
                         _escape_md_cell(_format_number(event.get("base_per_tick"), 3)),
@@ -661,7 +679,7 @@ def _render_markdown(
 
     lines.extend(
         [
-            "## Personality Modifiers",
+            f"## {t('section_personality_modifiers', lang)}",
             "",
             "Each stressor's impact is modulated by HEXACO personality:",
             "",
@@ -731,7 +749,7 @@ def _render_markdown(
     return "\n".join(lines)
 
 
-def run(manifest: dict, extracted: dict) -> dict:
+def run(manifest: dict, extracted: dict | None = None, lang: str = "ko") -> dict:
     """Generate stress system detail documentation.
 
     Args:
@@ -757,9 +775,10 @@ def run(manifest: dict, extracted: dict) -> dict:
         warnings.append("extracted is not an object; continuing with empty extracted data")
         extracted = {}
 
-    markdown = _render_markdown(manifest, extracted, warnings)
+    markdown = _render_markdown(manifest, extracted, warnings, lang)
 
-    output_path = os.path.join(config.CONTENT_SYSTEMS, "stress-detail.md")
+    dirs = config.lang_dirs(lang)
+    output_path = os.path.join(dirs["systems"], "stress-detail.md")
     config.ensure_dir(os.path.dirname(output_path))
 
     existing_content = ""

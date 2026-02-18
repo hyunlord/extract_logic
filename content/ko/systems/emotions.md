@@ -10,18 +10,18 @@ system_name: "emotions"
 
 # Emotions
 
-📄 source: `scripts/systems/emotion_system.gd` | Priority: 32 | Tick interval: 12
+📄 소스: `scripts/systems/emotion_system.gd` | 우선순위: 32 | 틱 간격: 12
 
-## Overview (개요)
+## 개요
 
 The **Emotions** system implements Lazarus & Folkman (1984) cognitive appraisal stress model, Standard exponential decay, Plutchik (1980) emotion impulse dynamics, Uhlenbeck & Ornstein (1930) mean-reverting process, Plutchik emotion model, Lazarus appraisal model, Scherer appraisal process, Russell circumplex model, HEXACO personality framework to simulate plutchik 8-emotion update engine with 3-layer temporal dynamics.
 It runs every **12 ticks** (0.0 game-years) at priority **32**.
 
-**Core entity data**: `action_timer` (read/write (inferred)), `current_action` (read/write (inferred)), `current_goal` (read/write (inferred)), `emotion_data` (read/write (inferred)), `emotions` (read/write (inferred)), `energy` (read/write (inferred)), `entity_name` (read/write (inferred)), `id` (read/write (inferred)), `personality` (read/write (inferred)), `settlement_id` (read/write (inferred))
+**핵심 엔티티 데이터**: `action_timer` (read/write (inferred)), `current_action` (read/write (inferred)), `current_goal` (read/write (inferred)), `emotion_data` (read/write (inferred)), `emotions` (read/write (inferred)), `energy` (read/write (inferred)), `entity_name` (read/write (inferred)), `id` (read/write (inferred)), `personality` (read/write (inferred)), `settlement_id` (read/write (inferred))
 
 > Plutchik 8-emotion update engine with 3-layer temporal dynamics.
 
-## Tick Pipeline (틱 파이프라인)
+## 틱 파이프라인
 
 1. Apply habituation to repeated events
    📄 source: `scripts/systems/emotion_system.gd:L316`
@@ -49,7 +49,7 @@ It runs every **12 ticks** (0.0 game-years) at priority **32**.
    📄 source: `scripts/systems/emotion_system.gd:L103`
    Math context: stress_scale = f(demand, resources, appraisal), Updates emotional state dynamics across fast, slow, or memory-trace layers., impulse_e = f(appraisal, personality, context)
 
-### Pipeline Diagram (파이프라인 다이어그램)
+### 파이프라인 다이어그램
 
 ```mermaid
 flowchart TD
@@ -72,7 +72,7 @@ flowchart TD
   step8 --> step9
 ```
 
-## Formulas (수식)
+## 수식
 
 ### Computes stress amplification by comparing perceived demands against available coping resources.
 
@@ -732,39 +732,39 @@ return mag * cos(TAU * v)
 
 📄 source: `scripts/systems/emotion_system.gd:L553`
 
-## Configuration Reference (설정)
+## 설정 레퍼런스
 
-No explicit `GameConfig` references extracted.
+GameConfig 참조가 추출되지 않음
 
-## Cross-System Effects (시스템 간 상호작용)
+## 시스템 간 상호작용
 
-### Imported Modules (모듈 임포트)
+### 모듈 임포트
 
 - `scripts/core/emotion_data.gd` via `preload` at `scripts/systems/emotion_system.gd:L10`
 
-### Shared Entity Fields (공유 엔티티 필드)
+### 공유 엔티티 필드
 
 | Field | Access | Shared With |
 | :-- | :-- | :-- |
 | `action_timer` | read/write (inferred) | [`behavior`](behavior.md), [`migration`](migration.md), [`movement`](movement.md) |
 | `current_action` | read/write (inferred) | [`behavior`](behavior.md), [`construction`](construction.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`movement`](movement.md), [`needs`](needs.md), [`social_events`](social_events.md), [`stress`](stress.md) |
 | `emotion_data` | read/write (inferred) | [`behavior`](behavior.md), [`family`](family.md), [`mental_break`](mental_break.md), [`stress`](stress.md), [`trait`](trait.md) |
-| `emotions` | read/write (inferred) | [`behavior`](behavior.md), [`family`](family.md), [`trait`](trait.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
+| `emotions` | read/write (inferred) | [`behavior`](behavior.md), [`family`](family.md), [`trait`](trait.md) |
 | `energy` | read/write (inferred) | [`behavior`](behavior.md), [`building_effect`](building_effect.md), [`mental_break`](mental_break.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
-| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
-| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
-| `personality` | read/write (inferred) | [`aging`](aging.md), [`mental_break`](mental_break.md), [`stress`](stress.md), [`trait`](trait.md), [`trait_violation`](trait_violation.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
+| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md) |
+| `personality` | read/write (inferred) | [`aging`](aging.md), [`mental_break`](mental_break.md), [`stress`](stress.md), [`trait`](trait.md) |
 | `settlement_id` | read/write (inferred) | [`behavior`](behavior.md), [`family`](family.md), [`migration`](migration.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
 
-### Signals (시그널)
+### 시그널
 
-No emitted signals extracted for this module.
+시그널 메타데이터가 추출되지 않음
 
-### Downstream Impact (다운스트림 영향)
+### 다운스트림 영향
 
-- No explicit downstream dependencies extracted.
+- 다운스트림 의존성이 추출되지 않음
 
-## Entity Data Model (엔티티 데이터 모델)
+## 엔티티 데이터 모델
 
 | Field | Access | Type | Represents | Typical Values |
 | :-- | :-- | :-- | :-- | :-- |

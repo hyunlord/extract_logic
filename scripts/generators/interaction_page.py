@@ -9,6 +9,7 @@ from collections import defaultdict
 from typing import Any
 
 import scripts.config as config
+from scripts.generators.strings import t
 
 MANUAL_BLOCK_RE = re.compile(
     r"(<!-- MANUAL:START -->)(.*?)(<!-- MANUAL:END -->)",
@@ -1270,7 +1271,7 @@ def _build_stress_emotion_doc(context: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _build_pair_markdown(page: dict[str, Any], nav_order: int) -> str:
+def _build_pair_markdown(page: dict[str, Any], nav_order: int, lang: str) -> str:
     """Render one pair interaction markdown page."""
     source_files = page.get("source_files", [])
     if not source_files:
@@ -1294,7 +1295,7 @@ def _build_pair_markdown(page: dict[str, Any], nav_order: int) -> str:
             "",
             "한국어 / English: 계산 파이프라인 중심 상호작용 문서 / Calculation-pipeline interaction documentation.",
             "",
-            "## Interaction Overview",
+            f"## {t('section_interaction_overview', lang)}",
             str(page.get("summary", "")),
             "",
             f"## {page['interaction_heading']}",
@@ -1304,16 +1305,16 @@ def _build_pair_markdown(page: dict[str, Any], nav_order: int) -> str:
             f"### {page['flow_title']}",
             *flow_table,
             "",
-            "## Calculation Flow Diagram",
+            f"## {t('section_calculation_flow_diagram', lang)}",
             *page.get("diagram_lines", []),
             "",
-            "## Feedback Loops",
+            f"## {t('section_feedback_loops', lang)}",
             *page.get("feedback_lines", ["- None"]),
             "",
-            "## Source References",
+            f"## {t('section_source_notes', lang)}",
             *source_lines,
             "",
-            "## Manual Notes",
+            f"## {t('section_manual_notes', lang)}",
             "<!-- MANUAL:START -->",
             "<!-- MANUAL:END -->",
             "",
@@ -1321,7 +1322,7 @@ def _build_pair_markdown(page: dict[str, Any], nav_order: int) -> str:
     )
 
 
-def _build_index_markdown(pages: list[dict[str, Any]]) -> str:
+def _build_index_markdown(pages: list[dict[str, Any]], lang: str) -> str:
     """Render master interaction index with required dependency graph."""
     table_lines = [
         "| Interaction Pair | Output Page |",
@@ -1355,7 +1356,7 @@ def _build_index_markdown(pages: list[dict[str, Any]]) -> str:
             "",
             f"Generated {len(pages)} calculation-pipeline interaction pages.",
             "",
-            "## System Dependency Graph",
+            f"## {t('section_system_dependency_graph', lang)}",
             "```mermaid",
             "graph TD",
             "    PERS[Personality System] -->|sensitivity, baselines| EMOT[Emotion System]",
@@ -1368,14 +1369,14 @@ def _build_index_markdown(pages: list[dict[str, Any]]) -> str:
             "    MORT -->|death event| EMOT",
             "```",
             "",
-            "## Interaction Pages",
+            f"## {t('section_interaction_pages', lang)}",
             *table_lines,
             "",
-            "## Feedback Loops",
+            f"## {t('section_feedback_loops', lang)}",
             "- stress -> mental break -> emotion inject -> more stress",
             "- death event -> bereavement stressor -> stress -> allostatic load -> mortality",
             "",
-            "## Manual Notes",
+            f"## {t('section_manual_notes', lang)}",
             "<!-- MANUAL:START -->",
             "<!-- MANUAL:END -->",
             "",
@@ -1383,7 +1384,7 @@ def _build_index_markdown(pages: list[dict[str, Any]]) -> str:
     )
 
 
-def run(manifest: dict, extracted: dict | None = None) -> dict:
+def run(manifest: dict, extracted: dict | None = None, lang: str = "ko") -> dict:
     """Generate calculation-pipeline interaction pages and master dependency index.
 
     Args:
@@ -1444,7 +1445,8 @@ def run(manifest: dict, extracted: dict | None = None) -> dict:
         _build_stress_emotion_doc(context),
     ]
 
-    interactions_dir = config.CONTENT_INTERACTIONS
+    dirs = config.lang_dirs(lang)
+    interactions_dir = dirs["interactions"]
     config.ensure_dir(interactions_dir)
 
     expected = {page["filename"] for page in pages}
@@ -1478,13 +1480,13 @@ def run(manifest: dict, extracted: dict | None = None) -> dict:
     items_processed = 0
     for nav_order, page in enumerate(pages, start=10):
         output_path = os.path.join(interactions_dir, page["filename"])
-        content = _build_pair_markdown(page, nav_order)
+        content = _build_pair_markdown(page, nav_order, lang)
         if _write_markdown(output_path, content, warnings):
             files_written.append(output_path)
             items_processed += 1
 
     index_path = os.path.join(interactions_dir, "_index.md")
-    index_content = _build_index_markdown(pages)
+    index_content = _build_index_markdown(pages, lang)
     if _write_markdown(index_path, index_content, warnings):
         files_written.append(index_path)
 

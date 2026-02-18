@@ -16,7 +16,7 @@ nav_order: 35
 
 # Stress System — Detailed Documentation
 
-## Overview
+## 개요
 
 The stress system implements a **multi-source stress accumulation and recovery model** based on:
 - **Lazarus & Folkman (1984) cognitive appraisal stress model**
@@ -27,7 +27,7 @@ The stress system implements a **multi-source stress accumulation and recovery m
 
 Localization: 한국어 / English labels are shown where source data provides both.
 
-## Stress Pipeline (per tick)
+## 스트레스 파이프라인 (per tick)
 
 ```mermaid
 graph TD
@@ -42,9 +42,9 @@ graph TD
     I --> J[Yerkes-Dodson Efficiency]
 ```
 
-📄 source: `scripts/systems/stress_system.gd:L60`
+📄 source: `scripts/systems/stress_system.gd:L55`
 
-## Lazarus Appraisal Scale
+## Lazarus 평가 스케일
 
 The demand/resource ratio determines stress:
 
@@ -63,9 +63,9 @@ Where:
 | 1.0 - 2.0 | Demand exceeds resources | Distress |
 | > 2.0 | Overwhelmed | Severe stress, GAS alarm |
 
-📄 source: `scripts/systems/stress_system.gd:L129`
+📄 source: `scripts/systems/stress_system.gd:L124`
 
-## Continuous Stressors
+## 지속 스트레스원
 
 These stressors accumulate every tick based on entity state:
 
@@ -76,9 +76,9 @@ These stressors accumulate every tick based on entity state:
 | Social isolation | social_need < threshold | `stress += (threshold - social) * social_mult` | Social system |
 | Overcrowding | density > threshold | `stress += (density - threshold) * crowd_mult` | Settlement |
 
-📄 source: `scripts/systems/stress_system.gd:L160`
+📄 source: `scripts/systems/stress_system.gd:L155`
 
-## Emotion → Stress Contribution
+## 감정→스트레스 기여
 
 Negative emotions contribute to stress via weighted sum:
 
@@ -101,10 +101,10 @@ Where:
 | Trust | -0.040 | 스트레스 감소 경로 (stress reduction pathway, negative weight) |
 | Anticipation | -0.020 | 미약한 스트레스 감소 (mild stress reduction, anticipatory) |
 
-📄 source: `scripts/systems/stress_system.gd:L213`
+📄 source: `scripts/systems/stress_system.gd:L208`
 📄 source: `data/species/human/emotions/decay_parameters.json`
 
-## Stress Recovery
+## 스트레스 회복
 
 Recovery occurs when conditions are met:
 
@@ -122,9 +122,9 @@ $$
 Base recovery term:
 - `BASE_DECAY_PER_TICK` = 1.2
 
-📄 source: `scripts/systems/stress_system.gd:L240`
+📄 source: `scripts/systems/stress_system.gd:L235`
 
-## Allostatic Load (Chronic Stress)
+## 알로스타틱 부하 (Chronic Stress)
 
 Allostatic load represents cumulative physiological wear from chronic stress:
 
@@ -141,9 +141,9 @@ $$
 - Parameters: `alpha=0.035`, `beta=0.003`
 - High allostatic load increases mortality risk (feeds into Siler model)
 
-📄 source: `scripts/systems/stress_system.gd:L284`
+📄 source: `scripts/systems/stress_system.gd:L279`
 
-## General Adaptation Syndrome (Selye 1956)
+## 일반 적응 증후군 (Selye 1956)
 
 | Stage | Condition | Reserve Effect | Duration |
 |:------|:----------|:---------------|:---------|
@@ -158,9 +158,9 @@ $$
 - Reserve range: 0-100
 - Stage transitions are driven by reserve and prolonged stress exposure
 
-📄 source: `scripts/systems/stress_system.gd:L262`
+📄 source: `scripts/systems/stress_system.gd:L257`
 
-## Yerkes-Dodson Efficiency Curve
+## Yerkes-Dodson 효율 곡선
 
 Moderate stress improves performance (eustress):
 
@@ -173,64 +173,64 @@ $$
 - Optimal stress → peak performance
 - Too much stress → impaired performance
 
-📄 source: `scripts/systems/stress_system.gd:L381`
+📄 source: `scripts/systems/stress_system.gd:L373`
 
-## Stressor Events
+## 스트레스 이벤트
 
-### By Category
+### 카테고리별
 
 📄 source: `data/stressor_events.json`
 
 #### Death Events (highest severity)
 
-| Event | Name (EN) | Name (KR) | Severity | Instant | Per-tick | Is Loss |
-|:------|:----------|:----------|---------:|--------:|---------:|:-------:|
-| child_death | Child Death | 자녀 사망 | 38875 | 550 | 12 | Yes |
-| maternal_death_partner | Partner Died in Childbirth | 출산 중 파트너 사망 | 38750 | 500 | 12 | Yes |
-| partner_death | Partner Death | 파트너 사망 | 26125 | 450 | 10 | Yes |
-| parent_death | Parent Death | 부모 사망 | 17541.667 | 350 | 8 | Yes |
-| stillborn | Stillborn | 사산 | 14208.333 | 350 | 8 | Yes |
-| sibling_death | Sibling Death | 형제자매 사망 | 10625 | 250 | 6 | Yes |
-| close_friend_death | Close Friend Death | 절친 사망 | 6750 | 200 | 5 | Yes |
-| acquaintance_death | Acquaintance Death | 지인 사망 | 360 | 60 | 1.5 | No |
+| Event | Name | Severity | Instant | Per-tick | Is Loss |
+|:------|:-----|---------:|--------:|---------:|:-------:|
+| child_death | 자녀 사망 | 38875 | 550 | 12 | Yes |
+| maternal_death_partner | 출산 중 파트너 사망 | 38750 | 500 | 12 | Yes |
+| partner_death | 파트너 사망 | 26125 | 450 | 10 | Yes |
+| parent_death | 부모 사망 | 17541.667 | 350 | 8 | Yes |
+| stillborn | 사산 | 14208.333 | 350 | 8 | Yes |
+| sibling_death | 형제자매 사망 | 10625 | 250 | 6 | Yes |
+| close_friend_death | 절친 사망 | 6750 | 200 | 5 | Yes |
+| acquaintance_death | 지인 사망 | 360 | 60 | 1.5 | No |
 
 #### Social Events
 
-| Event | Name (EN) | Name (KR) | Severity | Instant | Per-tick | Is Loss |
-|:------|:----------|:----------|---------:|--------:|---------:|:-------:|
-| exile_banishment | Exile / Banishment | 추방 | 14083.333 | 300 | 8 | Yes |
-| partnership_breakup | Partnership Breakup | 결별 | 8125 | 250 | 6 | Yes |
-| betrayal_discovered | Betrayal Discovered | 배신 발각 | 6750 | 200 | 5 | Yes |
-| theft_victim | Theft Victim | 도난 피해 | 1500 | 100 | 2 | Yes |
-| rejection_social | Social Rejection | 사회적 거부 | 580 | 80 | 2 | No |
-| argument | Argument | 말다툼 | 165 | 40 | 1 | No |
+| Event | Name | Severity | Instant | Per-tick | Is Loss |
+|:------|:-----|---------:|--------:|---------:|:-------:|
+| exile_banishment | 추방 | 14083.333 | 300 | 8 | Yes |
+| partnership_breakup | 결별 | 8125 | 250 | 6 | Yes |
+| betrayal_discovered | 배신 발각 | 6750 | 200 | 5 | Yes |
+| theft_victim | 도난 피해 | 1500 | 100 | 2 | Yes |
+| rejection_social | 사회적 거부 | 580 | 80 | 2 | No |
+| argument | 말다툼 | 165 | 40 | 1 | No |
 
 #### Survival Events
 
-| Event | Name (EN) | Name (KR) | Severity | Instant | Per-tick | Is Loss |
-|:------|:----------|:----------|---------:|--------:|---------:|:-------:|
-| severe_injury | Severe Injury | 중상 | 1483.333 | 150 | 4 | No |
-| combat_engaged | Combat Engaged | 전투 참여 | 1330 | 80 | 15 | No |
-| starvation_crisis | Starvation Crisis | 기아 위기 | 1300 | 100 | 6 | No |
-| predator_encounter | Predator Encounter | 포식자 조우 | 963.333 | 130 | 5 | No |
+| Event | Name | Severity | Instant | Per-tick | Is Loss |
+|:------|:-----|---------:|--------:|---------:|:-------:|
+| severe_injury | 중상 | 1483.333 | 150 | 4 | No |
+| combat_engaged | 전투 참여 | 1330 | 80 | 15 | No |
+| starvation_crisis | 기아 위기 | 1300 | 100 | 6 | No |
+| predator_encounter | 포식자 조우 | 963.333 | 130 | 5 | No |
 
 #### Psychological Events
 
-| Event | Name (EN) | Name (KR) | Severity | Instant | Per-tick | Is Loss |
-|:------|:----------|:----------|---------:|--------:|---------:|:-------:|
-| overcrowding | Overcrowding | 과밀 스트레스 | 333.333 | 0 | 2 | No |
-| forced_action_by_god | Forced by God Command | 신의 강제 명령 | 60 | 60 | 0 | No |
+| Event | Name | Severity | Instant | Per-tick | Is Loss |
+|:------|:-----|---------:|--------:|---------:|:-------:|
+| overcrowding | 과밀 스트레스 | 333.333 | 0 | 2 | No |
+| forced_action_by_god | 신의 강제 명령 | 60 | 60 | 0 | No |
 
 #### Eustress Events
 
-| Event | Name (EN) | Name (KR) | Severity | Instant | Per-tick | Is Loss |
-|:------|:----------|:----------|---------:|--------:|---------:|:-------:|
-| building_completed | Building Completed | 건축 완료 | -25 | -25 | 0 | No |
-| successful_hunt | Successful Hunt | 사냥 성공 | -30 | -30 | 0 | No |
-| childbirth_father | Child Born (Father) | 자녀 출생 (아버지) | -80 | -80 | 0 | No |
-| childbirth_mother | Giving Birth | 출산 (산모) | -120 | -120 | 0 | No |
+| Event | Name | Severity | Instant | Per-tick | Is Loss |
+|:------|:-----|---------:|--------:|---------:|:-------:|
+| building_completed | 건축 완료 | -25 | -25 | 0 | No |
+| successful_hunt | 사냥 성공 | -30 | -30 | 0 | No |
+| childbirth_father | 자녀 출생 (아버지) | -80 | -80 | 0 | No |
+| childbirth_mother | 출산 (산모) | -120 | -120 | 0 | No |
 
-## Personality Modifiers
+## 성격 보정
 
 Each stressor's impact is modulated by HEXACO personality:
 
@@ -347,7 +347,7 @@ Each stressor's impact is modulated by HEXACO personality:
 | childbirth_father | d_psychopath_primary | 0.2 | -80% stress |
 | childbirth_mother | c_caregiver | 1.2 | +20% stress |
 
-📄 source: `scripts/systems/stress_system.gd:L508`
+📄 source: `scripts/systems/stress_system.gd:L495`
 
 <!-- MANUAL:START -->
 

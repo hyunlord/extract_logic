@@ -10,12 +10,12 @@ nav_order: 13
 
 # Extraversion (X) — 외향성
 
-## Axis Overview
+## 축 개요
 
 The **Extraversion** axis measures personality tendencies represented by the `X` axis in the HEXACO model.
 **Facets**: `X_liveliness` (활기 / Liveliness), `X_sociability` (사교성 / Sociability), `X_social_boldness` (사회적 대담함 / Social Boldness), `X_social_self_esteem` (사회적 자존감 / Social Self-Esteem)
 
-## Traits
+## 특성 효과
 
 <a id="f_confident"></a>
 ### Confident (자신감 있는) — `f_confident`
@@ -1454,7 +1454,7 @@ The **Extraversion** axis measures personality tendencies represented by the `X`
 
 ---
 
-## Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

@@ -10,18 +10,18 @@ system_name: "personality_maturation"
 
 # Personality Maturation
 
-📄 source: `scripts/systems/personality_maturation.gd` | Priority: n/a | Tick interval: n/a
+📄 소스: `scripts/systems/personality_maturation.gd` | 우선순위: n/a | 틱 간격: n/a
 
-## Overview (개요)
+## 개요
 
 The **Personality Maturation** system implements Uhlenbeck & Ornstein (1930) mean-reverting process, Ornstein-Uhlenbeck mean reversion to simulate age-based personality maturation using OU (Ornstein-Uhlenbeck) process.
 It runs **at an unspecified cadence** at priority **n/a**.
 
-**Core entity data**: No entity fields were extracted.
+**핵심 엔티티 데이터**: No entity fields were extracted.
 
 > Age-based personality maturation using OU (Ornstein-Uhlenbeck) process.
 
-## Tick Pipeline (틱 파이프라인)
+## 틱 파이프라인
 
 1. Apply maturation
    📄 source: `scripts/systems/personality_maturation.gd:L41`
@@ -29,7 +29,7 @@ It runs **at an unspecified cadence** at priority **n/a**.
 2. Resolve maturation target
    📄 source: `scripts/systems/personality_maturation.gd:L62`
 
-## Formulas (수식)
+## 수식
 
 ### Updates a latent state by mean-reverting toward baseline while injecting stochastic fluctuation.
 
@@ -160,31 +160,31 @@ var t: float = clampf(float(age - start_age) / span, 0.0, 1.0)
 
 📄 source: `scripts/systems/personality_maturation.gd:L82`
 
-## Configuration Reference (설정)
+## 설정 레퍼런스
 
-No explicit `GameConfig` references extracted.
+GameConfig 참조가 추출되지 않음
 
-## Cross-System Effects (시스템 간 상호작용)
+## 시스템 간 상호작용
 
-### Imported Modules (모듈 임포트)
+### 모듈 임포트
 
 - [`personality_maturation`](personality_maturation.md) via `preload` at `scripts/systems/personality_maturation.gd:L6`
 - `scripts/core/personality_data.gd` via `preload` at `scripts/systems/personality_maturation.gd:L8`
 - [`trait`](trait.md) via `preload` at `scripts/systems/personality_maturation.gd:L9`
 
-### Shared Entity Fields (공유 엔티티 필드)
+### 공유 엔티티 필드
 
-No cross-system shared entity field usage was inferred.
+공유 필드가 추론되지 않음
 
-### Signals (시그널)
+### 시그널
 
-No emitted signals extracted for this module.
+시그널 메타데이터가 추출되지 않음
 
-### Downstream Impact (다운스트림 영향)
+### 다운스트림 영향
 
 - [`aging`](aging.md) depends on this system's outputs.
 - [`personality_maturation`](personality_maturation.md) depends on this system's outputs.
 
-## Entity Data Model (엔티티 데이터 모델)
+## 엔티티 데이터 모델
 
 No entity field metadata extracted for this module.

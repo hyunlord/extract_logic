@@ -10,16 +10,16 @@ system_name: "building_effect"
 
 # Building Effect
 
-📄 source: `scripts/systems/building_effect_system.gd` | Priority: 15 | Tick interval: config (GameConfig.BUILDING_EFFECT_TICK_INTERVAL)
+📄 소스: `scripts/systems/building_effect_system.gd` | 우선순위: 15 | 틱 간격: config (GameConfig.BUILDING_EFFECT_TICK_INTERVAL)
 
-## Overview (개요)
+## 개요
 
 The **Building Effect** system implements a domain-specific simulation model to simulate building effect dynamics for entities and world state.
 It runs on a **config-driven cadence** (`GameConfig.BUILDING_EFFECT_TICK_INTERVAL`) at priority **15**.
 
-**Core entity data**: `energy` (read/write (inferred)), `social` (read/write (inferred))
+**핵심 엔티티 데이터**: `energy` (read/write (inferred)), `social` (read/write (inferred))
 
-## Tick Pipeline (틱 파이프라인)
+## 틱 파이프라인
 
 1. Run per-entity tick update loop
    📄 source: `scripts/systems/building_effect_system.gd:L17`
@@ -28,39 +28,39 @@ It runs on a **config-driven cadence** (`GameConfig.BUILDING_EFFECT_TICK_INTERVA
 3. Apply shelter
    📄 source: `scripts/systems/building_effect_system.gd:L44`
 
-## Formulas (수식)
+## 수식
 
 No extracted formulas for this module.
 
-## Configuration Reference (설정)
+## 설정 레퍼런스
 
 | Constant | Default | Controls | Behavior Effect |
 | :-- | :-- | :-- | :-- |
 | `BUILDING_EFFECT_TICK_INTERVAL` | 10 | System update cadence. | Lower values increase update frequency and responsiveness. |
 | `BUILDING_TYPES` | { 	"stockpile": {"cost": {"wood": 2.0}, "build_ticks": 36, "radius": 8}, 	"shelter": {"cost": {"wood": 4.0, "stone": 1.0}, "build_ticks": 60, "radius": 0}, 	"campfire": {"cost": {"wood": 1.0}, "build_ticks": 24, "radius": 5}, } | Building type definitions | Adjusts baseline system behavior under this module. |
 
-## Cross-System Effects (시스템 간 상호작용)
+## 시스템 간 상호작용
 
-### Imported Modules (모듈 임포트)
+### 모듈 임포트
 
-No import relationships extracted for this module.
+임포트 관계가 추출되지 않음
 
-### Shared Entity Fields (공유 엔티티 필드)
+### 공유 엔티티 필드
 
 | Field | Access | Shared With |
 | :-- | :-- | :-- |
 | `energy` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
 | `social` | read/write (inferred) | [`behavior`](behavior.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
 
-### Signals (시그널)
+### 시그널
 
-No emitted signals extracted for this module.
+시그널 메타데이터가 추출되지 않음
 
-### Downstream Impact (다운스트림 영향)
+### 다운스트림 영향
 
-- No explicit downstream dependencies extracted.
+- 다운스트림 의존성이 추출되지 않음
 
-## Entity Data Model (엔티티 데이터 모델)
+## 엔티티 데이터 모델
 
 | Field | Access | Type | Represents | Typical Values |
 | :-- | :-- | :-- | :-- | :-- |

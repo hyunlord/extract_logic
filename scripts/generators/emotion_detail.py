@@ -8,6 +8,7 @@ import re
 from typing import Any
 
 import scripts.config as config
+from scripts.generators.strings import t
 
 
 _MANUAL_BLOCK_RE = re.compile(r"<!-- MANUAL:START -->.*?<!-- MANUAL:END -->", re.DOTALL)
@@ -69,6 +70,22 @@ def _first_sentence(text: Any) -> str:
         return ""
     parts = re.split(r"(?<=[.!?])\s+", cleaned, maxsplit=1)
     return parts[0].strip()
+
+
+def _pick(item: dict[str, Any], field: str, lang: str, fallback_field: str | None = None) -> str:
+    """Select localized field: {field}_{lang} -> fallback_field -> field."""
+    value = item.get(f"{field}_{lang}", "")
+    if isinstance(value, str) and value:
+        return value
+    if fallback_field:
+        fallback = item.get(fallback_field, "")
+        if isinstance(fallback, str) and fallback:
+            return fallback
+    for key in (f"{field}_kr", f"{field}_en", field):
+        candidate = item.get(key, "")
+        if isinstance(candidate, str) and candidate:
+            return candidate
+    return ""
 
 
 def _merge_manual_blocks(generated: str, existing: str) -> str:
@@ -209,7 +226,12 @@ def _model_references(
     return refs
 
 
-def _render_markdown(manifest: dict[str, Any], extracted: dict[str, Any], warnings: list[str]) -> str:
+def _render_markdown(
+    manifest: dict[str, Any],
+    extracted: dict[str, Any],
+    warnings: list[str],
+    lang: str,
+) -> str:
     emotion_presets = _as_dict(extracted.get("emotion_presets"))
     decay_config = _as_dict(extracted.get("decay_config"))
     formulas = _as_dict(extracted.get("formulas"))
@@ -288,7 +310,7 @@ def _render_markdown(manifest: dict[str, Any], extracted: dict[str, Any], warnin
             "",
             "Localization: 한국어 / English",
             "",
-            "## Architecture",
+            f"## {t('section_architecture', lang)}",
             "",
             "The emotion system implements **Plutchik's 8 basic emotions** with a **3-layer temporal model**:",
             "",
@@ -452,7 +474,7 @@ def _render_markdown(manifest: dict[str, Any], extracted: dict[str, Any], warnin
             "",
             f"📄 source: {_format_source(system_source, memory_trace_line)}",
             "",
-            "## Event → Emotion Pipeline",
+            f"## {t('section_event_to_emotion_pipeline', lang)}",
             "",
             "```mermaid",
             "flowchart TD",
@@ -487,7 +509,7 @@ def _render_markdown(manifest: dict[str, Any], extracted: dict[str, Any], warnin
                         _md_cell(_title_case(str(dimension.get("id", "-")))),
                         _md_cell(dimension.get("abbrev", "-")),
                         _md_cell(dimension.get("range", "-")),
-                        _md_cell(dimension.get("description", "-")),
+                        _md_cell(_pick(dimension, "description", lang) or "-"),
                     ]
                 )
                 + " |"
@@ -609,7 +631,7 @@ def _render_markdown(manifest: dict[str, Any], extracted: dict[str, Any], warnin
 
     lines.extend(
         [
-            "## Emotional Contagion",
+            f"## {t('section_emotional_contagion', lang)}",
             "",
             "Emotions spread between nearby entities in a settlement:",
             "",
@@ -653,7 +675,7 @@ def _render_markdown(manifest: dict[str, Any], extracted: dict[str, Any], warnin
 
     lines.extend(
         [
-            "## Mental Break",
+            f"## {t('section_mental_break', lang)}",
             "",
             "When stress exceeds a threshold, entities may experience a mental break:",
             "",
@@ -665,7 +687,7 @@ def _render_markdown(manifest: dict[str, Any], extracted: dict[str, Any], warnin
             f"- beta: {_fmt_number(beta, 3)} (sigmoid steepness)",
             f"- threshold: {_fmt_number(threshold, 3)}",
             "",
-            "### Break Types",
+            f"### {t('section_break_types', lang)}",
             "",
             "| Type | Duration | Energy Drain | Description |",
             "|------|---------:|-------------:|-------------|",
@@ -682,7 +704,7 @@ def _render_markdown(manifest: dict[str, Any], extracted: dict[str, Any], warnin
                         _md_cell(_title_case(behavior_name)),
                         _fmt_number(behavior.get("duration_hours"), 2) + "h",
                         _fmt_number(behavior.get("energy_drain"), 2),
-                        _md_cell(_first_sentence(behavior.get("description")) or "-"),
+                        _md_cell(_first_sentence(_pick(behavior, "description", lang)) or "-"),
                     ]
                 )
                 + " |"
@@ -695,7 +717,7 @@ def _render_markdown(manifest: dict[str, Any], extracted: dict[str, Any], warnin
 
     lines.extend(
         [
-            "## Event Presets",
+            f"## {t('section_event_presets', lang)}",
             "",
             "| Event | Category | Intensity | Primary Emotions | Trauma |",
             "|-------|----------|----------:|------------------|--------|",
@@ -757,7 +779,7 @@ def _render_markdown(manifest: dict[str, Any], extracted: dict[str, Any], warnin
     return "\n".join(lines)
 
 
-def run(manifest: dict, extracted: dict) -> dict:
+def run(manifest: dict, extracted: dict | None = None, lang: str = "ko") -> dict:
     """Generate emotion system detail documentation.
 
     Args:
@@ -782,11 +804,12 @@ def run(manifest: dict, extracted: dict) -> dict:
         warnings.append("extracted is not an object; using empty extracted payload")
         extracted = {}
 
-    output_path = os.path.join(config.CONTENT_SYSTEMS, "emotion-detail.md")
-    config.ensure_dir(config.CONTENT_SYSTEMS)
+    dirs = config.lang_dirs(lang)
+    output_path = os.path.join(dirs["systems"], "emotion-detail.md")
+    config.ensure_dir(dirs["systems"])
 
     try:
-        markdown = _render_markdown(manifest, extracted, warnings)
+        markdown = _render_markdown(manifest, extracted, warnings, lang)
     except Exception as exc:
         errors.append(f"failed to render emotion detail markdown: {exc}")
         return {

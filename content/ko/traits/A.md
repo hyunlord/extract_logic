@@ -10,12 +10,12 @@ nav_order: 14
 
 # Agreeableness (A) — 우호성
 
-## Axis Overview
+## 축 개요
 
 The **Agreeableness** axis measures personality tendencies represented by the `A` axis in the HEXACO model.
 **Facets**: `A_flexibility` (유연성 / Flexibility), `A_forgiveness` (용서 / Forgiveness), `A_gentleness` (온화 / Gentleness), `A_patience` (인내 / Patience)
 
-## Traits
+## 특성 효과
 
 <a id="f_forgiving"></a>
 ### Forgiving (관대한) — `f_forgiving`
@@ -1234,7 +1234,7 @@ The **Agreeableness** axis measures personality tendencies represented by the `A
 
 ---
 
-## Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

@@ -10,24 +10,24 @@ system_name: "needs"
 
 # Needs
 
-📄 source: `scripts/systems/needs_system.gd` | Priority: 10 | Tick interval: config (GameConfig.NEEDS_TICK_INTERVAL)
+📄 소스: `scripts/systems/needs_system.gd` | 우선순위: 10 | 틱 간격: config (GameConfig.NEEDS_TICK_INTERVAL)
 
-## Overview (개요)
+## 개요
 
 The **Needs** system implements Standard exponential decay to simulate needs dynamics for entities and world state.
 It runs on a **config-driven cadence** (`GameConfig.NEEDS_TICK_INTERVAL`) at priority **10**.
 
-**Core entity data**: `age` (read/write (inferred)), `age_stage` (read/write (inferred)), `birth_tick` (read/write (inferred)), `current_action` (read/write (inferred)), `energy` (read/write (inferred)), `entity_name` (read/write (inferred)), `hunger` (read/write (inferred)), `id` (read/write (inferred)), `inventory` (read/write (inferred)), `remove_item` (read/write (inferred)), `settlement_id` (read/write (inferred)), `social` (read/write (inferred)), `starving_timer` (read/write (inferred))
+**핵심 엔티티 데이터**: `age` (read/write (inferred)), `age_stage` (read/write (inferred)), `birth_tick` (read/write (inferred)), `current_action` (read/write (inferred)), `energy` (read/write (inferred)), `entity_name` (read/write (inferred)), `hunger` (read/write (inferred)), `id` (read/write (inferred)), `inventory` (read/write (inferred)), `remove_item` (read/write (inferred)), `settlement_id` (read/write (inferred)), `social` (read/write (inferred)), `starving_timer` (read/write (inferred))
 
-## Tick Pipeline (틱 파이프라인)
+## 틱 파이프라인
 
 1. Run per-entity tick update loop
    📄 source: `scripts/systems/needs_system.gd:L20`
    Math context: x(t) = x₀·e^{-λt}, Computes a gameplay state update from mathematical relationships in the source logic., exponential decay dynamics
 2. Resolve settlement food
-   📄 source: `scripts/systems/needs_system.gd:L114`
+   📄 source: `scripts/systems/needs_system.gd:L106`
 
-## Formulas (수식)
+## 수식
 
 ### Applies time-based exponential decay using half-life or decay-rate parameters.
 
@@ -91,7 +91,7 @@ entity.energy = clampf(entity.energy, 0.0, 1.0)
 
 📄 source: `scripts/systems/needs_system.gd:L51`
 
-## Configuration Reference (설정)
+## 설정 레퍼런스
 
 | Constant | Default | Controls | Behavior Effect |
 | :-- | :-- | :-- | :-- |
@@ -109,13 +109,13 @@ entity.energy = clampf(entity.energy, 0.0, 1.0)
 | `STARVATION_GRACE_TICKS` | 25 | Simulation-time conversion or cadence. | Adjusts baseline system behavior under this module. |
 | `get_age_years` | (not found) | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
 
-## Cross-System Effects (시스템 간 상호작용)
+## 시스템 간 상호작용
 
-### Imported Modules (모듈 임포트)
+### 모듈 임포트
 
-No import relationships extracted for this module.
+임포트 관계가 추출되지 않음
 
-### Shared Entity Fields (공유 엔티티 필드)
+### 공유 엔티티 필드
 
 | Field | Access | Shared With |
 | :-- | :-- | :-- |
@@ -124,23 +124,23 @@ No import relationships extracted for this module.
 | `birth_tick` | read/write (inferred) | [`mortality`](mortality.md) |
 | `current_action` | read/write (inferred) | [`behavior`](behavior.md), [`construction`](construction.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`movement`](movement.md), [`social_events`](social_events.md), [`stress`](stress.md) |
 | `energy` | read/write (inferred) | [`behavior`](behavior.md), [`building_effect`](building_effect.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`movement`](movement.md), [`stress`](stress.md) |
-| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`population`](population.md), [`stress`](stress.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`population`](population.md), [`stress`](stress.md) |
 | `hunger` | read/write (inferred) | [`behavior`](behavior.md), [`childcare`](childcare.md), [`family`](family.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`stress`](stress.md) |
-| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`population`](population.md), [`social_events`](social_events.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
+| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`population`](population.md), [`social_events`](social_events.md) |
 | `inventory` | read/write (inferred) | [`behavior`](behavior.md), [`movement`](movement.md) |
 | `remove_item` | read/write (inferred) | [`behavior`](behavior.md), [`movement`](movement.md) |
 | `settlement_id` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`migration`](migration.md), [`population`](population.md), [`stress`](stress.md) |
 | `social` | read/write (inferred) | [`behavior`](behavior.md), [`building_effect`](building_effect.md), [`movement`](movement.md), [`stress`](stress.md) |
 
-### Signals (시그널)
+### 시그널
 
-No emitted signals extracted for this module.
+시그널 메타데이터가 추출되지 않음
 
-### Downstream Impact (다운스트림 영향)
+### 다운스트림 영향
 
-- No explicit downstream dependencies extracted.
+- 다운스트림 의존성이 추출되지 않음
 
-## Entity Data Model (엔티티 데이터 모델)
+## 엔티티 데이터 모델
 
 | Field | Access | Type | Represents | Typical Values |
 | :-- | :-- | :-- | :-- | :-- |

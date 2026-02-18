@@ -10,9 +10,9 @@ nav_order: 1
 
 # buildings 용어 / Glossary
 
-총 6개 항목 | Total 6 entries
+총 항목 수: 6
 
-## 용어 목록
+## 용어 사전
 
 | Key | 한국어 | English |
 |-----|--------|---------|
@@ -23,7 +23,7 @@ nav_order: 1
 | `BUILDING_STOCKPILE` | 비축소 | Stockpile |
 | `BUILDING_STOCKPILE_DESC` | 자원을 저장하는 비축 시설 | Storage facility for resources |
 
-## 수동 메모 / Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

@@ -13,10 +13,10 @@ nav_order: 17
 
 📄 source: `scripts/core/relationship_manager.gd` | 176 lines | extends: RefCounted
 
-## 개요 (Overview)
+## 개요
 Sparse relationship storage.
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -28,6 +28,6 @@ Sparse relationship storage.
 |--------|------------|
 | - | - |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: [`relationship_data.gd`](relationship_data.md)
 - Used by: -

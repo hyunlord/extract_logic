@@ -8,6 +8,7 @@ import re
 from typing import Any
 
 import scripts.config as config
+from scripts.generators.strings import t
 
 
 _MANUAL_BLOCK_RE = re.compile(r"<!-- MANUAL:START -->.*?<!-- MANUAL:END -->", re.DOTALL)
@@ -490,6 +491,7 @@ def _render_index_page(
     trait_by_id: dict[str, dict[str, Any]],
     axis_codes: list[str],
     source_files: list[str],
+    lang: str,
 ) -> str:
     hexaco_axes = trait_data.get("hexaco_axes") if isinstance(trait_data.get("hexaco_axes"), dict) else {}
     by_axis = trait_data.get("by_axis") if isinstance(trait_data.get("by_axis"), dict) else {}
@@ -517,28 +519,28 @@ def _render_index_page(
         "",
         "**Model basis**: Ashton & Lee (2007) HEXACO Personality Model, with extensions for dark triad traits and composite conditions.",
         "",
-        "## Overview",
+        f"## {t('section_overview', lang)}",
         "",
         _render_markdown_table(
             ["HEXACO Axis", "Name (EN)", "Name (KR)", "Traits", "Positive", "Negative"],
             _axis_table_rows(axis_codes, hexaco_axes, by_axis, trait_by_id),
         ),
         "",
-        "## Trait Types",
+        f"## {t('section_trait_types', lang)}",
         "",
         _render_markdown_table(
             ["Type", "Count", "Description"],
             _type_table_rows(by_type),
         ),
         "",
-        "## How Traits Work",
+        f"## {t('section_how_traits_work', lang)}",
         "",
         "1. **Activation**: Each entity's HEXACO personality scores are checked against trait conditions.",
         "2. **Threshold**: A trait activates when a facet score is above (`high`) or below (`low`) the threshold.",
         "3. **Effects**: Active traits modify behavior weights, emotion sensitivity, stress responses, and social interactions.",
         "4. **Synergies**: Some traits amplify each other's effects; anti-synergies create internal conflict.",
         "",
-        "## Axis Pages",
+        f"## {t('section_axis_pages', lang)}",
         "",
     ]
 
@@ -554,13 +556,13 @@ def _render_index_page(
     lines.extend(
         [
             "",
-            "## Synergy Network (Top 20 Connected Traits)",
+            f"## {t('section_synergy_network', lang)}",
             "",
             _render_synergy_mermaid(synergy_graph),
             "",
             "📄 source: `extracted/trait_data.json`",
             "",
-            "## Manual Notes",
+            f"## {t('section_manual_notes', lang)}",
             "",
             "<!-- MANUAL:START -->",
             "<!-- MANUAL:END -->",
@@ -578,6 +580,7 @@ def _render_axis_page(
     trait_by_id: dict[str, dict[str, Any]],
     trait_axis_by_id: dict[str, str],
     source_files: list[str],
+    lang: str,
 ) -> str:
     axis_name = _normalize_text(axis_info.get("name")) or axis_code
     axis_name_kr = _normalize_text(axis_info.get("name_kr")) or "-"
@@ -596,12 +599,12 @@ def _render_axis_page(
         ),
         f"# {axis_name} ({axis_code}) — {axis_name_kr}",
         "",
-        "## Axis Overview",
+        f"## {t('section_axis_overview', lang)}",
         "",
         f"The **{axis_name}** axis measures {axis_description}.",
         f"**Facets**: {facets_text}",
         "",
-        "## Traits",
+        f"## {t('section_traits', lang)}",
         "",
     ]
 
@@ -701,7 +704,7 @@ def _render_axis_page(
 
     lines.extend(
         [
-            "## Manual Notes",
+            f"## {t('section_manual_notes', lang)}",
             "",
             "<!-- MANUAL:START -->",
             "<!-- MANUAL:END -->",
@@ -712,7 +715,7 @@ def _render_axis_page(
     return "\n".join(lines)
 
 
-def run(manifest: dict, extracted: dict) -> dict:
+def run(manifest: dict, extracted: dict | None = None, lang: str = "ko") -> dict:
     """Generate trait documentation pages from extracted trait data.
 
     Args:
@@ -804,7 +807,8 @@ def run(manifest: dict, extracted: dict) -> dict:
     if raw_source_file:
         source_files.append(raw_source_file)
 
-    traits_dir = config.CONTENT_TRAITS
+    dirs = config.lang_dirs(lang)
+    traits_dir = dirs["traits"]
     config.ensure_dir(traits_dir)
 
     index_content = _render_index_page(
@@ -812,6 +816,7 @@ def run(manifest: dict, extracted: dict) -> dict:
         trait_by_id=trait_by_id,
         axis_codes=axis_codes,
         source_files=source_files,
+        lang=lang,
     )
     index_path = os.path.join(traits_dir, "_index.md")
     if _write_markdown(index_path, index_content, warnings, errors):
@@ -830,6 +835,7 @@ def run(manifest: dict, extracted: dict) -> dict:
             trait_by_id=trait_by_id,
             trait_axis_by_id=trait_axis_by_id,
             source_files=source_files,
+            lang=lang,
         )
         axis_path = os.path.join(traits_dir, f"{axis_code}.md")
         if _write_markdown(axis_path, axis_content, warnings, errors):

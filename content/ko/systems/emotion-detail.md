@@ -13,7 +13,7 @@ nav_order: 33
 
 Localization: 한국어 / English
 
-## Architecture
+## 아키텍처
 
 The emotion system implements **Plutchik's 8 basic emotions** with a **3-layer temporal model**:
 
@@ -133,7 +133,7 @@ a fraction (n/a) is stored as a memory trace with very slow decay.
 
 📄 source: `scripts/systems/emotion_system.gd:L507`
 
-## Event → Emotion Pipeline
+## 이벤트→감정 파이프라인
 
 ```mermaid
 flowchart TD
@@ -215,7 +215,7 @@ When one emotion rises by delta, its opposite is suppressed by γ·delta where �
 
 📄 source: `scripts/systems/emotion_system.gd:L103`
 
-## Emotional Contagion
+## 감정 전염
 
 Emotions spread between nearby entities in a settlement:
 
@@ -232,7 +232,7 @@ $$
 
 📄 source: `scripts/systems/emotion_system.gd:L338`
 
-## Mental Break
+## 정신 붕괴
 
 When stress exceeds a threshold, entities may experience a mental break:
 
@@ -244,7 +244,7 @@ $$
 - beta: 60 (sigmoid steepness)
 - threshold: n/a
 
-### Break Types
+### 붕괴 유형
 
 | Type | Duration | Energy Drain | Description |
 |------|---------:|-------------:|-------------|
@@ -256,7 +256,7 @@ $$
 
 📄 source: `scripts/systems/emotion_system.gd:L405`
 
-## Event Presets
+## 이벤트 프리셋
 
 | Event | Category | Intensity | Primary Emotions | Trauma |
 |-------|----------|----------:|------------------|--------|

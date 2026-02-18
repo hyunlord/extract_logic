@@ -9,19 +9,19 @@ nav_order: 10
 
 # distribution
 
-📄 source (출처): `data/species/human/personality/distribution.json` | Category (분류): species/human/personality | Type (유형): object
+📄 소스: `data/species/human/personality/distribution.json` | 분류: species/human/personality | 유형: object
 
-## 개요 (Overview)
+## 개요
 
-- Configures (설정 내용): `species/human/personality` 데이터 도메인 설정 값. Configuration values for the `species/human/personality` data domain.
-- Read by systems/modules (읽는 시스템/모듈): species_manager
-- Related documentation (관련 문서): [`species_manager`](../../../../core/species_manager.md)
+- 설정 내용: `species/human/personality` 데이터 도메인 설정 값. Configuration values for the `species/human/personality` data domain.
+- 읽는 시스템/모듈: species_manager
+- 관련 문서: [`species_manager`](../../../../core/species_manager.md)
 
-## 해석된 파라미터 (Interpreted Parameters)
+## 해석된 파라미터
 
-### Weights & Multipliers (가중/배수)
+### 가중치 & 배수
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `maturation.A.age_range` | 2 items | array | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
 | `maturation.A.age_range.sample` | 18 multiplier | int | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
@@ -42,9 +42,9 @@ nav_order: 10
 | `maturation.X.age_range.sample` | 18 multiplier | int | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
 | `maturation.X.target_shift` | 0.3 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
 
-### Other Parameters (기타)
+### 기타 파라미터
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `comment_facet_spread` | Intra-axis facet variance (z-score). 0.75 allows diverse facet profiles within same axis, enabling contradictory trait combos (e.g. fearful+low empathy). Previous: 0.35 | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 | `comment_sd` | Academic SD=0.15, widened for gameplay. Ashton & Lee 2009 | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
@@ -69,11 +69,11 @@ nav_order: 10
 | `sex_difference_d.O` | -0.04 | float | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 | `sex_difference_d.X` | 0.1 | float | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 
-## 참조하는 시스템 (Referenced By)
+## 레퍼런스
 
 - [`species_manager`](../../../../core/species_manager.md) - references data under `data/species/`
 
-## 수동 노트 (Manual Notes)
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

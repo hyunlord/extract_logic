@@ -13,10 +13,10 @@ nav_order: 3
 
 📄 source: `scripts/core/chunk_index.gd` | 86 lines | extends: RefCounted
 
-## 개요 (Overview)
+## 개요
 16x16 tile spatial index for O(1) chunk lookups.
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -28,6 +28,6 @@ nav_order: 3
 |--------|------------|
 | - | - |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: -
 - Used by: [`entity_manager.gd`](entity_manager.md)

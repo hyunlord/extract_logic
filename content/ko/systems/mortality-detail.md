@@ -40,7 +40,7 @@ Where x = age in years, and:
 | Background | $a_2$ | Constant across all ages | Accidents, infections, random events |
 | Senescent | $a_3 \cdot e^{b_3 x}$ | Negligible in youth, exponential in old age | Aging, organ failure, cancer |
 
-## Technology Modifiers
+## 기술 보정
 
 Settlement technology level reduces mortality:
 
@@ -58,7 +58,7 @@ Where T = tech_level (0.0 to 1.0):
 
 **Design note**: Tech has the strongest effect on infant mortality (easiest wins) and weakest on aging (hard biological limit).
 
-## Infant & Child Care Protection
+## 영아 보호
 
 Young entities receive mortality reduction when cared for:
 
@@ -72,7 +72,7 @@ $$
 | care_reduction | 0.60 | Mortality reduction when cared for |
 | orphan_penalty | n/a | Additional mortality risk without caregiver |
 
-## Seasonal Mortality Modifiers
+## 계절 환경 영향
 
 | Season | Modifier | Effect |
 |:-------|:---------|:-------|
@@ -133,7 +133,7 @@ TICKS_PER_YEAR = **4380** (📄 source: `scripts/core/game_config.gd:L19`)
 | 70 | 0.043 | 4.18% | 0.0010% | Senescent / 노화 |
 | 90 | 0.208 | 18.8% | 0.0047% | Senescent / 노화 |
 
-## Source Notes
+## 소스 노트
 
 - 📄 source: `scripts/systems/mortality_system.gd`
 - 📄 source: `data/species/human/mortality/siler_parameters.json`

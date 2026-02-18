@@ -10,27 +10,27 @@ system_name: "childcare"
 
 # Childcare
 
-📄 source: `scripts/systems/childcare_system.gd` | Priority: 8 | Tick interval: 2
+📄 소스: `scripts/systems/childcare_system.gd` | 우선순위: 8 | 틱 간격: 2
 
-## Overview (개요)
+## 개요
 
 The **Childcare** system implements a domain-specific simulation model to simulate childcare dynamics for entities and world state.
 It runs every **2 ticks** (0.0 game-years) at priority **8**.
 
-**Core entity data**: `age_stage` (read/write (inferred)), `hunger` (read/write (inferred))
+**핵심 엔티티 데이터**: `age_stage` (read/write (inferred)), `hunger` (read/write (inferred))
 
-## Tick Pipeline (틱 파이프라인)
+## 틱 파이프라인
 
 1. Run per-entity tick update loop
    📄 source: `scripts/systems/childcare_system.gd:L22`
 2. Resolve settlement food
    📄 source: `scripts/systems/childcare_system.gd:L80`
 
-## Formulas (수식)
+## 수식
 
 No extracted formulas for this module.
 
-## Configuration Reference (설정)
+## 설정 레퍼런스
 
 | Constant | Default | Controls | Behavior Effect |
 | :-- | :-- | :-- | :-- |
@@ -38,28 +38,28 @@ No extracted formulas for this module.
 | `CHILDCARE_HUNGER_THRESHOLDS` | { 	"infant": 0.85, 	"toddler": 0.80, 	"child": 0.75, 	"teen": 0.70, } | Threshold gate for state transitions. | Changing this moves trigger points for behavior changes. |
 | `FOOD_HUNGER_RESTORE` | 0.3 | Eating constants | Adjusts baseline system behavior under this module. |
 
-## Cross-System Effects (시스템 간 상호작용)
+## 시스템 간 상호작용
 
-### Imported Modules (모듈 임포트)
+### 모듈 임포트
 
-No import relationships extracted for this module.
+임포트 관계가 추출되지 않음
 
-### Shared Entity Fields (공유 엔티티 필드)
+### 공유 엔티티 필드
 
 | Field | Access | Shared With |
 | :-- | :-- | :-- |
 | `age_stage` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`construction`](construction.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md) |
 | `hunger` | read/write (inferred) | [`behavior`](behavior.md), [`family`](family.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
 
-### Signals (시그널)
+### 시그널
 
-No emitted signals extracted for this module.
+시그널 메타데이터가 추출되지 않음
 
-### Downstream Impact (다운스트림 영향)
+### 다운스트림 영향
 
-- No explicit downstream dependencies extracted.
+- 다운스트림 의존성이 추출되지 않음
 
-## Entity Data Model (엔티티 데이터 모델)
+## 엔티티 데이터 모델
 
 | Field | Access | Type | Represents | Typical Values |
 | :-- | :-- | :-- | :-- | :-- |

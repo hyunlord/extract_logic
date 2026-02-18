@@ -10,9 +10,9 @@ nav_order: 4
 
 # events 용어 / Glossary
 
-총 14개 항목 | Total 14 entries
+총 항목 수: 14
 
-## 용어 목록
+## 용어 사전
 
 | Key | 한국어 | English |
 |-----|--------|---------|
@@ -31,7 +31,7 @@ nav_order: 4
 | `EVT_STILLBORN` | {name} 사산 ({mother}) | {name} stillborn ({mother}) |
 | `EVT_TWIN_BORN` | 쌍둥이! {name}이(가) {mother}와 {father} 사이에서 태어남! | Twins! {name} born to {mother} & {father}! |
 
-## 수동 메모 / Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

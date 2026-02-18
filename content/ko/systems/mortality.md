@@ -10,18 +10,18 @@ system_name: "mortality"
 
 # Mortality
 
-📄 source: `scripts/systems/mortality_system.gd` | Priority: 49 | Tick interval: 1
+📄 소스: `scripts/systems/mortality_system.gd` | 우선순위: 49 | 틱 간격: 1
 
-## Overview (개요)
+## 개요
 
 The **Mortality** system implements Siler (1979) bathtub-curve mortality, Siler mortality hazard model to simulate siler(1979) bathtub-curve mortality model.
 It runs every **1 ticks** (0.0 game-years) at priority **49**.
 
-**Core entity data**: `age` (read/write (inferred)), `age_stage` (read/write (inferred)), `birth_tick` (read/write (inferred)), `entity_name` (read/write (inferred)), `frailty` (read/write (inferred)), `hunger` (read/write (inferred)), `id` (read/write (inferred))
+**핵심 엔티티 데이터**: `age` (read/write (inferred)), `age_stage` (read/write (inferred)), `birth_tick` (read/write (inferred)), `entity_name` (read/write (inferred)), `frailty` (read/write (inferred)), `hunger` (read/write (inferred)), `id` (read/write (inferred))
 
 > Siler(1979) bathtub-curve mortality model.
 
-## Tick Pipeline (틱 파이프라인)
+## 틱 파이프라인
 
 1. Run per-entity tick update loop
    📄 source: `scripts/systems/mortality_system.gd:L82`
@@ -44,7 +44,7 @@ It runs every **1 ticks** (0.0 game-years) at priority **49**.
 9. Inject bereavement stress
    📄 source: `scripts/systems/mortality_system.gd:L378`
 
-### Pipeline Diagram (파이프라인 다이어그램)
+### 파이프라인 다이어그램
 
 ```mermaid
 flowchart TD
@@ -67,7 +67,7 @@ flowchart TD
   step8 --> step9
 ```
 
-## Formulas (수식)
+## 수식
 
 ### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
@@ -525,38 +525,38 @@ COR (Hobfoll 1989): loss events use is_loss=true -> x2.5 multiplier.
 
 📄 source: `scripts/systems/mortality_system.gd:L377`
 
-## Configuration Reference (설정)
+## 설정 레퍼런스
 
 | Constant | Default | Controls | Behavior Effect |
 | :-- | :-- | :-- | :-- |
 | `get_age_years` | (not found) | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
 
-## Cross-System Effects (시스템 간 상호작용)
+## 시스템 간 상호작용
 
-### Imported Modules (모듈 임포트)
+### 모듈 임포트
 
 - `scripts/core/game_calendar.gd` via `preload` at `scripts/systems/mortality_system.gd:L8`
 
-### Shared Entity Fields (공유 엔티티 필드)
+### 공유 엔티티 필드
 
 | Field | Access | Shared With |
 | :-- | :-- | :-- |
 | `age` | read/write (inferred) | [`aging`](aging.md), [`family`](family.md), [`needs`](needs.md) |
 | `age_stage` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`childcare`](childcare.md), [`construction`](construction.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`movement`](movement.md), [`needs`](needs.md) |
 | `birth_tick` | read/write (inferred) | [`needs`](needs.md) |
-| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
 | `hunger` | read/write (inferred) | [`behavior`](behavior.md), [`childcare`](childcare.md), [`family`](family.md), [`mental_break`](mental_break.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
-| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
+| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md) |
 
-### Signals (시그널)
+### 시그널
 
-No emitted signals extracted for this module.
+시그널 메타데이터가 추출되지 않음
 
-### Downstream Impact (다운스트림 영향)
+### 다운스트림 영향
 
-- No explicit downstream dependencies extracted.
+- 다운스트림 의존성이 추출되지 않음
 
-## Entity Data Model (엔티티 데이터 모델)
+## 엔티티 데이터 모델
 
 | Field | Access | Type | Represents | Typical Values |
 | :-- | :-- | :-- | :-- | :-- |

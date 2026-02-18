@@ -13,10 +13,10 @@ nav_order: 5
 
 📄 source: `scripts/core/emotion_data.gd` | 365 lines | extends: RefCounted
 
-## 개요 (Overview)
+## 개요
 Plutchik 8 basic emotions with 3-layer temporal dynamics.
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -28,6 +28,6 @@ Plutchik 8 basic emotions with 3-layer temporal dynamics.
 |--------|------------|
 | - | - |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: [`emotion_data.gd`](emotion_data.md)
 - Used by: [`emotion_data.gd`](emotion_data.md), [`entity_data.gd`](entity_data.md), [`save_manager.gd`](save_manager.md), [`emotion_system.gd`](../systems/emotions.md)

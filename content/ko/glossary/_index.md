@@ -24,13 +24,13 @@ nav_order: 0
 
 # 용어 사전 / Glossary Index
 
-총 8개 카테고리 | Total 8 categories
+총 카테고리 수: 8
 
-총 1487개 항목 | Total 1487 entries
+총 항목 수: 1359
 
-## 카테고리별 통계 / Category Stats
+## 카테고리별
 
-| Category | 항목 수 | Entries |
+| 분류 | 항목 수 | 항목 수 |
 |----------|-------:|--------:|
 | [buildings](buildings.md) | 6 | 6 |
 | [deaths](deaths.md) | 6 | 6 |
@@ -39,9 +39,9 @@ nav_order: 0
 | [game](game.md) | 300 | 300 |
 | [traits](traits.md) | 374 | 374 |
 | [tutorial](tutorial.md) | 7 | 7 |
-| [ui](ui.md) | 724 | 724 |
+| [ui](ui.md) | 596 | 596 |
 
-## 수동 메모 / Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

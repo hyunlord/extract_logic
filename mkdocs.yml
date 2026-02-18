@@ -107,7 +107,7 @@ nav:
       - Conscientiousness (C) Traits: "ko/traits/C.md"
       - Openness to Experience (O) Traits: "ko/traits/O.md"
   - 데이터:
-      - 데이터 (Data): "ko/data/_index.md"
+      - 데이터: "ko/data/_index.md"
       - mental_breaks Data: "ko/data/data/mental_breaks.md"
       - stressor_events Data: "ko/data/data/stressor_events.md"
       - trauma_scars Data: "ko/data/data/trauma_scars.md"
@@ -142,6 +142,7 @@ nav:
       - 용어 사전: "ko/glossary/_index.md"
       - 용어 사전 — buildings: "ko/glossary/buildings.md"
       - 용어 사전 — deaths: "ko/glossary/deaths.md"
+      - 용어 사전 — debug: "ko/glossary/debug.md"
       - 용어 사전 — emotions: "ko/glossary/emotions.md"
       - 용어 사전 — events: "ko/glossary/events.md"
       - 용어 사전 — game: "ko/glossary/game.md"
@@ -149,7 +150,7 @@ nav:
       - 용어 사전 — tutorial: "ko/glossary/tutorial.md"
       - 용어 사전 — ui: "ko/glossary/ui.md"
   - 코어:
-      - 코어 모듈 (Core Modules): "ko/core/_index.md"
+      - 코어 모듈: "ko/core/_index.md"
       - Building Data: "ko/core/building_data.md"
       - Building Manager: "ko/core/building_manager.md"
       - Chunk Index: "ko/core/chunk_index.md"
