@@ -92,11 +92,14 @@ Where:
 
 | Emotion | Weight | Rationale |
 |:--------|------:|:----------|
-| Fear | 1 | High arousal, negative valence |
-| Anger | 0.9 | High arousal, negative valence |
-| Sadness | 1.1 | Low arousal, negative valence |
-| Disgust | 0.6 | Moderate contribution |
-| Joy | n/a | Negative valence-pressure term (stress reduction pathway) |
+| Fear | 0.090 | 최고 스트레스 기여 — 고각성 부정 감정 (highest stress contribution, high arousal negative) |
+| Anger | 0.060 | 고각성 부정 감정 (high arousal, negative valence) |
+| Sadness | 0.050 | 저각성 부정 감정 (low arousal, negative valence) |
+| Disgust | 0.040 | 중간 기여 부정 감정 (moderate negative contribution) |
+| Surprise | 0.030 | 낮은 기여 (low contribution, valence-neutral) |
+| Joy | -0.050 | 스트레스 감소 경로 (stress reduction pathway, negative weight) |
+| Trust | -0.040 | 스트레스 감소 경로 (stress reduction pathway, negative weight) |
+| Anticipation | -0.020 | 미약한 스트레스 감소 (mild stress reduction, anticipatory) |
 
 📄 source: `scripts/systems/stress_system.gd:L208`
 📄 source: `data/species/human/emotions/decay_parameters.json`

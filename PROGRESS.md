@@ -134,3 +134,18 @@ check 5/5: Summary             PASS — 0 warnings
 1. **t-105 partial**: gdscript_formulas.py only got D/R variable support, not full model_ref/purpose enhancement. Non-blocking — pipeline works fine with existing extraction.
 2. **647 anchor warnings**: Trait pages reference facet anchors (`#f_gentle`, `#f_sentimental`) that resolve to heading IDs with slightly different slugification. Non-blocking — all file-level links resolve correctly.
 3. **Export size warnings**: Full export (498KB) exceeds 150KB limit and gets truncated. Systems export (213KB) also truncated. Expected with richer v2 content.
+
+---
+
+## Post-v2 QA Fixes (2026-02-18)
+
+Found via localhost:8000 content audit.
+
+| # | Title | Dispatch | Status |
+|---|-------|----------|--------|
+| t-117 | `data_page.py` — mental_breaks semantic fallback: add domain key → meaning mapping for duration_base_ticks, duration_variance_ticks, break_scale, shaken_* keys | DIRECT | ✅ |
+| t-118 | `stress_detail.py` — EMOTION_WEIGHTS table: parse actual $w_e$ values from stress_system.gd (fear:0.09, anger:0.06, joy:-0.05, etc.) | DIRECT | ✅ |
+
+**Root causes:**
+- t-117: `_infer_control_description` had no mental_break-specific mappings; `duration_base_ticks` fell through all checks to generic fallback
+- t-118: `_collect_emotion_weights` read from `decay_config.get("stress").get("weights")` but decay_config.json has no such path; EMOTION_WEIGHTS is a GDScript const dict not in extracted/constants.json
