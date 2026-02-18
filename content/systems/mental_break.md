@@ -1,114 +1,50 @@
 ---
-title: "Mental Break System"
+title: "Mental Break"
 description: "Generated system documentation page."
 generated: true
 source_files:
   - "scripts/systems/mental_break_system.gd"
 nav_order: 35
+system_name: "mental_break"
 ---
 
-# Mental Break System
-
-> No module-level documentation comment was extracted.
+# Mental Break
 
 📄 source: `scripts/systems/mental_break_system.gd` | Priority: 35 | Tick interval: 1
 
-## Overview
+## Overview (개요)
 
-This page summarizes the extracted structure and runtime behavior for `Mental Break`.
+The **Mental Break** system implements McEwen (1998) allostatic load model to simulate mental break dynamics for entities and world state.
+It runs every **1 ticks** (0.0 game-years) at priority **35**.
 
-The extractor found 10 functions, 0 configuration references, and 5 tracked entity fields.
+**Core entity data**: `emotion_data` (read/write (inferred)), `energy` (read/write (inferred)), `entity_name` (read/write (inferred)), `hunger` (read/write (inferred)), `personality` (read/write (inferred))
 
-## Configuration
+## Tick Pipeline (틱 파이프라인)
 
-No explicit `GameConfig` references extracted.
+1. Run per-entity tick update loop
+   📄 source: `scripts/systems/mental_break_system.gd:L55`
+2. Check mental break conditions
+   📄 source: `scripts/systems/mental_break_system.gd:L75`
+   Math context: allostatic accumulation model
+3. Calculate threshold
+   📄 source: `scripts/systems/mental_break_system.gd:L85`
+   Math context: load(t+1) = clamp(load(t) + chronic_stress - recovery), allostatic accumulation model
+4. Tick active break
+   📄 source: `scripts/systems/mental_break_system.gd:L177`
 
-## Entity Fields Accessed
+## Formulas (수식)
 
-| Field | Access | Description |
-| --- | --- | --- |
-| `emotion_data` | read | Emotion-related state. |
-| `energy` | read | Energy or fatigue state. |
-| `entity_name` | read | entity name |
-| `hunger` | read | Hunger/food state. |
-| `personality` | read | Personality and trait state. |
+### Accumulates chronic stress burden over time and models recovery-driven load reduction.
 
-## Functions
+**Model**: McEwen (1998) allostatic load model (McEwen, B. S. (1998). Protective and Damaging Effects of Stress Mediators)
 
-### `_init()`
+$$
+load(t+1) = clamp(load(t) + chronic_stress - recovery)
+$$
 
-**Parameters**: `(none)`
-**Lines**: 22-28 (7 lines)
+**Interpretation**: Accumulates chronic stress burden over time and models recovery-driven load reduction.
 
-### `init(entity_manager: RefCounted, rng: RandomNumberGenerator)`
-
-Initialize with references
-
-**Parameters**: `entity_manager: RefCounted, rng: RandomNumberGenerator`
-**Lines**: 29-35 (7 lines)
-
-### `_load_break_definitions()`
-
-Load break definitions from JSON
-
-**Parameters**: `(none)`
-**Lines**: 36-54 (19 lines)
-
-### `execute_tick(tick: int)`
-
-**Parameters**: `tick: int`
-**Lines**: 55-74 (20 lines)
-
-### `_check_mental_break(entity: RefCounted, ed: RefCounted, tick: int)`
-
-Per-tick: 발동 확률 체크
-
-**Parameters**: `entity: RefCounted, ed: RefCounted, tick: int`
-**Lines**: 75-84 (10 lines)
-
-### `_calc_threshold(entity: RefCounted, ed: RefCounted)`
-
-역치 계산 (Connor-Davidson resilience + HEXACO)
-
-**Parameters**: `entity: RefCounted, ed: RefCounted`
-**Lines**: 85-111 (27 lines)
-
-### `_select_break_type(entity: RefCounted)`
-
-유형 선택 (HEXACO 가중치 기반 가중 랜덤)
-
-**Parameters**: `entity: RefCounted`
-**Lines**: 125-158 (34 lines)
-
-### `_trigger_break(entity: RefCounted, ed: RefCounted, tick: int)`
-
-브레이크 발동
-
-**Parameters**: `entity: RefCounted, ed: RefCounted, tick: int`
-**Lines**: 159-176 (18 lines)
-
-### `_tick_active_break(entity: RefCounted, ed: RefCounted)`
-
-진행 중인 브레이크 틱 처리
-
-**Parameters**: `entity: RefCounted, ed: RefCounted`
-**Lines**: 177-183 (7 lines)
-
-### `_end_break(entity: RefCounted, ed: RefCounted)`
-
-브레이크 종료 → 카타르시스 + Shaken 설정
-
-**Parameters**: `entity: RefCounted, ed: RefCounted`
-**Lines**: 184-217 (34 lines)
-
-## Formulas
-
-### Calc Threshold Threshold
-
-Formula logic extracted from _calc_threshold
-
-$$(1.0 + 0.40  \cdot  (ed.resilience - 0.5)  \cdot  2.0)$$
-
+**GDScript**:
 ```gdscript
 threshold *= (1.0 + 0.40 * (ed.resilience - 0.5) * 2.0)
 	threshold *= (1.0 + 0.25 * (C - 0.5) * 2.0)
@@ -119,78 +55,157 @@ threshold *= (1.0 + 0.40 * (ed.resilience - 0.5) * 2.0)
 	threshold = clampf(threshold, THRESHOLD_MIN, THRESHOLD_MAX)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `threshold` | threshold |
+| `ed` | ed |
+| `resilience` | recovery resilience factor (CD-RISC based) |
+| `allostatic` | allostatic load (chronic wear, 0-100) |
+| `entity` | entity |
+| `energy` | energy |
+| `hunger` | nutrition state input |
+
 📄 source: `scripts/systems/mental_break_system.gd:L94`
 
-### Calc Break Chance Line 116
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _calc_break_chance
+$$
+clampf((stress - threshold) / BREAK_SCALE, 0.0, BREAK_CAP_PER_TICK)
+$$
 
-$$clampf((stress - threshold) / BREAK_SCALE, 0.0, BREAK_CAP_PER_TICK)$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 var p: float = clampf((stress - threshold) / BREAK_SCALE, 0.0, BREAK_CAP_PER_TICK)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `p` | p |
+| `stress` | stress |
+| `threshold` | threshold |
+
 📄 source: `scripts/systems/mental_break_system.gd:L116`
 
-### Select Break Type Line 140
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _select_break_type
+$$
+lerpf(1.0, 1.0 + axis_weight, axis_val)
+$$
 
-$$lerpf(1.0, 1.0 + axis_weight, axis_val)$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 w *= lerpf(1.0, 1.0 + axis_weight, axis_val)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `w` | w |
+| `axis_weight` | axis weight |
+| `axis_val` | axis val |
+
 📄 source: `scripts/systems/mental_break_system.gd:L140`
 
-### Select Break Type Line 142
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _select_break_type
+$$
+lerpf(1.0, 1.0 + absf(axis_weight), 1.0 - axis_val)
+$$
 
-$$lerpf(1.0, 1.0 + absf(axis_weight), 1.0 - axis_val)$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 w *= lerpf(1.0, 1.0 + absf(axis_weight), 1.0 - axis_val)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `w` | w |
+| `axis_weight` | axis weight |
+| `axis_val` | axis val |
+
 📄 source: `scripts/systems/mental_break_system.gd:L142`
 
-### Select Break Type Line 149
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _select_break_type
+$$
+_rng.randf()  \cdot  total
+$$
 
-$$_rng.randf()  \cdot  total$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 var roll: float = _rng.randf() * total
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `roll` | roll |
+| `_rng` |  rng |
+| `total` | total |
+
 📄 source: `scripts/systems/mental_break_system.gd:L149`
 
-### Trigger Break Duration
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _trigger_break
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 var variance: int = bdef.get("duration_variance_ticks", 4)
 	var duration: float = float(base + _rng.randi() % (variance + 1))
 	duration = clampf(duration, 1.0, 168.0)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `variance` | variance |
+| `bdef` | bdef |
+| `duration` | duration |
+| `base` | base |
+| `_rng` |  rng |
+
 📄 source: `scripts/systems/mental_break_system.gd:L164`
 
-## Dependencies
+## Configuration Reference (설정)
 
-### Imports
+No explicit `GameConfig` references extracted.
 
-- None
+## Cross-System Effects (시스템 간 상호작용)
 
-### Signals Emitted
+### Imported Modules (모듈 임포트)
 
-- None
+No import relationships extracted for this module.
 
-### Referenced By
+### Shared Entity Fields (공유 엔티티 필드)
 
-- None
+| Field | Access | Shared With |
+| :-- | :-- | :-- |
+| `emotion_data` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`stress`](stress.md), [`trait`](trait.md) |
+| `energy` | read/write (inferred) | [`behavior`](behavior.md), [`building_effect`](building_effect.md), [`emotions`](emotions.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
+| `hunger` | read/write (inferred) | [`behavior`](behavior.md), [`childcare`](childcare.md), [`family`](family.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
+| `personality` | read/write (inferred) | [`aging`](aging.md), [`emotions`](emotions.md), [`stress`](stress.md), [`trait`](trait.md) |
+
+### Signals (시그널)
+
+No emitted signals extracted for this module.
+
+### Downstream Impact (다운스트림 영향)
+
+- No explicit downstream dependencies extracted.
+
+## Entity Data Model (엔티티 데이터 모델)
+
+| Field | Access | Type | Represents | Typical Values |
+| :-- | :-- | :-- | :-- | :-- |
+| `emotion_data` | read/write (inferred) | Dictionary / custom data object | Affective state used for behavior modulation and social propagation. | Structured object with nested metrics/axes. |
+| `energy` | read/write (inferred) | float | Fatigue/rest capacity controlling action readiness. | Normalized scalar (commonly 0.0-1.0 or 0-100 by system). |
+| `entity_name` | read/write (inferred) | Variant | Entity name. | System-defined value domain. |
+| `hunger` | read/write (inferred) | float | Nutritional deprivation level driving survival and action priorities. | Normalized scalar (commonly 0.0-1.0 or 0-100 by system). |
+| `personality` | read/write (inferred) | Dictionary / custom data object | Trait/axis profile used for sensitivity and decision weighting. | Structured object with nested metrics/axes. |

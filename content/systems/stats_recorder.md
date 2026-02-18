@@ -1,77 +1,59 @@
 ---
-title: "Stats Recorder System"
+title: "Stats Recorder"
 description: "Generated system documentation page."
 generated: true
 source_files:
   - "scripts/systems/stats_recorder.gd"
 nav_order: 90
+system_name: "stats_recorder"
 ---
 
-# Stats Recorder System
-
-> No module-level documentation comment was extracted.
+# Stats Recorder
 
 📄 source: `scripts/systems/stats_recorder.gd` | Priority: 90 | Tick interval: 200
 
-## Overview
+## Overview (개요)
 
-This page summarizes the extracted structure and runtime behavior for `Stats Recorder`.
+The **Stats Recorder** system implements a domain-specific simulation model to simulate stats recorder dynamics for entities and world state.
+It runs every **200 ticks** (0.0 game-years) at priority **90**.
 
-The extractor found 5 functions, 0 configuration references, and 0 tracked entity fields.
+**Core entity data**: No entity fields were extracted.
 
-## Configuration
+## Tick Pipeline (틱 파이프라인)
+
+1. Run per-entity tick update loop
+   📄 source: `scripts/systems/stats_recorder.gd:L25`
+2. Resolve resource deltas
+   📄 source: `scripts/systems/stats_recorder.gd:L73`
+3. Resolve settlement stats
+   📄 source: `scripts/systems/stats_recorder.gd:L90`
+
+## Formulas (수식)
+
+No extracted formulas for this module.
+
+## Configuration Reference (설정)
 
 No explicit `GameConfig` references extracted.
 
-## Entity Fields Accessed
+## Cross-System Effects (시스템 간 상호작용)
 
-No entity field access metadata extracted.
+### Imported Modules (모듈 임포트)
 
-## Functions
+No import relationships extracted for this module.
 
-### `_init()`
+### Shared Entity Fields (공유 엔티티 필드)
 
-**Parameters**: `(none)`
-**Lines**: 13-18 (6 lines)
+No cross-system shared entity field usage was inferred.
 
-### `init(entity_manager: RefCounted, building_manager: RefCounted, settlement_manager: RefCounted = null)`
+### Signals (시그널)
 
-**Parameters**: `entity_manager: RefCounted, building_manager: RefCounted, settlement_manager: RefCounted = null`
-**Lines**: 19-24 (6 lines)
+No emitted signals extracted for this module.
 
-### `execute_tick(_tick: int)`
+### Downstream Impact (다운스트림 영향)
 
-**Parameters**: `_tick: int`
-**Lines**: 25-72 (48 lines)
+- No explicit downstream dependencies extracted.
 
-### `get_resource_deltas()`
+## Entity Data Model (엔티티 데이터 모델)
 
-Get resource delta per 100 ticks (rate of change)
-
-**Parameters**: `(none)`
-**Lines**: 73-89 (17 lines)
-
-### `get_settlement_stats()`
-
-Get per-settlement stats
-
-**Parameters**: `(none)`
-**Lines**: 90-114 (25 lines)
-
-## Formulas
-
-No formulas extracted for this module.
-
-## Dependencies
-
-### Imports
-
-- None
-
-### Signals Emitted
-
-- None
-
-### Referenced By
-
-- None
+No entity field metadata extracted for this module.

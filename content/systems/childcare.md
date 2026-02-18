@@ -1,85 +1,67 @@
 ---
-title: "Childcare System"
+title: "Childcare"
 description: "Generated system documentation page."
 generated: true
 source_files:
   - "scripts/systems/childcare_system.gd"
 nav_order: 8
+system_name: "childcare"
 ---
 
-# Childcare System
-
-> No module-level documentation comment was extracted.
+# Childcare
 
 📄 source: `scripts/systems/childcare_system.gd` | Priority: 8 | Tick interval: 2
 
-## Overview
+## Overview (개요)
 
-This page summarizes the extracted structure and runtime behavior for `Childcare`.
+The **Childcare** system implements a domain-specific simulation model to simulate childcare dynamics for entities and world state.
+It runs every **2 ticks** (0.0 game-years) at priority **8**.
 
-The extractor found 6 functions, 3 configuration references, and 2 tracked entity fields.
+**Core entity data**: `age_stage` (read/write (inferred)), `hunger` (read/write (inferred))
 
-## Configuration
+## Tick Pipeline (틱 파이프라인)
 
-| Constant | Value | Description |
-| --- | --- | --- |
-| `CHILDCARE_FEED_AMOUNTS` | { 	"infant": 0.40, 	"toddler": 0.50, 	"child": 0.50, 	"teen": 0.60, } | Feed amounts per childcare tick (food units from stockpile) |
-| `CHILDCARE_HUNGER_THRESHOLDS` | { 	"infant": 0.85, 	"toddler": 0.80, 	"child": 0.75, 	"teen": 0.70, } | Per-stage hunger threshold for childcare feeding (higher = feed sooner) |
-| `FOOD_HUNGER_RESTORE` | 0.3 | Eating constants |
+1. Run per-entity tick update loop
+   📄 source: `scripts/systems/childcare_system.gd:L22`
+2. Resolve settlement food
+   📄 source: `scripts/systems/childcare_system.gd:L80`
 
-## Entity Fields Accessed
+## Formulas (수식)
 
-| Field | Access | Description |
-| --- | --- | --- |
-| `age_stage` | read | Age or stage lifecycle state. |
-| `hunger` | read | Hunger/food state. |
+No extracted formulas for this module.
 
-## Functions
+## Configuration Reference (설정)
 
-### `_init()`
+| Constant | Default | Controls | Behavior Effect |
+| :-- | :-- | :-- | :-- |
+| `CHILDCARE_FEED_AMOUNTS` | { 	"infant": 0.40, 	"toddler": 0.50, 	"child": 0.50, 	"teen": 0.60, } | Feed amounts per childcare tick (food units from stockpile) | Adjusts baseline system behavior under this module. |
+| `CHILDCARE_HUNGER_THRESHOLDS` | { 	"infant": 0.85, 	"toddler": 0.80, 	"child": 0.75, 	"teen": 0.70, } | Threshold gate for state transitions. | Changing this moves trigger points for behavior changes. |
+| `FOOD_HUNGER_RESTORE` | 0.3 | Eating constants | Adjusts baseline system behavior under this module. |
 
-**Parameters**: `(none)`
-**Lines**: 10-15 (6 lines)
+## Cross-System Effects (시스템 간 상호작용)
 
-### `init(entity_manager: RefCounted, building_manager: RefCounted, settlement_manager: RefCounted)`
+### Imported Modules (모듈 임포트)
 
-**Parameters**: `entity_manager: RefCounted, building_manager: RefCounted, settlement_manager: RefCounted`
-**Lines**: 16-21 (6 lines)
+No import relationships extracted for this module.
 
-### `execute_tick(tick: int)`
+### Shared Entity Fields (공유 엔티티 필드)
 
-**Parameters**: `tick: int`
-**Lines**: 22-79 (58 lines)
+| Field | Access | Shared With |
+| :-- | :-- | :-- |
+| `age_stage` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`construction`](construction.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md) |
+| `hunger` | read/write (inferred) | [`behavior`](behavior.md), [`family`](family.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
 
-### `_get_settlement_food(settlement_id: int)`
+### Signals (시그널)
 
-**Parameters**: `settlement_id: int`
-**Lines**: 80-90 (11 lines)
+No emitted signals extracted for this module.
 
-### `_withdraw_food(settlement_id: int, amount: float)`
+### Downstream Impact (다운스트림 영향)
 
-**Parameters**: `settlement_id: int, amount: float`
-**Lines**: 91-113 (23 lines)
+- No explicit downstream dependencies extracted.
 
-### `_sort_hunger_ascending(a: RefCounted, b: RefCounted)`
+## Entity Data Model (엔티티 데이터 모델)
 
-**Parameters**: `a: RefCounted, b: RefCounted`
-**Lines**: 114-115 (2 lines)
-
-## Formulas
-
-No formulas extracted for this module.
-
-## Dependencies
-
-### Imports
-
-- None
-
-### Signals Emitted
-
-- None
-
-### Referenced By
-
-- None
+| Field | Access | Type | Represents | Typical Values |
+| :-- | :-- | :-- | :-- | :-- |
+| `age_stage` | read/write (inferred) | String enum | Lifecycle progression used for stage-specific behavior and events. | Named categorical states. |
+| `hunger` | read/write (inferred) | float | Nutritional deprivation level driving survival and action priorities. | Normalized scalar (commonly 0.0-1.0 or 0-100 by system). |

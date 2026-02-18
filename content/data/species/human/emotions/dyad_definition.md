@@ -9,325 +9,137 @@ nav_order: 10
 
 # dyad_definition
 
-📄 source: `data/species/human/emotions/dyad_definition.json` | Category: species/human/emotions | Type: object
+📄 source (출처): `data/species/human/emotions/dyad_definition.json` | Category (분류): species/human/emotions | Type (유형): object
 
-## Schema
+## 개요 (Overview)
 
-| Key | Type | Description |
-|-----|------|-------------|
-| `dyads` | object | object with 24 keys |
-| `dyads.aggressiveness` | object | object with 3 keys |
-| `dyads.aggressiveness.components` | array | array (2 items, string entries) |
-| `dyads.aggressiveness.name_kr` | string | "공격성" |
-| `dyads.aggressiveness.type` | string | "primary" |
-| `dyads.anxiety` | object | object with 3 keys |
-| `dyads.anxiety.components` | array | array (2 items, string entries) |
-| `dyads.anxiety.name_kr` | string | "불안" |
-| `dyads.anxiety.type` | string | "tertiary" |
-| `dyads.awe` | object | object with 3 keys |
-| `dyads.awe.components` | array | array (2 items, string entries) |
-| `dyads.awe.name_kr` | string | "경외" |
-| `dyads.awe.type` | string | "primary" |
-| `dyads.contempt` | object | object with 3 keys |
-| `dyads.contempt.components` | array | array (2 items, string entries) |
-| `dyads.contempt.name_kr` | string | "경멸" |
-| `dyads.contempt.type` | string | "primary" |
-| `dyads.curiosity` | object | object with 3 keys |
-| `dyads.curiosity.components` | array | array (2 items, string entries) |
-| `dyads.curiosity.name_kr` | string | "호기심" |
-| `dyads.curiosity.type` | string | "secondary" |
-| `dyads.cynicism` | object | object with 3 keys |
-| `dyads.cynicism.components` | array | array (2 items, string entries) |
-| `dyads.cynicism.name_kr` | string | "냉소" |
-| `dyads.cynicism.type` | string | "secondary" |
-| `dyads.delight` | object | object with 3 keys |
-| `dyads.delight.components` | array | array (2 items, string entries) |
-| `dyads.delight.name_kr` | string | "환희" |
-| `dyads.delight.type` | string | "tertiary" |
-| `dyads.despair` | object | object with 3 keys |
-| `dyads.despair.components` | array | array (2 items, string entries) |
-| `dyads.despair.name_kr` | string | "절망" |
-| `dyads.despair.type` | string | "secondary" |
-| `dyads.disappointment` | object | object with 3 keys |
-| `dyads.disappointment.components` | array | array (2 items, string entries) |
-| `dyads.disappointment.name_kr` | string | "실망" |
-| `dyads.disappointment.type` | string | "primary" |
-| `dyads.dominance` | object | object with 3 keys |
-| `dyads.dominance.components` | array | array (2 items, string entries) |
-| `dyads.dominance.name_kr` | string | "지배" |
-| `dyads.dominance.type` | string | "tertiary" |
-| `dyads.envy` | object | object with 3 keys |
-| `dyads.envy.components` | array | array (2 items, string entries) |
-| `dyads.envy.name_kr` | string | "시기" |
-| `dyads.envy.type` | string | "secondary" |
-| `dyads.guilt` | object | object with 3 keys |
-| `dyads.guilt.components` | array | array (2 items, string entries) |
-| `dyads.guilt.name_kr` | string | "죄책감" |
-| `dyads.guilt.type` | string | "secondary" |
-| `dyads.hope` | object | object with 3 keys |
-| `dyads.hope.components` | array | array (2 items, string entries) |
-| `dyads.hope.name_kr` | string | "희망" |
-| `dyads.hope.type` | string | "secondary" |
-| `dyads.love` | object | object with 3 keys |
-| `dyads.love.components` | array | array (2 items, string entries) |
-| `dyads.love.name_kr` | string | "사랑" |
-| `dyads.love.type` | string | "primary" |
-| `dyads.morbidness` | object | object with 3 keys |
-| `dyads.morbidness.components` | array | array (2 items, string entries) |
-| `dyads.morbidness.name_kr` | string | "잔혹" |
-| `dyads.morbidness.type` | string | "tertiary" |
-| `dyads.optimism` | object | object with 3 keys |
-| `dyads.optimism.components` | array | array (2 items, string entries) |
-| `dyads.optimism.name_kr` | string | "낙관" |
-| `dyads.optimism.type` | string | "primary" |
-| `dyads.outrage` | object | object with 3 keys |
-| `dyads.outrage.components` | array | array (2 items, string entries) |
-| `dyads.outrage.name_kr` | string | "격분" |
-| `dyads.outrage.type` | string | "tertiary" |
-| `dyads.pessimism` | object | object with 3 keys |
-| `dyads.pessimism.components` | array | array (2 items, string entries) |
-| `dyads.pessimism.name_kr` | string | "비관" |
-| `dyads.pessimism.type` | string | "tertiary" |
-| `dyads.pride` | object | object with 3 keys |
-| `dyads.pride.components` | array | array (2 items, string entries) |
-| `dyads.pride.name_kr` | string | "자부심" |
-| `dyads.pride.type` | string | "secondary" |
-| `dyads.remorse` | object | object with 3 keys |
-| `dyads.remorse.components` | array | array (2 items, string entries) |
-| `dyads.remorse.name_kr` | string | "후회" |
-| `dyads.remorse.type` | string | "primary" |
-| `dyads.sentimentality` | object | object with 3 keys |
-| `dyads.sentimentality.components` | array | array (2 items, string entries) |
-| `dyads.sentimentality.name_kr` | string | "감상" |
-| `dyads.sentimentality.type` | string | "tertiary" |
-| `dyads.shame` | object | object with 3 keys |
-| `dyads.shame.components` | array | array (2 items, string entries) |
-| `dyads.shame.name_kr` | string | "수치" |
-| `dyads.shame.type` | string | "tertiary" |
-| `dyads.submission` | object | object with 3 keys |
-| `dyads.submission.components` | array | array (2 items, string entries) |
-| `dyads.submission.name_kr` | string | "복종" |
-| `dyads.submission.type` | string | "primary" |
-| `dyads.unbelief` | object | object with 3 keys |
-| `dyads.unbelief.components` | array | array (2 items, string entries) |
-| `dyads.unbelief.name_kr` | string | "불신" |
-| `dyads.unbelief.type` | string | "secondary" |
+- Configures (설정 내용): `species/human/emotions` 데이터 도메인 설정 값. Configuration values for the `species/human/emotions` data domain.
+- Read by systems/modules (읽는 시스템/모듈): species_manager
+- Related documentation (관련 문서): [`species_manager`](../../../../core/species_manager.md)
 
-## Full Content
+## 해석된 파라미터 (Interpreted Parameters)
 
-Large object detected: **97** total nested keys.
+### Timing & Decay (시간/감쇠)
 
-Top-level keys: **1**
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `dyads.sentimentality.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.sentimentality.components.sample` | trust | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.sentimentality.name_kr` | 감상 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.sentimentality.type` | tertiary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 
-<details>
-<summary>Expand top-level preview</summary>
+### Thresholds & Bounds (임계/경계)
 
-```json
-{
-  "dyads": {
-    "love": {
-      "components": [
-        "joy",
-        "trust"
-      ],
-      "type": "primary",
-      "name_kr": "사랑"
-    },
-    "submission": {
-      "components": [
-        "trust",
-        "fear"
-      ],
-      "type": "primary",
-      "name_kr": "복종"
-    },
-    "awe": {
-      "components": [
-        "fear",
-        "surprise"
-      ],
-      "type": "primary",
-      "name_kr": "경외"
-    },
-    "disappointment": {
-      "components": [
-        "surprise",
-        "sadness"
-      ],
-      "type": "primary",
-      "name_kr": "실망"
-    },
-    "remorse": {
-      "components": [
-        "sadness",
-        "disgust"
-      ],
-      "type": "primary",
-      "name_kr": "후회"
-    },
-    "contempt": {
-      "components": [
-        "disgust",
-        "anger"
-      ],
-      "type": "primary",
-      "name_kr": "경멸"
-    },
-    "aggressiveness": {
-      "components": [
-        "anger",
-        "anticipation"
-      ],
-      "type": "primary",
-      "name_kr": "공격성"
-    },
-    "optimism": {
-      "components": [
-        "anticipation",
-        "joy"
-      ],
-      "type": "primary",
-      "name_kr": "낙관"
-    },
-    "hope": {
-      "components": [
-        "anticipation",
-        "trust"
-      ],
-      "type": "secondary",
-      "name_kr": "희망"
-    },
-    "guilt": {
-      "components": [
-        "joy",
-        "fear"
-      ],
-      "type": "secondary",
-      "name_kr": "죄책감"
-    },
-    "curiosity": {
-      "components": [
-        "trust",
-        "surprise"
-      ],
-      "type": "secondary",
-      "name_kr": "호기심"
-    },
-    "despair": {
-      "components": [
-        "fear",
-        "sadness"
-      ],
-      "type": "secondary",
-      "name_kr": "절망"
-    },
-    "unbelief": {
-      "components": [
-        "surprise",
-        "disgust"
-      ],
-      "type": "secondary",
-      "name_kr": "불신"
-    },
-    "envy": {
-      "components": [
-        "sadness",
-        "anger"
-      ],
-      "type": "secondary",
-      "name_kr": "시기"
-    },
-    "cynicism": {
-      "components": [
-        "disgust",
-        "anticipation"
-      ],
-      "type": "secondary",
-      "name_kr": "냉소"
-    },
-    "pride": {
-      "components": [
-        "anger",
-        "joy"
-      ],
-      "type": "secondary",
-      "name_kr": "자부심"
-    },
-    "delight": {
-      "components": [
-        "joy",
-        "surprise"
-      ],
-      "type": "tertiary",
-      "name_kr": "환희"
-    },
-    "sentimentality": {
-      "components": [
-        "trust",
-        "sadness"
-      ],
-      "type": "tertiary",
-      "name_kr": "감상"
-    },
-    "shame": {
-      "components": [
-        "fear",
-        "disgust"
-      ],
-      "type": "tertiary",
-      "name_kr": "수치"
-    },
-    "outrage": {
-      "components": [
-        "surprise",
-        "anger"
-      ],
-      "type": "tertiary",
-      "name_kr": "격분"
-    },
-    "pessimism": {
-      "components": [
-        "sadness",
-        "anticipation"
-      ],
-      "type": "tertiary",
-      "name_kr": "비관"
-    },
-    "morbidness": {
-      "components": [
-        "disgust",
-        "joy"
-      ],
-      "type": "tertiary",
-      "name_kr": "잔혹"
-    },
-    "dominance": {
-      "components": [
-        "anger",
-        "trust"
-      ],
-      "type": "tertiary",
-      "name_kr": "지배"
-    },
-    "anxiety": {
-      "components": [
-        "anticipation",
-        "fear"
-      ],
-      "type": "tertiary",
-      "name_kr": "불안"
-    }
-  }
-}
-```
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `dyads.dominance.components` | 2 items | array | Activation boundary used by game logic. (작동 임계값) |
+| `dyads.dominance.components.sample` | anger | string | Activation boundary used by game logic. (작동 임계값) |
+| `dyads.dominance.name_kr` | 지배 | string | Activation boundary used by game logic. (작동 임계값) |
+| `dyads.dominance.type` | tertiary | string | Activation boundary used by game logic. (작동 임계값) |
 
-</details>
+### Identifiers & Labels (식별자/라벨)
 
-## Referenced By
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `dyads.aggressiveness.name_kr` | 공격성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.aggressiveness.type` | primary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.anxiety.name_kr` | 불안 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.anxiety.type` | tertiary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.awe.name_kr` | 경외 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.awe.type` | primary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.contempt.name_kr` | 경멸 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.contempt.type` | primary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.curiosity.name_kr` | 호기심 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.curiosity.type` | secondary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.cynicism.name_kr` | 냉소 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.cynicism.type` | secondary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.delight.name_kr` | 환희 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.delight.type` | tertiary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.despair.name_kr` | 절망 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.despair.type` | secondary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.disappointment.name_kr` | 실망 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.disappointment.type` | primary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.envy.name_kr` | 시기 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.envy.type` | secondary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.guilt.name_kr` | 죄책감 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.guilt.type` | secondary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.hope.name_kr` | 희망 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.hope.type` | secondary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.love.name_kr` | 사랑 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.love.type` | primary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.morbidness.components` | 2 items | array | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.morbidness.components.sample` | disgust | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.morbidness.name_kr` | 잔혹 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.morbidness.type` | tertiary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.optimism.name_kr` | 낙관 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.optimism.type` | primary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.outrage.name_kr` | 격분 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.outrage.type` | tertiary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.pessimism.name_kr` | 비관 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.pessimism.type` | tertiary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.pride.components` | 2 items | array | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.pride.components.sample` | anger | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.pride.name_kr` | 자부심 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.pride.type` | secondary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.remorse.name_kr` | 후회 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.remorse.type` | primary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.shame.name_kr` | 수치 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.shame.type` | tertiary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.submission.name_kr` | 복종 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.submission.type` | primary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.unbelief.name_kr` | 불신 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `dyads.unbelief.type` | secondary | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+
+### Other Parameters (기타)
+
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `dyads.aggressiveness.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.aggressiveness.components.sample` | anger | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.anxiety.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.anxiety.components.sample` | anticipation | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.awe.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.awe.components.sample` | fear | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.contempt.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.contempt.components.sample` | disgust | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.curiosity.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.curiosity.components.sample` | trust | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.cynicism.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.cynicism.components.sample` | disgust | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.delight.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.delight.components.sample` | joy | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.despair.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.despair.components.sample` | fear | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.disappointment.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.disappointment.components.sample` | surprise | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.envy.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.envy.components.sample` | sadness | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.guilt.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.guilt.components.sample` | joy | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.hope.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.hope.components.sample` | anticipation | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.love.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.love.components.sample` | joy | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.optimism.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.optimism.components.sample` | anticipation | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.outrage.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.outrage.components.sample` | surprise | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.pessimism.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.pessimism.components.sample` | sadness | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.remorse.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.remorse.components.sample` | sadness | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.shame.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.shame.components.sample` | fear | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.submission.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.submission.components.sample` | trust | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.unbelief.components` | 2 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `dyads.unbelief.components.sample` | surprise | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+
+## 참조하는 시스템 (Referenced By)
 
 - [`species_manager`](../../../../core/species_manager.md) - references data under `data/species/`
 
-## Manual Notes
+## 수동 노트 (Manual Notes)
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

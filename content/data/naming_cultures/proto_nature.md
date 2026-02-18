@@ -9,196 +9,49 @@ nav_order: 10
 
 # proto_nature
 
-📄 source: `data/naming_cultures/proto_nature.json` | Category: naming_cultures | Type: object
+📄 source (출처): `data/naming_cultures/proto_nature.json` | Category (분류): naming_cultures | Type (유형): object
 
-## Schema
+## 개요 (Overview)
 
-| Key | Type | Description |
-|-----|------|-------------|
-| `allow_markov_generation` | boolean | false |
-| `culture_id` | string | "proto_nature" |
-| `description` | string | "Names derived from nature. Early stone age." |
-| `display_name` | string | "Nature Names (Primitive)" |
-| `given_names` | object | object with 3 keys |
-| `given_names.female` | array | array (65 items, string entries) |
-| `given_names.male` | array | array (64 items, string entries) |
-| `given_names.neutral` | array | array (16 items, string entries) |
-| `name_structure` | string | "given" |
-| `patronymic_rule` | string | "none" |
-| `surname_rule` | string | "none" |
+- Configures (설정 내용): `naming_cultures` 데이터 도메인 설정 값. Configuration values for the `naming_cultures` data domain.
+- Read by systems/modules (읽는 시스템/모듈): name_generator
+- Related documentation (관련 문서): [`name_generator`](../../core/name_generator.md)
 
-## Full Content
+## 해석된 파라미터 (Interpreted Parameters)
 
-```json
-{
-  "culture_id": "proto_nature",
-  "display_name": "Nature Names (Primitive)",
-  "description": "Names derived from nature. Early stone age.",
-  "name_structure": "given",
-  "given_names": {
-    "male": [
-      "Ash",
-      "Birch",
-      "Brook",
-      "Cedar",
-      "Clay",
-      "Dusk",
-      "Elm",
-      "Fern",
-      "Flint",
-      "Glen",
-      "Heath",
-      "Ivy",
-      "Kael",
-      "Lark",
-      "Moss",
-      "Nix",
-      "Oak",
-      "Pike",
-      "Quinn",
-      "Reed",
-      "Sage",
-      "Stone",
-      "Thorn",
-      "Vale",
-      "Wolf",
-      "Yew",
-      "Blaze",
-      "Cliff",
-      "Crag",
-      "Dale",
-      "Dune",
-      "Ember",
-      "Frost",
-      "Gale",
-      "Hawk",
-      "Lake",
-      "Marsh",
-      "Peak",
-      "Ridge",
-      "Shade",
-      "Sky",
-      "Storm",
-      "Swift",
-      "Tide",
-      "Wren",
-      "Briar",
-      "Coral",
-      "Delta",
-      "Echo",
-      "Fox",
-      "Grove",
-      "Haven",
-      "Jet",
-      "Leaf",
-      "Mist",
-      "North",
-      "Onyx",
-      "Pine",
-      "Raven",
-      "Rush",
-      "Slate",
-      "Spark",
-      "Trail",
-      "Vine"
-    ],
-    "female": [
-      "Alba",
-      "Amber",
-      "Aspen",
-      "Autumn",
-      "Berry",
-      "Bloom",
-      "Breeze",
-      "Clover",
-      "Coral",
-      "Dahlia",
-      "Dawn",
-      "Dew",
-      "Dove",
-      "Ember",
-      "Fawn",
-      "Flora",
-      "Gem",
-      "Hazel",
-      "Heron",
-      "Holly",
-      "Iris",
-      "Jade",
-      "Jasmine",
-      "Lily",
-      "Luna",
-      "Maple",
-      "Marigold",
-      "Meadow",
-      "Myrtle",
-      "Opal",
-      "Pearl",
-      "Petal",
-      "Poppy",
-      "Rain",
-      "River",
-      "Rose",
-      "Rowan",
-      "Ruby",
-      "Sable",
-      "Sage",
-      "Sierra",
-      "Snow",
-      "Sparrow",
-      "Spring",
-      "Star",
-      "Summer",
-      "Sunny",
-      "Terra",
-      "Violet",
-      "Willow",
-      "Wren",
-      "Zinnia",
-      "Aurora",
-      "Brook",
-      "Crystal",
-      "Fern",
-      "Ginger",
-      "Ivy",
-      "Juniper",
-      "Lark",
-      "Moss",
-      "Olive",
-      "Raven",
-      "Shell",
-      "Teal"
-    ],
-    "neutral": [
-      "Ash",
-      "Brook",
-      "Cedar",
-      "Dawn",
-      "Echo",
-      "Fern",
-      "Glen",
-      "Haven",
-      "Ivy",
-      "Lark",
-      "Moss",
-      "Quinn",
-      "Reed",
-      "Sage",
-      "Sky",
-      "Wren"
-    ]
-  },
-  "allow_markov_generation": false,
-  "patronymic_rule": "none",
-  "surname_rule": "none"
-}
-```
+### Weights & Multipliers (가중/배수)
 
-## Referenced By
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `allow_markov_generation` | false | boolean | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+
+### Identifiers & Labels (식별자/라벨)
+
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `culture_id` | proto_nature | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `display_name` | Nature Names (Primitive) | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `given_names.female` | 65 items | array | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `given_names.female.sample` | Alba | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `given_names.male` | 64 items | array | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `given_names.male.sample` | Ash | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `given_names.neutral` | 16 items | array | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `given_names.neutral.sample` | Ash | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `name_structure` | given | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `surname_rule` | none | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+
+### Other Parameters (기타)
+
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `description` | Names derived from nature. Early stone age. | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `patronymic_rule` | none | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+
+## 참조하는 시스템 (Referenced By)
 
 - [`name_generator`](../../core/name_generator.md) - references data under `data/naming_cultures/`
 
-## Manual Notes
+## 수동 노트 (Manual Notes)
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

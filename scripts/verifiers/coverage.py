@@ -86,6 +86,17 @@ def _build_expectations(
     required_expected: list[dict[str, str]] = [
         {"group": "required", "source": "content/config-reference.md", "path": os.path.join(config.CONTENT_DIR, "config-reference.md")},
         {"group": "required", "source": "content/index.md", "path": os.path.join(config.CONTENT_DIR, "index.md")},
+        # v2 required content pages
+        {"group": "required", "source": "content/pipeline.md", "path": os.path.join(config.CONTENT_DIR, "pipeline.md")},
+        {"group": "required", "source": "content/traits/_index.md", "path": os.path.join(config.CONTENT_TRAITS, "_index.md")},
+        {"group": "required", "source": "content/systems/emotion-detail.md", "path": os.path.join(config.CONTENT_SYSTEMS, "emotion-detail.md")},
+        {"group": "required", "source": "content/systems/stress-detail.md", "path": os.path.join(config.CONTENT_SYSTEMS, "stress-detail.md")},
+        {"group": "required", "source": "content/systems/mortality-detail.md", "path": os.path.join(config.CONTENT_SYSTEMS, "mortality-detail.md")},
+        # v2 required extracted JSON files
+        {"group": "required", "source": "extracted/trait_data.json", "path": os.path.join(config.EXTRACTED_DIR, "trait_data.json")},
+        {"group": "required", "source": "extracted/stressor_data.json", "path": os.path.join(config.EXTRACTED_DIR, "stressor_data.json")},
+        {"group": "required", "source": "extracted/emotion_presets.json", "path": os.path.join(config.EXTRACTED_DIR, "emotion_presets.json")},
+        {"group": "required", "source": "extracted/decay_config.json", "path": os.path.join(config.EXTRACTED_DIR, "decay_config.json")},
     ]
 
     def _append_from_manifest(

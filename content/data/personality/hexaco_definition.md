@@ -9,205 +9,104 @@ nav_order: 10
 
 # hexaco_definition
 
-📄 source: `data/personality/hexaco_definition.json` | Category: personality | Type: object
+📄 source (출처): `data/personality/hexaco_definition.json` | Category (분류): personality | Type (유형): object
 
-## Schema
+## 개요 (Overview)
 
-| Key | Type | Description |
-|-----|------|-------------|
-| `axes` | object | object with 6 keys |
-| `axes.A` | object | object with 3 keys |
-| `axes.A.facets` | object | object with 4 keys |
-| `axes.A.name` | string | "Agreeableness" |
-| `axes.A.name_kr` | string | "우호성" |
-| `axes.C` | object | object with 3 keys |
-| `axes.C.facets` | object | object with 4 keys |
-| `axes.C.name` | string | "Conscientiousness" |
-| `axes.C.name_kr` | string | "성실성" |
-| `axes.E` | object | object with 3 keys |
-| `axes.E.facets` | object | object with 4 keys |
-| `axes.E.name` | string | "Emotionality" |
-| `axes.E.name_kr` | string | "감정성" |
-| `axes.H` | object | object with 3 keys |
-| `axes.H.facets` | object | object with 4 keys |
-| `axes.H.name` | string | "Honesty-Humility" |
-| `axes.H.name_kr` | string | "정직-겸손" |
-| `axes.O` | object | object with 3 keys |
-| `axes.O.facets` | object | object with 4 keys |
-| `axes.O.name` | string | "Openness to Experience" |
-| `axes.O.name_kr` | string | "경험 개방성" |
-| `axes.X` | object | object with 3 keys |
-| `axes.X.facets` | object | object with 4 keys |
-| `axes.X.name` | string | "Extraversion" |
-| `axes.X.name_kr` | string | "외향성" |
-| `interstitial` | object | object with 1 keys |
-| `interstitial.altruism` | object | object with 3 keys |
-| `interstitial.altruism.name` | string | "Altruism" |
-| `interstitial.altruism.name_kr` | string | "이타성" |
-| `interstitial.altruism.note` | string | "Component between H and E" |
+- Configures (설정 내용): `personality` 데이터 도메인 설정 값. Configuration values for the `personality` data domain.
+- Read by systems/modules (읽는 시스템/모듈): `references.json`에서 추론되지 않음.
+- Related documentation (관련 문서): 없음.
 
-## Full Content
+## 해석된 파라미터 (Interpreted Parameters)
 
-Large object detected: **102** total nested keys.
+### Timing & Decay (시간/감쇠)
 
-Top-level keys: **2**
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `axes.E.facets.E_sentimentality.name` | Sentimentality | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.E.facets.E_sentimentality.name_kr` | 감상성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 
-<details>
-<summary>Expand top-level preview</summary>
+### Stress & Emotion (스트레스/감정)
 
-```json
-{
-  "axes": {
-    "H": {
-      "name": "Honesty-Humility",
-      "name_kr": "정직-겸손",
-      "facets": {
-        "H_sincerity": {
-          "name": "Sincerity",
-          "name_kr": "진실성"
-        },
-        "H_fairness": {
-          "name": "Fairness",
-          "name_kr": "공정성"
-        },
-        "H_greed_avoidance": {
-          "name": "Greed Avoidance",
-          "name_kr": "탐욕 회피"
-        },
-        "H_modesty": {
-          "name": "Modesty",
-          "name_kr": "겸손"
-        }
-      }
-    },
-    "E": {
-      "name": "Emotionality",
-      "name_kr": "감정성",
-      "facets": {
-        "E_fearfulness": {
-          "name": "Fearfulness",
-          "name_kr": "두려움"
-        },
-        "E_anxiety": {
-          "name": "Anxiety",
-          "name_kr": "불안"
-        },
-        "E_dependence": {
-          "name": "Dependence",
-          "name_kr": "의존성"
-        },
-        "E_sentimentality": {
-          "name": "Sentimentality",
-          "name_kr": "감상성"
-        }
-      }
-    },
-    "X": {
-      "name": "Extraversion",
-      "name_kr": "외향성",
-      "facets": {
-        "X_social_self_esteem": {
-          "name": "Social Self-Esteem",
-          "name_kr": "사회적 자존감"
-        },
-        "X_social_boldness": {
-          "name": "Social Boldness",
-          "name_kr": "사회적 대담함"
-        },
-        "X_sociability": {
-          "name": "Sociability",
-          "name_kr": "사교성"
-        },
-        "X_liveliness": {
-          "name": "Liveliness",
-          "name_kr": "활기"
-        }
-      }
-    },
-    "A": {
-      "name": "Agreeableness",
-      "name_kr": "우호성",
-      "facets": {
-        "A_forgiveness": {
-          "name": "Forgiveness",
-          "name_kr": "용서"
-        },
-        "A_gentleness": {
-          "name": "Gentleness",
-          "name_kr": "온화"
-        },
-        "A_flexibility": {
-          "name": "Flexibility",
-          "name_kr": "유연성"
-        },
-        "A_patience": {
-          "name": "Patience",
-          "name_kr": "인내"
-        }
-      }
-    },
-    "C": {
-      "name": "Conscientiousness",
-      "name_kr": "성실성",
-      "facets": {
-        "C_organization": {
-          "name": "Organization",
-          "name_kr": "조직화"
-        },
-        "C_diligence": {
-          "name": "Diligence",
-          "name_kr": "근면"
-        },
-        "C_perfectionism": {
-          "name": "Perfectionism",
-          "name_kr": "완벽주의"
-        },
-        "C_prudence": {
-          "name": "Prudence",
-          "name_kr": "신중"
-        }
-      }
-    },
-    "O": {
-      "name": "Openness to Experience",
-      "name_kr": "경험 개방성",
-      "facets": {
-        "O_aesthetic": {
-          "name": "Aesthetic Appreciation",
-          "name_kr": "심미성"
-        },
-        "O_inquisitiveness": {
-          "name": "Inquisitiveness",
-          "name_kr": "호기심"
-        },
-        "O_creativity": {
-          "name": "Creativity",
-          "name_kr": "창의성"
-        },
-        "O_unconventionality": {
-          "name": "Unconventionality",
-          "name_kr": "비전통성"
-        }
-      }
-    }
-  },
-  "interstitial": {
-    "altruism": {
-      "name": "Altruism",
-      "name_kr": "이타성",
-      "note": "Component between H and E"
-    }
-  }
-}
-```
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `axes.E.facets.E_fearfulness.name` | Fearfulness | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
+| `axes.E.facets.E_fearfulness.name_kr` | 두려움 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 
-</details>
+### Identifiers & Labels (식별자/라벨)
 
-## Referenced By
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `axes.A.facets.A_flexibility.name` | Flexibility | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.A.facets.A_flexibility.name_kr` | 유연성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.A.facets.A_forgiveness.name` | Forgiveness | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.A.facets.A_forgiveness.name_kr` | 용서 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.A.facets.A_gentleness.name` | Gentleness | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.A.facets.A_gentleness.name_kr` | 온화 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.A.facets.A_patience.name` | Patience | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.A.facets.A_patience.name_kr` | 인내 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.A.name` | Agreeableness | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.A.name_kr` | 우호성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.C.facets.C_diligence.name` | Diligence | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.C.facets.C_diligence.name_kr` | 근면 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.C.facets.C_organization.name` | Organization | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.C.facets.C_organization.name_kr` | 조직화 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.C.facets.C_perfectionism.name` | Perfectionism | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.C.facets.C_perfectionism.name_kr` | 완벽주의 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.C.facets.C_prudence.name` | Prudence | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.C.facets.C_prudence.name_kr` | 신중 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.C.name` | Conscientiousness | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.C.name_kr` | 성실성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.E.facets.E_anxiety.name` | Anxiety | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.E.facets.E_anxiety.name_kr` | 불안 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.E.facets.E_dependence.name` | Dependence | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.E.facets.E_dependence.name_kr` | 의존성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.E.name` | Emotionality | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.E.name_kr` | 감정성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.H.facets.H_fairness.name` | Fairness | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.H.facets.H_fairness.name_kr` | 공정성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.H.facets.H_greed_avoidance.name` | Greed Avoidance | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.H.facets.H_greed_avoidance.name_kr` | 탐욕 회피 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.H.facets.H_modesty.name` | Modesty | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.H.facets.H_modesty.name_kr` | 겸손 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.H.facets.H_sincerity.name` | Sincerity | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.H.facets.H_sincerity.name_kr` | 진실성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.H.name` | Honesty-Humility | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.H.name_kr` | 정직-겸손 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.O.facets.O_aesthetic.name` | Aesthetic Appreciation | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.O.facets.O_aesthetic.name_kr` | 심미성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.O.facets.O_creativity.name` | Creativity | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.O.facets.O_creativity.name_kr` | 창의성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.O.facets.O_inquisitiveness.name` | Inquisitiveness | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.O.facets.O_inquisitiveness.name_kr` | 호기심 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.O.facets.O_unconventionality.name` | Unconventionality | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.O.facets.O_unconventionality.name_kr` | 비전통성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.O.name` | Openness to Experience | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.O.name_kr` | 경험 개방성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.X.facets.X_liveliness.name` | Liveliness | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.X.facets.X_liveliness.name_kr` | 활기 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.X.facets.X_sociability.name` | Sociability | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.X.facets.X_sociability.name_kr` | 사교성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.X.facets.X_social_boldness.name` | Social Boldness | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.X.facets.X_social_boldness.name_kr` | 사회적 대담함 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.X.facets.X_social_self_esteem.name` | Social Self-Esteem | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.X.facets.X_social_self_esteem.name_kr` | 사회적 자존감 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.X.name` | Extraversion | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `axes.X.name_kr` | 외향성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `interstitial.altruism.name` | Altruism | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `interstitial.altruism.name_kr` | 이타성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 
-- None found.
+### Other Parameters (기타)
 
-## Manual Notes
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `interstitial.altruism.note` | Component between H and E | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+
+## 참조하는 시스템 (Referenced By)
+
+- None found. (참조 없음)
+
+## 수동 노트 (Manual Notes)
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

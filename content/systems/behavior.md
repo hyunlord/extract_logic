@@ -1,199 +1,63 @@
 ---
-title: "Behavior System"
+title: "Behavior"
 description: "Generated system documentation page."
 generated: true
 source_files:
   - "scripts/ai/behavior_system.gd"
 nav_order: 20
+system_name: "behavior"
 ---
 
-# Behavior System
-
-> No module-level documentation comment was extracted.
+# Behavior
 
 📄 source: `scripts/ai/behavior_system.gd` | Priority: 20 | Tick interval: config (GameConfig.BEHAVIOR_TICK_INTERVAL)
 
-## Overview
+## Overview (개요)
 
-This page summarizes the extracted structure and runtime behavior for `Behavior`.
+The **Behavior** system implements a domain-specific simulation model to simulate behavior dynamics for entities and world state.
+It runs on a **config-driven cadence** (`GameConfig.BEHAVIOR_TICK_INTERVAL`) at priority **20**.
 
-The extractor found 22 functions, 4 configuration references, and 21 tracked entity fields.
+**Core entity data**: `action_history` (read/write (inferred)), `action_target` (read/write (inferred)), `action_timer` (read/write (inferred)), `age_stage` (read/write (inferred)), `cached_path` (read/write (inferred)), `current_action` (read/write (inferred)), `emotion_data` (read/write (inferred)), `emotions` (read/write (inferred)), `energy` (read/write (inferred)), `entity_name` (read/write (inferred)), `get_total_carry` (read/write (inferred)), `hunger` (read/write (inferred)), `id` (read/write (inferred)), `inventory` (read/write (inferred)), `job` (read/write (inferred)), `partner_id` (read/write (inferred)), `path_index` (read/write (inferred)), `position` (read/write (inferred)), `remove_item` (read/write (inferred)), `settlement_id` (read/write (inferred)), `social` (read/write (inferred))
 
-## Configuration
+## Tick Pipeline (틱 파이프라인)
 
-| Constant | Value | Description |
-| --- | --- | --- |
-| `BEHAVIOR_TICK_INTERVAL` | 10 | from GameConfig |
-| `BUILDING_TYPES` | { 	"stockpile": {"cost": {"wood": 2.0}, "build_ticks": 36, "radius": 8}, 	"shelter": {"cost": {"wood": 4.0, "stone": 1.0}, "build_ticks": 60, "radius": 0}, 	"campfire": {"cost": {"wood": 1.0}, "build_ticks": 24, "radius": 5}, } | Building type definitions |
-| `Biome` | - | GameConfig function reference |
-| `ResourceType` | - | GameConfig function reference |
+1. Run per-entity tick update loop
+   📄 source: `scripts/ai/behavior_system.gd:L27`
 
-## Entity Fields Accessed
+## Formulas (수식)
 
-| Field | Access | Description |
-| --- | --- | --- |
-| `action_history` | read | Current behavior/action state. |
-| `action_target` | read | Current behavior/action state. |
-| `action_timer` | read | Current behavior/action state. |
-| `age_stage` | read | Age or stage lifecycle state. |
-| `cached_path` | read | World-space movement data. |
-| `current_action` | read | Current behavior/action state. |
-| `emotion_data` | read | Emotion-related state. |
-| `emotions` | read | Emotion-related state. |
-| `energy` | read | Energy or fatigue state. |
-| `entity_name` | read | entity name |
-| `get_total_carry` | read | get total carry |
-| `hunger` | read | Hunger/food state. |
-| `id` | read | Entity identity reference. |
-| `inventory` | read | inventory |
-| `job` | read | job |
-| `partner_id` | read | Entity identity reference. |
-| `path_index` | read | World-space movement data. |
-| `position` | read | World-space movement data. |
-| `remove_item` | read | remove item |
-| `settlement_id` | read | Entity identity reference. |
-| `social` | read | Social interaction state. |
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-## Functions
+$$
+0.3 + _rng.randf()  \cdot  0.1
+$$
 
-### `_init()`
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
-**Parameters**: `(none)`
-**Lines**: 11-17 (7 lines)
-
-### `init(entity_manager: RefCounted, world_data: RefCounted, rng: RandomNumberGenerator, resource_map: RefCounted = null, building_manager: RefCounted = null, settlement_manager: RefCounted = null)`
-
-Initialize with references (resource_map and building_manager optional for backward compat)
-
-**Parameters**: `entity_manager: RefCounted, world_data: RefCounted, rng: RandomNumberGenerator, resource_map: RefCounted = null, building_manager: RefCounted = null, settlement_manager: RefCounted = null`
-**Lines**: 18-26 (9 lines)
-
-### `execute_tick(tick: int)`
-
-**Parameters**: `tick: int`
-**Lines**: 27-50 (24 lines)
-
-### `_evaluate_actions(entity: RefCounted)`
-
-**Parameters**: `entity: RefCounted`
-**Lines**: 51-170 (120 lines)
-
-### `_urgency_curve(deficit: float)`
-
-Exponential urgency: higher deficit = much higher urgency
-
-**Parameters**: `deficit: float`
-**Lines**: 171-175 (5 lines)
-
-### `_assign_break_action(entity: RefCounted, break_type: String, tick: int)`
-
-멘탈 브레이크 행동 오버라이드
-
-**Parameters**: `entity: RefCounted, break_type: String, tick: int`
-**Lines**: 176-210 (35 lines)
-
-### `_assign_action(entity: RefCounted, action: String, tick: int)`
-
-**Parameters**: `entity: RefCounted, action: String, tick: int`
-**Lines**: 211-307 (97 lines)
-
-### `_find_random_walkable_nearby(pos: Vector2i, radius: int)`
-
-**Parameters**: `pos: Vector2i, radius: int`
-**Lines**: 308-322 (15 lines)
-
-### `_find_food_tile(pos: Vector2i, radius: int)`
-
-**Parameters**: `pos: Vector2i, radius: int`
-**Lines**: 323-338 (16 lines)
-
-### `_find_nearest_entity(entity: RefCounted)`
-
-**Parameters**: `entity: RefCounted`
-**Lines**: 339-357 (19 lines)
-
-### `_has_nearby_resource(pos: Vector2i, resource_type: int, radius: int)`
-
-**Parameters**: `pos: Vector2i, resource_type: int, radius: int`
-**Lines**: 358-367 (10 lines)
-
-### `_find_resource_tile(pos: Vector2i, resource_type: int, radius: int)`
-
-**Parameters**: `pos: Vector2i, resource_type: int, radius: int`
-**Lines**: 368-391 (24 lines)
-
-### `_find_nearest_building_in_settlement(pos: Vector2i, btype: String, settlement_id: int, built_only: bool)`
-
-**Parameters**: `pos: Vector2i, btype: String, settlement_id: int, built_only: bool`
-**Lines**: 392-412 (21 lines)
-
-### `_count_settlement_buildings(btype: String, settlement_id: int)`
-
-**Parameters**: `btype: String, settlement_id: int`
-**Lines**: 413-425 (13 lines)
-
-### `_count_settlement_alive(settlement_id: int)`
-
-**Parameters**: `settlement_id: int`
-**Lines**: 426-433 (8 lines)
-
-### `_find_unbuilt_building(entity: RefCounted)`
-
-**Parameters**: `entity: RefCounted`
-**Lines**: 434-453 (20 lines)
-
-### `_should_place_building(entity: RefCounted)`
-
-**Parameters**: `entity: RefCounted`
-**Lines**: 454-474 (21 lines)
-
-### `_builder_can_afford_anything(entity: RefCounted)`
-
-**Parameters**: `entity: RefCounted`
-**Lines**: 475-484 (10 lines)
-
-### `_try_place_building(entity: RefCounted)`
-
-**Parameters**: `entity: RefCounted`
-**Lines**: 485-523 (39 lines)
-
-### `_can_afford_building(entity: RefCounted, cost: Dictionary)`
-
-**Parameters**: `entity: RefCounted, cost: Dictionary`
-**Lines**: 524-541 (18 lines)
-
-### `_consume_building_cost(entity: RefCounted, cost: Dictionary)`
-
-**Parameters**: `entity: RefCounted, cost: Dictionary`
-**Lines**: 542-559 (18 lines)
-
-### `_find_building_site(pos: Vector2i)`
-
-**Parameters**: `pos: Vector2i`
-**Lines**: 560-570 (11 lines)
-
-## Formulas
-
-### Evaluate Actions Line 60
-
-Formula logic extracted from _evaluate_actions
-
-$$0.3 + _rng.randf()  \cdot  0.1$$
-
+**GDScript**:
 ```gdscript
 "wander": 0.3 + _rng.randf() * 0.1,
 			"rest": _urgency_curve(energy_deficit) * 1.2,
 			"socialize": _urgency_curve(social_deficit) * 0.8,
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `_rng` |  rng |
+| `energy_deficit` | energy deficit |
+| `social_deficit` | social deficit |
+
 📄 source: `scripts/ai/behavior_system.gd:L60`
 
-### Evaluate Actions Line 68
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _evaluate_actions
+$$
+0.3 + _rng.randf()  \cdot  0.1
+$$
 
-$$0.3 + _rng.randf()  \cdot  0.1$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 "wander": 0.3 + _rng.randf() * 0.1,
 			"rest": _urgency_curve(energy_deficit) * 1.2,
@@ -201,26 +65,44 @@ $$0.3 + _rng.randf()  \cdot  0.1$$
 			"gather_food": _urgency_curve(hunger_deficit) * 1.5 * 0.4,
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `_rng` |  rng |
+| `energy_deficit` | energy deficit |
+| `social_deficit` | social deficit |
+| `hunger_deficit` | nutrition state input |
+
 📄 source: `scripts/ai/behavior_system.gd:L68`
 
-### Evaluate Actions Line 74
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _evaluate_actions
+$$
+(0.3 + _rng.randf()  \cdot  0.1)  \cdot  0.3
+$$
 
-$$(0.3 + _rng.randf()  \cdot  0.1)  \cdot  0.3$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 child_scores["gather_wood"] = (0.3 + _rng.randf() * 0.1) * 0.3
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `child_scores` | child scores |
+| `_rng` |  rng |
+
 📄 source: `scripts/ai/behavior_system.gd:L74`
 
-### Evaluate Actions Line 78
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _evaluate_actions
+$$
+0.2 + _rng.randf()  \cdot  0.1
+$$
 
-$$0.2 + _rng.randf()  \cdot  0.1$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 "wander": 0.2 + _rng.randf() * 0.1,
 		"gather_food": _urgency_curve(hunger_deficit) * 1.5,
@@ -228,126 +110,279 @@ $$0.2 + _rng.randf()  \cdot  0.1$$
 		"socialize": _urgency_curve(social_deficit) * 0.8,
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `_rng` |  rng |
+| `hunger_deficit` | nutrition state input |
+| `energy_deficit` | energy deficit |
+| `social_deficit` | social deficit |
+
 📄 source: `scripts/ai/behavior_system.gd:L78`
 
-### Evaluate Actions Line 92
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Partner is far, want to visit
+$$
+0.4 + _rng.randf()  \cdot  0.1
+$$
 
-$$0.4 + _rng.randf()  \cdot  0.1$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 scores["visit_partner"] = 0.4 + _rng.randf() * 0.1
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `scores` | scores |
+| `_rng` |  rng |
+
 📄 source: `scripts/ai/behavior_system.gd:L92`
 
-### Evaluate Actions Line 106
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _evaluate_actions
+$$
+0.3 + _rng.randf()  \cdot  0.1
+$$
 
-$$0.3 + _rng.randf()  \cdot  0.1$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 scores["gather_wood"] = 0.3 + _rng.randf() * 0.1
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `scores` | scores |
+| `_rng` |  rng |
+
 📄 source: `scripts/ai/behavior_system.gd:L106`
 
-### Evaluate Actions Line 108
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _evaluate_actions
+$$
+0.2 + _rng.randf()  \cdot  0.1
+$$
 
-$$0.2 + _rng.randf()  \cdot  0.1$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 scores["gather_stone"] = 0.2 + _rng.randf() * 0.1
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `scores` | scores |
+| `_rng` |  rng |
+
 📄 source: `scripts/ai/behavior_system.gd:L108`
 
-### Evaluate Actions Line 133
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _evaluate_actions
+$$
+0.4 + _rng.randf()  \cdot  0.1
+$$
 
-$$0.4 + _rng.randf()  \cdot  0.1$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 scores["build"] = 0.4 + _rng.randf() * 0.1
 ```
+
+| Variable | Meaning |
+| :-- | :-- |
+| `scores` | scores |
+| `_rng` |  rng |
 
 📄 source: `scripts/ai/behavior_system.gd:L133`
 
-### Evaluate Actions Line 135
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _evaluate_actions
+$$
+0.4 + _rng.randf()  \cdot  0.1
+$$
 
-$$0.4 + _rng.randf()  \cdot  0.1$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 scores["build"] = 0.4 + _rng.randf() * 0.1
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `scores` | scores |
+| `_rng` |  rng |
+
 📄 source: `scripts/ai/behavior_system.gd:L135`
 
-### Urgency Curve Line 172
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _urgency_curve
+$$
+return pow(deficit, 2.0)
+$$
 
-$$return pow(deficit, 2.0)$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 return pow(deficit, 2.0)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `deficit` | deficit |
+
 📄 source: `scripts/ai/behavior_system.gd:L172`
 
-### Find Nearest Entity Line 347
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _find_nearest_entity
+$$
+absi(other.position.x - entity.position.x) + absi(other.position.y - entity.position.y)
+$$
 
-$$absi(other.position.x - entity.position.x) + absi(other.position.y - entity.position.y)$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 var dist: int = absi(other.position.x - entity.position.x) + absi(other.position.y - entity.position.y)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `dist` | dist |
+| `other` | other |
+| `position` | position |
+| `x` | x |
+| `entity` | entity |
+| `y` | y |
+
 📄 source: `scripts/ai/behavior_system.gd:L347`
 
-### Find Nearest Building In Settlement Line 406
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _find_nearest_building_in_settlement
+$$
+absi(building.tile_x - pos.x) + absi(building.tile_y - pos.y)
+$$
 
-$$absi(building.tile_x - pos.x) + absi(building.tile_y - pos.y)$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 var dist: int = absi(building.tile_x - pos.x) + absi(building.tile_y - pos.y)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `dist` | dist |
+| `building` | building |
+| `tile_x` | tile x |
+| `pos` | pos |
+| `x` | x |
+| `tile_y` | tile y |
+| `y` | y |
+
 📄 source: `scripts/ai/behavior_system.gd:L406`
 
-### Find Unbuilt Building Line 447
+### Computes a gameplay state update from mathematical relationships in the source logic.
 
-Formula logic extracted from _find_unbuilt_building
+$$
+float(absi(building.tile_x - entity.position.x) + absi(building.tile_y - entity.position.y))
+$$
 
-$$float(absi(building.tile_x - entity.position.x) + absi(building.tile_y - entity.position.y))$$
+**Interpretation**: Computes a gameplay state update from mathematical relationships in the source logic.
 
+**GDScript**:
 ```gdscript
 var dist: float = float(absi(building.tile_x - entity.position.x) + absi(building.tile_y - entity.position.y))
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `dist` | dist |
+| `building` | building |
+| `tile_x` | tile x |
+| `entity` | entity |
+| `position` | position |
+| `x` | x |
+| `tile_y` | tile y |
+| `y` | y |
+
 📄 source: `scripts/ai/behavior_system.gd:L447`
 
-## Dependencies
+## Configuration Reference (설정)
 
-### Imports
+| Constant | Default | Controls | Behavior Effect |
+| :-- | :-- | :-- | :-- |
+| `BEHAVIOR_TICK_INTERVAL` | 10 | System update cadence. | Lower values increase update frequency and responsiveness. |
+| `BUILDING_TYPES` | { 	"stockpile": {"cost": {"wood": 2.0}, "build_ticks": 36, "radius": 8}, 	"shelter": {"cost": {"wood": 4.0, "stone": 1.0}, "build_ticks": 60, "radius": 0}, 	"campfire": {"cost": {"wood": 1.0}, "build_ticks": 24, "radius": 5}, } | Building type definitions | Adjusts baseline system behavior under this module. |
+| `Biome` | (not found) | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
+| `ResourceType` | (not found) | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
 
-- None
+## Cross-System Effects (시스템 간 상호작용)
 
-### Signals Emitted
+### Imported Modules (모듈 임포트)
 
-- None
+No import relationships extracted for this module.
 
-### Referenced By
+### Shared Entity Fields (공유 엔티티 필드)
 
-- None
+| Field | Access | Shared With |
+| :-- | :-- | :-- |
+| `action_target` | read/write (inferred) | [`construction`](construction.md), [`migration`](migration.md), [`movement`](movement.md) |
+| `action_timer` | read/write (inferred) | [`emotions`](emotions.md), [`migration`](migration.md), [`movement`](movement.md) |
+| `age_stage` | read/write (inferred) | [`aging`](aging.md), [`childcare`](childcare.md), [`construction`](construction.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md) |
+| `cached_path` | read/write (inferred) | [`migration`](migration.md), [`movement`](movement.md) |
+| `current_action` | read/write (inferred) | [`construction`](construction.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`movement`](movement.md), [`needs`](needs.md), [`social_events`](social_events.md), [`stress`](stress.md) |
+| `emotion_data` | read/write (inferred) | [`emotions`](emotions.md), [`family`](family.md), [`mental_break`](mental_break.md), [`stress`](stress.md), [`trait`](trait.md) |
+| `emotions` | read/write (inferred) | [`emotions`](emotions.md), [`family`](family.md), [`trait`](trait.md) |
+| `energy` | read/write (inferred) | [`building_effect`](building_effect.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
+| `entity_name` | read/write (inferred) | [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
+| `get_total_carry` | read/write (inferred) | [`gathering`](gathering.md) |
+| `hunger` | read/write (inferred) | [`childcare`](childcare.md), [`family`](family.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
+| `id` | read/write (inferred) | [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md) |
+| `inventory` | read/write (inferred) | [`movement`](movement.md), [`needs`](needs.md) |
+| `job` | read/write (inferred) | [`aging`](aging.md), [`job_assignment`](job_assignment.md) |
+| `partner_id` | read/write (inferred) | [`family`](family.md) |
+| `path_index` | read/write (inferred) | [`migration`](migration.md), [`movement`](movement.md) |
+| `position` | read/write (inferred) | [`construction`](construction.md), [`gathering`](gathering.md), [`movement`](movement.md), [`social_events`](social_events.md) |
+| `remove_item` | read/write (inferred) | [`movement`](movement.md), [`needs`](needs.md) |
+| `settlement_id` | read/write (inferred) | [`emotions`](emotions.md), [`family`](family.md), [`migration`](migration.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
+| `social` | read/write (inferred) | [`building_effect`](building_effect.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
+
+### Signals (시그널)
+
+No emitted signals extracted for this module.
+
+### Downstream Impact (다운스트림 영향)
+
+- No explicit downstream dependencies extracted.
+
+## Entity Data Model (엔티티 데이터 모델)
+
+| Field | Access | Type | Represents | Typical Values |
+| :-- | :-- | :-- | :-- | :-- |
+| `action_history` | read/write (inferred) | Array | Current behavior intent used by schedulers and downstream systems. | System-defined value domain. |
+| `action_target` | read/write (inferred) | Variant | Current behavior intent used by schedulers and downstream systems. | System-defined value domain. |
+| `action_timer` | read/write (inferred) | int | Current behavior intent used by schedulers and downstream systems. | Non-negative tick counts. |
+| `age_stage` | read/write (inferred) | String enum | Lifecycle progression used for stage-specific behavior and events. | Named categorical states. |
+| `cached_path` | read/write (inferred) | Variant | Cached path. | System-defined value domain. |
+| `current_action` | read/write (inferred) | String enum | Current behavior intent used by schedulers and downstream systems. | System-defined value domain. |
+| `emotion_data` | read/write (inferred) | Dictionary / custom data object | Affective state used for behavior modulation and social propagation. | Structured object with nested metrics/axes. |
+| `emotions` | read/write (inferred) | Dictionary / custom data object | Affective state used for behavior modulation and social propagation. | System-defined value domain. |
+| `energy` | read/write (inferred) | float | Fatigue/rest capacity controlling action readiness. | Normalized scalar (commonly 0.0-1.0 or 0-100 by system). |
+| `entity_name` | read/write (inferred) | Variant | Entity name. | System-defined value domain. |
+| `get_total_carry` | read/write (inferred) | Variant | Get total carry. | System-defined value domain. |
+| `hunger` | read/write (inferred) | float | Nutritional deprivation level driving survival and action priorities. | Normalized scalar (commonly 0.0-1.0 or 0-100 by system). |
+| `id` | read/write (inferred) | int | Stable entity identity used for referencing across systems. | Positive integer identifiers. |
+| `inventory` | read/write (inferred) | Variant | Inventory. | System-defined value domain. |
+| `job` | read/write (inferred) | Variant | Job. | System-defined value domain. |
+| `partner_id` | read/write (inferred) | int | Stable entity identity used for referencing across systems. | Positive integer identifiers. |
+| `path_index` | read/write (inferred) | Variant | Path index. | System-defined value domain. |
+| `position` | read/write (inferred) | Vector2 / Vector2i | World-space location used for movement and proximity checks. | Grid/world vectors. |
+| `remove_item` | read/write (inferred) | Variant | Remove item. | System-defined value domain. |
+| `settlement_id` | read/write (inferred) | int | Stable entity identity used for referencing across systems. | Positive integer identifiers. |
+| `social` | read/write (inferred) | float | Social fulfillment/deficit level affecting mood and stress. | Normalized scalar (commonly 0.0-1.0 or 0-100 by system). |

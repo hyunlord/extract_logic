@@ -1,46 +1,50 @@
 ---
 title: "System Interaction Index"
-description: "Master dependency graph of cross-system interactions"
+description: "Master calculation-pipeline dependency graph"
 generated: true
 source_files:
   - "extracted/references.json"
   - "extracted/systems.json"
+  - "extracted/formulas.json"
+  - "extracted/stressor_data.json"
+  - "extracted/decay_config.json"
+  - "extracted/emotion_presets.json"
 nav_order: 1
 ---
 
 # System Interaction Index
 
-Generated 7 interaction link(s) total, with 3 significant pair page(s) (2+ types).
+한국어 / English: 시스템 계산 의존 그래프 / System calculation dependency graph.
 
-## Master Dependency Graph
+Generated 7 calculation-pipeline interaction pages.
+
+## System Dependency Graph
 ```mermaid
-graph LR
-  S1[aging]
-  S2[chronicle_system]
-  S3[family]
-  S4[mortality]
-  S5[personality_generator]
-  S6[personality_maturation]
-  S7[trait_system]
-  S1 ---|shared_dependencies, direct_calls| S6
-  S5 ---|shared_dependencies, direct_calls| S7
-  S6 ---|shared_dependencies, direct_calls| S7
-  S2 ---|shared_dependencies| S3
-  S2 ---|shared_dependencies| S4
-  S3 ---|shared_dependencies| S4
-  S5 ---|shared_dependencies| S6
+graph TD
+    PERS[Personality System] -->|sensitivity, baselines| EMOT[Emotion System]
+    PERS -->|modifier weights| STRESS[Stress System]
+    EVENTS[Game Events] -->|appraisal vectors| EMOT
+    EMOT -->|emotion values| STRESS
+    STRESS -->|allostatic load| MORT[Mortality System]
+    STRESS -->|mental break| EMOT
+    MORT -->|death event| STRESS
+    MORT -->|death event| EMOT
 ```
 
-## Interaction Strength Table
-| Pair | Strength | Types |
-|------|----------|-------|
-| `aging ↔ personality_maturation` | 2 | shared_dependencies, direct_calls |
-| `personality_generator ↔ trait_system` | 2 | shared_dependencies, direct_calls |
-| `personality_maturation ↔ trait_system` | 2 | shared_dependencies, direct_calls |
-| `chronicle_system ↔ family` | 1 | shared_dependencies |
-| `chronicle_system ↔ mortality` | 1 | shared_dependencies |
-| `family ↔ mortality` | 1 | shared_dependencies |
-| `personality_generator ↔ personality_maturation` | 1 | shared_dependencies |
+## Interaction Pages
+| Interaction Pair | Output Page |
+|---|---|
+| `Personality → Emotion` | [personality-emotion.md](personality-emotion.md) |
+| `Personality → Stress` | [personality-stress.md](personality-stress.md) |
+| `Emotion → Stress` | [emotion-stress.md](emotion-stress.md) |
+| `Stress → Mortality` | [stress-mortality.md](stress-mortality.md) |
+| `Personality → Mortality` | [personality-mortality.md](personality-mortality.md) |
+| `Events → Emotion` | [events-emotion.md](events-emotion.md) |
+| `Stress → Emotion` | [stress-emotion.md](stress-emotion.md) |
+
+## Feedback Loops
+- stress -> mental break -> emotion inject -> more stress
+- death event -> bereavement stressor -> stress -> allostatic load -> mortality
 
 ## Manual Notes
 <!-- MANUAL:START -->

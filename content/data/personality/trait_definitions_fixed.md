@@ -9,344 +9,85 @@ nav_order: 10
 
 # trait_definitions_fixed
 
-📄 source: `data/personality/trait_definitions_fixed.json` | Category: personality | Type: array
+📄 source (출처): `data/personality/trait_definitions_fixed.json` | Category (분류): personality | Type (유형): array
 
-## Schema
+## 개요 (Overview)
 
-| Key | Type | Description |
-|-----|------|-------------|
-| `items` | int | 187 |
-| `item` | object | object with 12 keys |
-| `item.anti_synergies` | array | array (3 items, string entries) |
-| `item.condition` | object | object with 3 keys |
-| `item.condition.direction` | string | "high" |
-| `item.condition.facet` | string | "H_sincerity" |
-| `item.condition.threshold` | float | 0.92 |
-| `item.description_en` | string | "Prefers telling the truth as-is and feels strong aversion to deception or backroom deals." |
-| `item.description_kr` | string | "사실을 왜곡하기보다 있는 그대로 말하려 하며, 속임수나 뒷거래에 강한 거부감을 느낀다." |
-| `item.effects` | object | object with 6 keys |
-| `item.effects.behavior_weights` | object | object with 4 keys |
-| `item.effects.behavior_weights.betray` | float | 0.75 |
-| `item.effects.behavior_weights.leadership` | float | 1.05 |
-| `item.effects.behavior_weights.social` | float | 1.1 |
-| `item.effects.behavior_weights.steal` | float | 0.7 |
-| `item.effects.combat_modifiers` | object | object with 3 keys |
-| `item.effects.combat_modifiers.aggression_mult` | float | 0.95 |
-| `item.effects.combat_modifiers.morale_mult` | float | 1.02 |
-| `item.effects.combat_modifiers.war_crime_propensity_mult` | float | 0.6 |
-| `item.effects.emotion_modifiers` | object | object with 3 keys |
-| `item.effects.emotion_modifiers.anger_sensitivity` | float | 0.95 |
-| `item.effects.emotion_modifiers.guilt_sensitivity` | float | 1.2 |
-| `item.effects.emotion_modifiers.shame_sensitivity` | float | 1.1 |
-| `item.effects.relationship_modifiers` | object | object with 3 keys |
-| `item.effects.relationship_modifiers.betrayal_propensity_mult` | float | 0.6 |
-| `item.effects.relationship_modifiers.trust_gain_mult` | float | 1.25 |
-| `item.effects.relationship_modifiers.trust_loss_mult` | float | 0.85 |
-| `item.effects.stress_modifiers` | object | object with 4 keys |
-| `item.effects.stress_modifiers.break_threshold_mult` | float | 0.98 |
-| `item.effects.stress_modifiers.stress_gain_mult` | float | 1.05 |
-| `item.effects.stress_modifiers.stress_recovery_mult` | float | 1.0 |
-| `item.effects.stress_modifiers.violation_stress` | object | object with 3 keys |
-| `item.effects.work_modifiers` | object | object with 3 keys |
-| `item.effects.work_modifiers.error_rate_mult` | float | 0.95 |
-| `item.effects.work_modifiers.quality_mult` | float | 1.05 |
-| `item.effects.work_modifiers.speed_mult` | float | 0.98 |
-| `item.id` | string | "f_sincere" |
-| `item.name_en` | string | "Sincere" |
-| `item.name_kr` | string | "진실한" |
-| `item.opposite_actions` | array | array (3 items, string entries) |
-| `item.synergies` | array | array (3 items, string entries) |
-| `item.type` | string | "personality" |
-| `item.valence` | string | "positive" |
+- Configures (설정 내용): `personality` 데이터 도메인 설정 값. Configuration values for the `personality` data domain.
+- Read by systems/modules (읽는 시스템/모듈): `references.json`에서 추론되지 않음.
+- Related documentation (관련 문서): 없음.
 
-## Full Content
+## 해석된 파라미터 (Interpreted Parameters)
 
-Large array detected: **187** items.
+### Thresholds & Bounds (임계/경계)
 
-Showing sampled content (3 item(s)):
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `item.condition.threshold` | 0.92 threshold | float | Activation boundary used by game logic. (작동 임계값) |
+| `item.effects.stress_modifiers.break_threshold_mult` | 0.98 threshold | float | Activation boundary used by game logic. (작동 임계값) |
 
-<details>
-<summary>Expand sampled content</summary>
+### Weights & Multipliers (가중/배수)
 
-```json
-[
-  {
-    "id": "f_sincere",
-    "name_kr": "진실한",
-    "name_en": "Sincere",
-    "type": "personality",
-    "valence": "positive",
-    "condition": {
-      "facet": "H_sincerity",
-      "direction": "high",
-      "threshold": 0.92
-    },
-    "effects": {
-      "behavior_weights": {
-        "social": 1.1,
-        "steal": 0.7,
-        "betray": 0.75,
-        "leadership": 1.05
-      },
-      "emotion_modifiers": {
-        "guilt_sensitivity": 1.2,
-        "shame_sensitivity": 1.1,
-        "anger_sensitivity": 0.95
-      },
-      "relationship_modifiers": {
-        "trust_gain_mult": 1.25,
-        "trust_loss_mult": 0.85,
-        "betrayal_propensity_mult": 0.6
-      },
-      "work_modifiers": {
-        "quality_mult": 1.05,
-        "speed_mult": 0.98,
-        "error_rate_mult": 0.95
-      },
-      "combat_modifiers": {
-        "aggression_mult": 0.95,
-        "war_crime_propensity_mult": 0.6,
-        "morale_mult": 1.02
-      },
-      "stress_modifiers": {
-        "stress_gain_mult": 1.05,
-        "stress_recovery_mult": 1.0,
-        "break_threshold_mult": 0.98,
-        "violation_stress": {
-          "lie": 14,
-          "deceive": 12,
-          "take_bribe": 18
-        }
-      }
-    },
-    "opposite_actions": [
-      "lie",
-      "deceive",
-      "take_bribe"
-    ],
-    "synergies": [
-      "f_fair_minded",
-      "f_modest",
-      "f_forgiving"
-    ],
-    "anti_synergies": [
-      "f_deceptive",
-      "f_corrupt",
-      "d_con_artist"
-    ],
-    "description_kr": "사실을 왜곡하기보다 있는 그대로 말하려 하며, 속임수나 뒷거래에 강한 거부감을 느낀다.",
-    "description_en": "Prefers telling the truth as-is and feels strong aversion to deception or backroom deals."
-  },
-  {
-    "id": "f_deceptive",
-    "name_kr": "기만적인",
-    "name_en": "Deceptive",
-    "type": "personality",
-    "valence": "negative",
-    "condition": {
-      "facet": "H_sincerity",
-      "direction": "low",
-      "threshold": 0.14
-    },
-    "effects": {
-      "behavior_weights": {
-        "social": 1.05,
-        "steal": 1.25,
-        "betray": 1.4,
-        "leadership": 1.1
-      },
-      "emotion_modifiers": {
-        "guilt_sensitivity": 0.7,
-        "shame_sensitivity": 0.8,
-        "anger_sensitivity": 1.05
-      },
-      "relationship_modifiers": {
-        "trust_gain_mult": 0.75,
-        "trust_loss_mult": 1.2,
-        "betrayal_propensity_mult": 1.4
-      },
-      "work_modifiers": {
-        "quality_mult": 0.95,
-        "speed_mult": 1.03,
-        "error_rate_mult": 1.05
-      },
-      "combat_modifiers": {
-        "aggression_mult": 1.0,
-        "ambush_propensity_mult": 1.3,
-        "flee_threshold_mult": 0.95
-      },
-      "stress_modifiers": {
-        "stress_gain_mult": 0.95,
-        "stress_recovery_mult": 1.05,
-        "break_threshold_mult": 1.05,
-        "violation_stress": {
-          "confess": 10,
-          "tell_truth": 8,
-          "return_stolen": 16
-        }
-      }
-    },
-    "opposite_actions": [
-      "confess",
-      "tell_truth",
-      "return_stolen"
-    ],
-    "synergies": [
-      "f_corrupt",
-      "f_greedy",
-      "f_reckless"
-    ],
-    "anti_synergies": [
-      "f_sincere",
-      "f_fair_minded"
-    ],
-    "description_kr": "말을 상황에 맞춰 바꾸고, 필요하면 거짓말이나 속임수도 도구로 사용한다.",
-    "description_en": "Adapts the truth to the situation and may use lying or manipulation as a tool when needed."
-  },
-  {
-    "id": "f_fair_minded",
-    "name_kr": "원칙적인",
-    "name_en": "Fair‑Minded",
-    "type": "personality",
-    "valence": "positive",
-    "condition": {
-      "facet": "H_fairness",
-      "direction": "high",
-      "threshold": 0.94
-    },
-    "effects": {
-      "behavior_weights": {
-        "steal": 0.55,
-        "share": 1.15,
-        "leadership": 1.1,
-        "trade": 1.05
-      },
-      "emotion_modifiers": {
-        "anger_injustice_sensitivity": 1.25,
-        "guilt_sensitivity": 1.15
-      },
-      "relationship_modifiers": {
-        "trust_gain_mult": 1.15,
-        "trust_loss_mult": 0.9,
-        "reciprocity_mult": 1.2
-      },
-      "work_modifiers": {
-        "quality_mult": 1.05,
-        "speed_mult": 0.98
-      },
-      "combat_modifiers": {
-        "war_crime_propensity_mult": 0.55,
-        "aggression_mult": 0.95
-      },
-      "stress_modifiers": {
-        "stress_gain_mult": 1.03,
-        "break_threshold_mult": 0.97,
-        "violation_stress": {
-          "steal": 22,
-          "cheat": 18,
-          "frame_other": 20
-        }
-      }
-    },
-    "opposite_actions": [
-      "steal",
-      "cheat",
-      "frame_other"
-    ],
-    "synergies": [
-      "f_sincere",
-      "f_forgiving",
-      "c_hx_hh_honest_leader"
-    ],
-    "anti_synergies": [
-      "f_corrupt",
-      "d_machiavellian"
-    ],
-    "description_kr": "규칙과 약속을 지키려 하며, 부정행위나 특권을 강하게 싫어한다.",
-    "description_en": "Tries to keep rules and promises, strongly disliking cheating or unfair privilege."
-  }
-]
-```
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `item.effects.behavior_weights.betray` | 0.75 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.behavior_weights.leadership` | 1.05 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.behavior_weights.social` | 1.1 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.behavior_weights.steal` | 0.7 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.combat_modifiers.aggression_mult` | 0.95 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.combat_modifiers.morale_mult` | 1.02 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.combat_modifiers.war_crime_propensity_mult` | 0.6 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.relationship_modifiers.betrayal_propensity_mult` | 0.6 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.relationship_modifiers.trust_gain_mult` | 1.25 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.relationship_modifiers.trust_loss_mult` | 0.85 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.stress_modifiers.stress_gain_mult` | 1.05 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.stress_modifiers.stress_recovery_mult` | 1 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.work_modifiers.error_rate_mult` | 0.95 rate | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.work_modifiers.quality_mult` | 1.05 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
+| `item.effects.work_modifiers.speed_mult` | 0.98 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
 
-</details>
+### Stress & Emotion (스트레스/감정)
 
-### Example Entry
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `item.effects.emotion_modifiers.anger_sensitivity` | 0.95 | float | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
+| `item.effects.emotion_modifiers.guilt_sensitivity` | 1.2 | float | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
+| `item.effects.emotion_modifiers.shame_sensitivity` | 1.1 | float | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
+| `item.effects.stress_modifiers.violation_stress.deceive` | 12 | int | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
+| `item.effects.stress_modifiers.violation_stress.lie` | 14 | int | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
+| `item.effects.stress_modifiers.violation_stress.take_bribe` | 18 | int | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 
-```json
-{
-  "id": "f_sincere",
-  "name_kr": "진실한",
-  "name_en": "Sincere",
-  "type": "personality",
-  "valence": "positive",
-  "condition": {
-    "facet": "H_sincerity",
-    "direction": "high",
-    "threshold": 0.92
-  },
-  "effects": {
-    "behavior_weights": {
-      "social": 1.1,
-      "steal": 0.7,
-      "betray": 0.75,
-      "leadership": 1.05
-    },
-    "emotion_modifiers": {
-      "guilt_sensitivity": 1.2,
-      "shame_sensitivity": 1.1,
-      "anger_sensitivity": 0.95
-    },
-    "relationship_modifiers": {
-      "trust_gain_mult": 1.25,
-      "trust_loss_mult": 0.85,
-      "betrayal_propensity_mult": 0.6
-    },
-    "work_modifiers": {
-      "quality_mult": 1.05,
-      "speed_mult": 0.98,
-      "error_rate_mult": 0.95
-    },
-    "combat_modifiers": {
-      "aggression_mult": 0.95,
-      "war_crime_propensity_mult": 0.6,
-      "morale_mult": 1.02
-    },
-    "stress_modifiers": {
-      "stress_gain_mult": 1.05,
-      "stress_recovery_mult": 1.0,
-      "break_threshold_mult": 0.98,
-      "violation_stress": {
-        "lie": 14,
-        "deceive": 12,
-        "take_bribe": 18
-      }
-    }
-  },
-  "opposite_actions": [
-    "lie",
-    "deceive",
-    "take_bribe"
-  ],
-  "synergies": [
-    "f_fair_minded",
-    "f_modest",
-    "f_forgiving"
-  ],
-  "anti_synergies": [
-    "f_deceptive",
-    "f_corrupt",
-    "d_con_artist"
-  ],
-  "description_kr": "사실을 왜곡하기보다 있는 그대로 말하려 하며, 속임수나 뒷거래에 강한 거부감을 느낀다.",
-  "description_en": "Prefers telling the truth as-is and feels strong aversion to deception or backroom deals."
-}
-```
+### Identifiers & Labels (식별자/라벨)
 
-## Referenced By
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `item.id` | f_sincere | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `item.name_en` | Sincere | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `item.name_kr` | 진실한 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
+| `item.type` | personality | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 
-- None found.
+### Other Parameters (기타)
 
-## Manual Notes
+| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+|----------------------|-----------|------------|-----------------------------|
+| `items` | 187 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `item.anti_synergies` | 3 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `item.anti_synergies.sample` | f_deceptive | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `item.condition.direction` | high | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `item.condition.facet` | H_sincerity | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `item.description_en` | Prefers telling the truth as-is and feels strong aversion to deception or backroom deals. | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `item.description_kr` | 사실을 왜곡하기보다 있는 그대로 말하려 하며, 속임수나 뒷거래에 강한 거부감을 느낀다. | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `item.opposite_actions` | 3 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `item.opposite_actions.sample` | lie | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `item.synergies` | 3 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `item.synergies.sample` | f_fair_minded | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+| `item.valence` | positive | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
+
+## 참조하는 시스템 (Referenced By)
+
+- None found. (참조 없음)
+
+## 수동 노트 (Manual Notes)
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

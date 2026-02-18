@@ -51,12 +51,59 @@ def _count_total_keys(value: Any) -> int:
     return 0
 
 
-def _count_leaf_values(value: Any) -> int:
+def _count_numeric_values(value: Any) -> int:
+    if isinstance(value, bool):
+        return 0
     if isinstance(value, dict):
-        return sum(_count_leaf_values(item) for item in value.values())
+        return sum(_count_numeric_values(item) for item in value.values())
     if isinstance(value, list):
-        return sum(_count_leaf_values(item) for item in value)
-    return 1
+        return sum(_count_numeric_values(item) for item in value)
+    if isinstance(value, (int, float)):
+        return 1
+    return 0
+
+
+def _has_arrays(value: Any) -> bool:
+    if isinstance(value, list):
+        return True
+    if isinstance(value, dict):
+        return any(_has_arrays(item) for item in value.values())
+    return False
+
+
+def _is_meta_key(key: str) -> bool:
+    return key == "" or key == "comment" or key.startswith("_comment")
+
+
+def _collect_comment_text(value: Any, comments: list[str]) -> None:
+    if isinstance(value, str):
+        if value:
+            comments.append(value)
+        return
+    if isinstance(value, list):
+        for item in value:
+            _collect_comment_text(item, comments)
+        return
+    if isinstance(value, dict):
+        for item in value.values():
+            _collect_comment_text(item, comments)
+        return
+    if value is not None:
+        comments.append(str(value))
+
+
+def _filter_meta_keys(value: Any, comments: list[str]) -> Any:
+    if isinstance(value, dict):
+        filtered: dict[str, Any] = {}
+        for key, item in value.items():
+            if _is_meta_key(key):
+                _collect_comment_text(item, comments)
+                continue
+            filtered[key] = _filter_meta_keys(item, comments)
+        return filtered
+    if isinstance(value, list):
+        return [_filter_meta_keys(item, comments) for item in value]
+    return value
 
 
 def _sample_object(value: dict[str, Any], limit: int = 2) -> dict[str, Any]:
@@ -115,6 +162,26 @@ def _derive_category(path: str) -> str:
     return "unknown"
 
 
+def _derive_domain(path: str) -> str:
+    if path.startswith("data/species/human/personality/"):
+        return "personality"
+    if path.startswith("data/species/human/emotions/"):
+        return "emotions"
+    if path.startswith("data/species/human/mortality/"):
+        return "mortality"
+    if path.startswith("data/emotions/"):
+        return "emotions"
+    if path.startswith("data/personality/"):
+        return "personality"
+    if path == "data/stressor_events.json":
+        return "stress"
+
+    parts = path.split("/")
+    if len(parts) >= 2 and parts[0] == "data" and parts[1]:
+        return parts[1]
+    return "unknown"
+
+
 def run(manifest: dict) -> dict:
     """Main entry point.
 
@@ -166,27 +233,31 @@ def run(manifest: dict) -> dict:
             warnings.append(f"failed to read {rel_path}: {exc}")
             continue
 
-        value_type = _json_type(parsed)
+        meta_comments: list[str] = []
+        filtered_parsed = _filter_meta_keys(parsed, meta_comments)
+
+        value_type = _json_type(filtered_parsed)
         if value_type == "object":
-            top_level_keys = list(parsed.keys())
+            top_level_keys = list(filtered_parsed.keys())
             schema: Any = {
                 key: _build_value_schema(value)
-                for key, value in parsed.items()
+                for key, value in filtered_parsed.items()
             }
         else:
             top_level_keys = []
-            schema = _build_value_schema(parsed)
+            schema = _build_value_schema(filtered_parsed)
 
         file_size = os.path.getsize(source_file)
-        full_content = parsed
+        full_content = filtered_parsed
         if (
             value_type == "array"
             and file_size > LARGE_FILE_BYTES
-            and isinstance(parsed, list)
+            and isinstance(filtered_parsed, list)
         ):
-            full_content = parsed[:LARGE_ARRAY_SAMPLE_SIZE]
+            full_content = filtered_parsed[:LARGE_ARRAY_SAMPLE_SIZE]
 
         category = entry.get("category") or _derive_category(rel_path)
+        domain = _derive_domain(rel_path)
         categories.setdefault(category, []).append(rel_path)
         by_type[value_type] = by_type.get(value_type, 0) + 1
 
@@ -194,14 +265,17 @@ def run(manifest: dict) -> dict:
             {
                 "file": rel_path,
                 "category": category,
+                "domain": domain,
                 "type": value_type,
                 "top_level_keys": top_level_keys,
                 "schema": schema,
                 "full_content": full_content,
+                "_meta_comments": meta_comments,
                 "stats": {
-                    "depth": _count_depth(parsed),
-                    "total_keys": _count_total_keys(parsed),
-                    "total_leaf_values": _count_leaf_values(parsed),
+                    "total_keys": _count_total_keys(filtered_parsed),
+                    "numeric_value_count": _count_numeric_values(filtered_parsed),
+                    "nested_depth": _count_depth(filtered_parsed),
+                    "has_arrays": _has_arrays(filtered_parsed),
                 },
             }
         )

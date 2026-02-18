@@ -1,87 +1,74 @@
 ---
-title: "Job Assignment System"
+title: "Job Assignment"
 description: "Generated system documentation page."
 generated: true
 source_files:
   - "scripts/systems/job_assignment_system.gd"
 nav_order: 8
+system_name: "job_assignment"
 ---
 
-# Job Assignment System
-
-> No module-level documentation comment was extracted.
+# Job Assignment
 
 📄 source: `scripts/systems/job_assignment_system.gd` | Priority: 8 | Tick interval: config (GameConfig.JOB_ASSIGNMENT_TICK_INTERVAL)
 
-## Overview
+## Overview (개요)
 
-This page summarizes the extracted structure and runtime behavior for `Job Assignment`.
+The **Job Assignment** system implements a domain-specific simulation model to simulate job assignment dynamics for entities and world state.
+It runs on a **config-driven cadence** (`GameConfig.JOB_ASSIGNMENT_TICK_INTERVAL`) at priority **8**.
 
-The extractor found 6 functions, 2 configuration references, and 5 tracked entity fields.
+**Core entity data**: `age_stage` (read/write (inferred)), `current_action` (read/write (inferred)), `entity_name` (read/write (inferred)), `id` (read/write (inferred)), `job` (read/write (inferred))
 
-## Configuration
+## Tick Pipeline (틱 파이프라인)
 
-| Constant | Value | Description |
-| --- | --- | --- |
-| `JOB_ASSIGNMENT_TICK_INTERVAL` | 24 | Time-based tick intervals (scaled for TICK_HOURS=2) |
-| `JOB_RATIOS` | { 	"gatherer": 0.5, 	"lumberjack": 0.25, 	"builder": 0.15, 	"miner": 0.1, } | Job ratios (target distribution) |
+1. Run per-entity tick update loop
+   📄 source: `scripts/systems/job_assignment_system.gd:L15`
+2. Resolve dynamic ratios
+   📄 source: `scripts/systems/job_assignment_system.gd:L76`
+3. Resolve total stockpile food
+   📄 source: `scripts/systems/job_assignment_system.gd:L151`
 
-## Entity Fields Accessed
+## Formulas (수식)
 
-| Field | Access | Description |
-| --- | --- | --- |
-| `age_stage` | read | Age or stage lifecycle state. |
-| `current_action` | read | Current behavior/action state. |
-| `entity_name` | read | entity name |
-| `id` | read | Entity identity reference. |
-| `job` | read | job |
+No extracted formulas for this module.
 
-## Functions
+## Configuration Reference (설정)
 
-### `init(entity_manager: RefCounted, building_manager: RefCounted)`
+| Constant | Default | Controls | Behavior Effect |
+| :-- | :-- | :-- | :-- |
+| `JOB_ASSIGNMENT_TICK_INTERVAL` | 24 | System update cadence. | Lower values increase update frequency and responsiveness. |
+| `JOB_RATIOS` | { 	"gatherer": 0.5, 	"lumberjack": 0.25, 	"builder": 0.15, 	"miner": 0.1, } | Job ratios (target distribution) | Adjusts baseline system behavior under this module. |
 
-**Parameters**: `entity_manager: RefCounted, building_manager: RefCounted`
-**Lines**: 7-14 (8 lines)
+## Cross-System Effects (시스템 간 상호작용)
 
-### `execute_tick(tick: int)`
+### Imported Modules (모듈 임포트)
 
-**Parameters**: `tick: int`
-**Lines**: 15-75 (61 lines)
+No import relationships extracted for this module.
 
-### `_get_dynamic_ratios(alive_count: int)`
+### Shared Entity Fields (공유 엔티티 필드)
 
-**Parameters**: `alive_count: int`
-**Lines**: 76-93 (18 lines)
+| Field | Access | Shared With |
+| :-- | :-- | :-- |
+| `age_stage` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`childcare`](childcare.md), [`construction`](construction.md), [`family`](family.md), [`gathering`](gathering.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md) |
+| `current_action` | read/write (inferred) | [`behavior`](behavior.md), [`construction`](construction.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`migration`](migration.md), [`movement`](movement.md), [`needs`](needs.md), [`social_events`](social_events.md), [`stress`](stress.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`mental_break`](mental_break.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
+| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md) |
+| `job` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md) |
 
-### `_find_most_needed_job(ratios: Dictionary, job_counts: Dictionary, alive_count: int)`
+### Signals (시그널)
 
-**Parameters**: `ratios: Dictionary, job_counts: Dictionary, alive_count: int`
-**Lines**: 94-108 (15 lines)
+No emitted signals extracted for this module.
 
-### `_rebalance_jobs(entities: Array, ratios: Dictionary, job_counts: Dictionary, alive_count: int, tick: int)`
+### Downstream Impact (다운스트림 영향)
 
-**Parameters**: `entities: Array, ratios: Dictionary, job_counts: Dictionary, alive_count: int, tick: int`
-**Lines**: 109-150 (42 lines)
+- No explicit downstream dependencies extracted.
 
-### `_get_total_stockpile_food()`
+## Entity Data Model (엔티티 데이터 모델)
 
-**Parameters**: `(none)`
-**Lines**: 151-158 (8 lines)
-
-## Formulas
-
-No formulas extracted for this module.
-
-## Dependencies
-
-### Imports
-
-- None
-
-### Signals Emitted
-
-- None
-
-### Referenced By
-
-- None
+| Field | Access | Type | Represents | Typical Values |
+| :-- | :-- | :-- | :-- | :-- |
+| `age_stage` | read/write (inferred) | String enum | Lifecycle progression used for stage-specific behavior and events. | Named categorical states. |
+| `current_action` | read/write (inferred) | String enum | Current behavior intent used by schedulers and downstream systems. | System-defined value domain. |
+| `entity_name` | read/write (inferred) | Variant | Entity name. | System-defined value domain. |
+| `id` | read/write (inferred) | int | Stable entity identity used for referencing across systems. | Positive integer identifiers. |
+| `job` | read/write (inferred) | Variant | Job. | System-defined value domain. |

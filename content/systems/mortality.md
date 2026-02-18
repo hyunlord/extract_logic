@@ -1,141 +1,85 @@
 ---
-title: "Mortality System"
+title: "Mortality"
 description: "Siler(1979) bathtub-curve mortality model."
 generated: true
 source_files:
   - "scripts/systems/mortality_system.gd"
 nav_order: 49
+system_name: "mortality"
 ---
 
-# Mortality System
-
-> Siler(1979) bathtub-curve mortality model. μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x} Birthday-based distributed checks (not every-tick iteration). Infants (0-1yr) checked monthly for higher resolution.
+# Mortality
 
 📄 source: `scripts/systems/mortality_system.gd` | Priority: 49 | Tick interval: 1
 
-## Overview
+## Overview (개요)
 
-Siler(1979) bathtub-curve mortality model. μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x} Birthday-based distributed checks (not every-tick iteration). Infants (0-1yr) checked monthly for higher resolution.
+The **Mortality** system implements Siler (1979) bathtub-curve mortality, Siler mortality hazard model to simulate siler(1979) bathtub-curve mortality model.
+It runs every **1 ticks** (0.0 game-years) at priority **49**.
 
-The extractor found 17 functions, 1 configuration references, and 7 tracked entity fields.
+**Core entity data**: `age` (read/write (inferred)), `age_stage` (read/write (inferred)), `birth_tick` (read/write (inferred)), `entity_name` (read/write (inferred)), `frailty` (read/write (inferred)), `hunger` (read/write (inferred)), `id` (read/write (inferred))
 
-## Configuration
+> Siler(1979) bathtub-curve mortality model.
 
-| Constant | Value | Description |
-| --- | --- | --- |
-| `get_age_years` | - | GameConfig function reference |
+## Tick Pipeline (틱 파이프라인)
 
-## Entity Fields Accessed
+1. Run per-entity tick update loop
+   📄 source: `scripts/systems/mortality_system.gd:L82`
+2. Check birthday mortality
+   📄 source: `scripts/systems/mortality_system.gd:L92`
+3. Check infant monthly
+   📄 source: `scripts/systems/mortality_system.gd:L110`
+4. Determine cause
+   📄 source: `scripts/systems/mortality_system.gd:L198`
+   Math context: μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+5. Check monthly pop log
+   📄 source: `scripts/systems/mortality_system.gd:L213`
+6. Check annual demography log
+   📄 source: `scripts/systems/mortality_system.gd:L248`
+7. Calculate theoretical e0
+   📄 source: `scripts/systems/mortality_system.gd:L341`
+8. Calculate theoretical ex
+   📄 source: `scripts/systems/mortality_system.gd:L345`
+   Math context: μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+9. Inject bereavement stress
+   📄 source: `scripts/systems/mortality_system.gd:L378`
 
-| Field | Access | Description |
-| --- | --- | --- |
-| `age` | read | Age or stage lifecycle state. |
-| `age_stage` | read | Age or stage lifecycle state. |
-| `birth_tick` | read | birth tick |
-| `entity_name` | read | entity name |
-| `frailty` | read | frailty |
-| `hunger` | read | Hunger/food state. |
-| `id` | read | Entity identity reference. |
+### Pipeline Diagram (파이프라인 다이어그램)
 
-## Functions
+```mermaid
+flowchart TD
+  step1["1. Run per-entity tick update loop"]
+  step2["2. Check birthday mortality"]
+  step1 --> step2
+  step3["3. Check infant monthly"]
+  step2 --> step3
+  step4["4. Determine cause"]
+  step3 --> step4
+  step5["5. Check monthly pop log"]
+  step4 --> step5
+  step6["6. Check annual demography log"]
+  step5 --> step6
+  step7["7. Calculate theoretical e0"]
+  step6 --> step7
+  step8["8. Calculate theoretical ex"]
+  step7 --> step8
+  step9["9. Inject bereavement stress"]
+  step8 --> step9
+```
 
-### `_init()`
+## Formulas (수식)
 
-**Parameters**: `(none)`
-**Lines**: 52-57 (6 lines)
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-### `init(entity_manager: RefCounted, rng: RandomNumberGenerator)`
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
-**Parameters**: `entity_manager: RefCounted, rng: RandomNumberGenerator`
-**Lines**: 58-63 (6 lines)
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
 
-### `_load_siler_parameters()`
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-**Parameters**: `(none)`
-**Lines**: 64-81 (18 lines)
-
-### `execute_tick(tick: int)`
-
-**Parameters**: `tick: int`
-**Lines**: 82-91 (10 lines)
-
-### `_check_birthday_mortality(tick: int)`
-
-**Parameters**: `tick: int`
-**Lines**: 92-109 (18 lines)
-
-### `_check_infant_monthly(tick: int)`
-
-**Parameters**: `tick: int`
-**Lines**: 110-129 (20 lines)
-
-### `_do_mortality_check(entity: RefCounted, tick: int, is_monthly: bool)`
-
-**Parameters**: `entity: RefCounted, tick: int, is_monthly: bool`
-**Lines**: 130-197 (68 lines)
-
-### `_determine_cause(h_infant: float, h_background: float, h_senescence: float)`
-
-**Parameters**: `h_infant: float, h_background: float, h_senescence: float`
-**Lines**: 198-212 (15 lines)
-
-### `_check_monthly_pop_log(tick: int)`
-
-**Parameters**: `tick: int`
-**Lines**: 213-229 (17 lines)
-
-### `_print_monthly_pop_log(tick: int)`
-
-**Parameters**: `tick: int`
-**Lines**: 230-247 (18 lines)
-
-### `_check_annual_demography_log(tick: int)`
-
-**Parameters**: `tick: int`
-**Lines**: 248-266 (19 lines)
-
-### `_print_demography_log(year: int, tick: int)`
-
-**Parameters**: `year: int, tick: int`
-**Lines**: 267-309 (43 lines)
-
-### `register_birth()`
-
-Register a birth (called externally by FamilySystem)
-
-**Parameters**: `(none)`
-**Lines**: 310-315 (6 lines)
-
-### `register_death(is_infant: bool = false, age_stage: String = "", age_years: float = -1.0, cause: String = "")`
-
-Register a death (called externally by NeedsSystem, FamilySystem)
-
-**Parameters**: `is_infant: bool = false, age_stage: String = "", age_years: float = -1.0, cause: String = ""`
-**Lines**: 316-340 (25 lines)
-
-### `_calc_theoretical_e0()`
-
-**Parameters**: `(none)`
-**Lines**: 341-344 (4 lines)
-
-### `_calc_theoretical_ex(start_age: float)`
-
-**Parameters**: `start_age: float`
-**Lines**: 345-377 (33 lines)
-
-### `_inject_bereavement_stress(deceased: RefCounted)`
-
-Inject bereavement stress into survivors of a deceased entity. COR (Hobfoll 1989): loss events use is_loss=true -> x2.5 multiplier.
-
-**Parameters**: `deceased: RefCounted`
-**Lines**: 378-428 (51 lines)
-
-## Formulas
-
-### Doc Line 3
-
-Siler(1979) bathtub-curve mortality model.
-
+**GDScript**:
 ```gdscript
 Siler(1979) bathtub-curve mortality model.
 μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
@@ -143,157 +87,328 @@ Birthday-based distributed checks (not every-tick iteration).
 Infants (0-1yr) checked monthly for higher resolution.
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `bathtub` | bathtub |
+| `curve` | curve |
+| `mortality` | mortality |
+| `model` | model |
+| `x` | x |
+| `a₁` | infant mortality amplitude (rapid decline after birth) |
+| `e` | e |
+| `b₁` | infant mortality decline rate |
+| `a₂` | age-independent background mortality |
+| `a₃` | senescent mortality amplitude (exponential aging) |
+| `b₃` | senescent mortality acceleration rate (Gompertz parameter) |
+| `based` | based |
+| `distributed` | distributed |
+| `every` | every |
+| `tick` | tick |
+| `iteration` | iteration |
+
 📄 source: `scripts/systems/mortality_system.gd:L3`
 
-### Siler Hazard Rate
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Siler hazard components
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
+
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 Siler hazard components
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `hazard` | hazard |
+| `components` | components |
+
 📄 source: `scripts/systems/mortality_system.gd:L133`
 
-### Do Mortality Check Line 134
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Siler hazard components
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
-$$_a1  \cdot  e^{-_b1  \cdot  age_years}$$
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
 
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 var mu_infant: float = _a1 * exp(-_b1 * age_years)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `mu_infant` | instantaneous hazard rate μ(x) |
+| `_a1` | infant mortality amplitude (rapid decline after birth) |
+| `_b1` | infant mortality decline rate |
+| `age_years` | age-related input |
+
 📄 source: `scripts/systems/mortality_system.gd:L134`
 
-### Do Mortality Check Line 136
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Formula logic extracted from _do_mortality_check
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
-$$_a3  \cdot  e^{_b3  \cdot  age_years}$$
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
 
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 var mu_senescence: float = _a3 * exp(_b3 * age_years)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `mu_senescence` | instantaneous hazard rate μ(x) |
+| `_a3` | senescent mortality amplitude (exponential aging) |
+| `_b3` | senescent mortality acceleration rate (Gompertz parameter) |
+| `age_years` | age-related input |
+
 📄 source: `scripts/systems/mortality_system.gd:L136`
 
-### Do Mortality Check Line 139
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Tech modifiers
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
-$$e^{-_tech_k1  \cdot  tech_level}$$
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
 
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 var m1: float = exp(-_tech_k1 * tech_level)
 	var m2: float = exp(-_tech_k2 * tech_level)
 	var m3: float = exp(-_tech_k3 * tech_level)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `m1` | m1 |
+| `_tech_k1` |  tech k1 |
+| `tech_level` | tech level |
+| `m2` | m2 |
+| `_tech_k2` |  tech k2 |
+| `m3` | m3 |
+| `_tech_k3` |  tech k3 |
+
 📄 source: `scripts/systems/mortality_system.gd:L139`
 
-### Do Mortality Check Line 144
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Nutrition modifier (based on hunger)
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
+
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 var nutrition: float = clampf(entity.hunger, 0.0, 1.0)
 	m1 *= lerpf(2.0, 0.8, nutrition)
 	m2 *= lerpf(1.5, 0.9, nutrition)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `nutrition` | nutrition state input |
+| `entity` | entity |
+| `hunger` | nutrition state input |
+| `m1` | m1 |
+| `m2` | m2 |
+
 📄 source: `scripts/systems/mortality_system.gd:L144`
 
-### Doc Line 168
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Annual death probability: q = 1 - exp(-μ)
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
-$$1 - e^{-μ}$$
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
 
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 Annual death probability: q = 1 - exp(-μ)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `death` | death |
+| `probability` | probability term |
+| `q` | q |
+
 📄 source: `scripts/systems/mortality_system.gd:L168`
 
-### Do Mortality Check Q Annual
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Annual death probability: q = 1 - exp(-μ)
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
-$$1.0 - e^{-mu_total}$$
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
 
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 var q_annual: float = 1.0 - exp(-mu_total)
 	q_annual = clampf(q_annual, 0.0, 0.999)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `q_annual` | probability term |
+| `mu_total` | instantaneous hazard rate μ(x) |
+
 📄 source: `scripts/systems/mortality_system.gd:L169`
 
-### Doc Line 175
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Monthly: q_month = 1 - (1 - q_annual)^(1/12)
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
-$$1 - (1 - q_annual)^(1/12)$$
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
 
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 Monthly: q_month = 1 - (1 - q_annual)^(1/12)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `q_month` | probability term |
+| `q_annual` | probability term |
+
 📄 source: `scripts/systems/mortality_system.gd:L175`
 
-### Do Mortality Check Q Check
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Monthly: q_month = 1 - (1 - q_annual)^(1/12)
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
-$$1.0 - pow(1.0 - q_annual, 1.0 / 12.0)$$
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
 
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 q_check = 1.0 - pow(1.0 - q_annual, 1.0 / 12.0)
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `q_check` | probability term |
+| `q_annual` | probability term |
+
 📄 source: `scripts/systems/mortality_system.gd:L176`
 
-### Determine Cause Line 202
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Formula logic extracted from _determine_cause
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
-$$_rng.randf()  \cdot  total$$
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
 
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 var roll: float = _rng.randf() * total
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `roll` | roll |
+| `_rng` |  rng |
+| `total` | total |
+
 📄 source: `scripts/systems/mortality_system.gd:L202`
 
-### Doc Line 282
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Theoretical e0 from current Siler parameters
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
+
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 Theoretical e0 from current Siler parameters
 ```
+
+| Variable | Meaning |
+| :-- | :-- |
+| `e0` | e0 |
+| `from` | from |
+| `current` | current |
+| `parameters` | parameters |
 
 📄 source: `scripts/systems/mortality_system.gd:L282`
 
-### Doc Line 347
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-e(start) = integral from start to 120 of S(x)/S(start) dx
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
-$$integral from start to 120 of S(x)/S(start) dx$$
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
 
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 e(start) = integral from start to 120 of S(x)/S(start) dx
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `start` | start |
+| `integral` | integral |
+| `from` | from |
+| `to` | to |
+| `of` | of |
+| `x` | x |
+| `dx` | dx |
+
 📄 source: `scripts/systems/mortality_system.gd:L347`
 
-### Calc Theoretical Ex Line 348
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Numerical integration of survival function S(x) from start_age e(start) = integral from start to 120 of S(x)/S(start) dx
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
-$$e^{-_tech_k1  \cdot  tech_level}$$
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
 
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 var m1: float = exp(-_tech_k1 * tech_level)
 	var m2: float = exp(-_tech_k2 * tech_level)
@@ -301,27 +416,63 @@ var m1: float = exp(-_tech_k1 * tech_level)
 	var dx: float = 0.5  # half-year steps
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `m1` | m1 |
+| `_tech_k1` |  tech k1 |
+| `tech_level` | tech level |
+| `m2` | m2 |
+| `_tech_k2` |  tech k2 |
+| `m3` | m3 |
+| `_tech_k3` |  tech k3 |
+| `dx` | dx |
+
 📄 source: `scripts/systems/mortality_system.gd:L348`
 
-### Calc Theoretical Ex Line 359
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Hazard formula logic extracted from _calc_theoretical_ex
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
-$$m1  \cdot  _a1  \cdot  e^{-_b1  \cdot  x} + m2  \cdot  _a2 + m3  \cdot  _a3  \cdot  e^{_b3  \cdot  x}$$
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
 
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 var mu: float = m1 * _a1 * exp(-_b1 * x) + m2 * _a2 + m3 * _a3 * exp(_b3 * x)
 		cum_hazard_start += mu * dx
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `mu` | instantaneous hazard rate μ(x) |
+| `m1` | m1 |
+| `_a1` | infant mortality amplitude (rapid decline after birth) |
+| `_b1` | infant mortality decline rate |
+| `x` | x |
+| `m2` | m2 |
+| `_a2` | age-independent background mortality |
+| `m3` | m3 |
+| `_a3` | senescent mortality amplitude (exponential aging) |
+| `_b3` | senescent mortality acceleration rate (Gompertz parameter) |
+| `cum_hazard_start` | cum hazard start |
+| `dx` | dx |
+
 📄 source: `scripts/systems/mortality_system.gd:L359`
 
-### Calc Theoretical Ex Line 367
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-Hazard formula logic extracted from _calc_theoretical_ex
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
-$$m1  \cdot  _a1  \cdot  e^{-_b1  \cdot  x} + m2  \cdot  _a2 + m3  \cdot  _a3  \cdot  e^{_b3  \cdot  x}$$
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
 
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 var mu: float = m1 * _a1 * exp(-_b1 * x) + m2 * _a2 + m3 * _a3 * exp(_b3 * x)
 		var s_rel: float = exp(-cum_hazard)  # S(x)/S(start)
@@ -329,28 +480,90 @@ var mu: float = m1 * _a1 * exp(-_b1 * x) + m2 * _a2 + m3 * _a3 * exp(_b3 * x)
 		cum_hazard += mu * dx
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `mu` | instantaneous hazard rate μ(x) |
+| `m1` | m1 |
+| `_a1` | infant mortality amplitude (rapid decline after birth) |
+| `_b1` | infant mortality decline rate |
+| `x` | x |
+| `m2` | m2 |
+| `_a2` | age-independent background mortality |
+| `m3` | m3 |
+| `_a3` | senescent mortality amplitude (exponential aging) |
+| `_b3` | senescent mortality acceleration rate (Gompertz parameter) |
+| `s_rel` | s rel |
+| `cum_hazard` | cum hazard |
+| `integral` | integral |
+| `dx` | dx |
+
 📄 source: `scripts/systems/mortality_system.gd:L367`
 
-### Doc Line 377
+### Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
 
-COR (Hobfoll 1989): loss events use is_loss=true -> x2.5 multiplier.
+**Model**: Siler (1979) bathtub-curve mortality (Siler, W. (1979). A Competing-Risk Model for Animal Mortality)
 
+$$
+μ(x) = a₁·e^{-b₁·x} + a₂ + a₃·e^{b₃·x}
+$$
+
+**Interpretation**: Calculates the age-specific mortality hazard rate combining infant decline, constant background risk, and exponential aging.
+
+**GDScript**:
 ```gdscript
 COR (Hobfoll 1989): loss events use is_loss=true -> x2.5 multiplier.
 ```
 
+| Variable | Meaning |
+| :-- | :-- |
+| `loss` | loss |
+| `events` | events |
+| `use` | use |
+| `is_loss` | is loss |
+| `x2` | x2 |
+| `multiplier` | instantaneous hazard rate μ(x) |
+
 📄 source: `scripts/systems/mortality_system.gd:L377`
 
-## Dependencies
+## Configuration Reference (설정)
 
-### Imports
+| Constant | Default | Controls | Behavior Effect |
+| :-- | :-- | :-- | :-- |
+| `get_age_years` | (not found) | Behavior tuning constant. | Adjusts baseline system behavior under this module. |
 
-- [`game_calendar.gd`](../core/game_calendar.md) - via `preload` (line 8)
+## Cross-System Effects (시스템 간 상호작용)
 
-### Signals Emitted
+### Imported Modules (모듈 임포트)
 
-- None
+- `scripts/core/game_calendar.gd` via `preload` at `scripts/systems/mortality_system.gd:L8`
 
-### Referenced By
+### Shared Entity Fields (공유 엔티티 필드)
 
-- None
+| Field | Access | Shared With |
+| :-- | :-- | :-- |
+| `age` | read/write (inferred) | [`aging`](aging.md), [`family`](family.md), [`needs`](needs.md) |
+| `age_stage` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`childcare`](childcare.md), [`construction`](construction.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`movement`](movement.md), [`needs`](needs.md) |
+| `birth_tick` | read/write (inferred) | [`needs`](needs.md) |
+| `entity_name` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`chronicle`](chronicle.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mental_break`](mental_break.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
+| `hunger` | read/write (inferred) | [`behavior`](behavior.md), [`childcare`](childcare.md), [`family`](family.md), [`mental_break`](mental_break.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
+| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md) |
+
+### Signals (시그널)
+
+No emitted signals extracted for this module.
+
+### Downstream Impact (다운스트림 영향)
+
+- No explicit downstream dependencies extracted.
+
+## Entity Data Model (엔티티 데이터 모델)
+
+| Field | Access | Type | Represents | Typical Values |
+| :-- | :-- | :-- | :-- | :-- |
+| `age` | read/write (inferred) | int | Lifecycle progression used for stage-specific behavior and events. | Non-negative tick counts. |
+| `age_stage` | read/write (inferred) | String enum | Lifecycle progression used for stage-specific behavior and events. | Named categorical states. |
+| `birth_tick` | read/write (inferred) | Variant | Birth tick. | System-defined value domain. |
+| `entity_name` | read/write (inferred) | Variant | Entity name. | System-defined value domain. |
+| `frailty` | read/write (inferred) | Variant | Frailty. | System-defined value domain. |
+| `hunger` | read/write (inferred) | float | Nutritional deprivation level driving survival and action priorities. | Normalized scalar (commonly 0.0-1.0 or 0-100 by system). |
+| `id` | read/write (inferred) | int | Stable entity identity used for referencing across systems. | Positive integer identifiers. |
