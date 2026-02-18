@@ -714,8 +714,8 @@ def run(manifest: dict, extracted: dict) -> dict:
             "errors": errors,
         }
 
-    output_path = os.path.join(config.CONTENT_DIR, "pipeline.md")
-    config.ensure_dir(config.CONTENT_DIR)
+    output_path = os.path.join(config.CONTENT_KO, "pipeline.md")
+    config.ensure_dir(config.CONTENT_KO)
 
     try:
         if os.path.exists(output_path):

@@ -22,6 +22,10 @@ def _to_posix(path: str) -> str:
     return path.replace(os.sep, "/")
 
 
+def _with_locale_prefix(path: str) -> str:
+    return _to_posix(os.path.join("ko", path))
+
+
 def _fallback_title(rel_path: str) -> str:
     stem = os.path.splitext(os.path.basename(rel_path))[0]
     if stem == "_index":
@@ -206,7 +210,7 @@ def _read_frontmatter(path: str, rel_path: str, warnings: list[str]) -> dict[str
 
 
 def _build_directory_nav(section_path: str, warnings: list[str]) -> list[dict[str, str]]:
-    absolute_dir = os.path.join(config.CONTENT_DIR, section_path)
+    absolute_dir = os.path.join(config.CONTENT_KO, section_path)
     if not os.path.isdir(absolute_dir):
         warnings.append(f"section directory missing: {section_path}")
         return []
@@ -217,7 +221,8 @@ def _build_directory_nav(section_path: str, warnings: list[str]) -> list[dict[st
     pages: list[dict[str, Any]] = []
 
     for file_path in markdown_files:
-        rel_path = _to_posix(os.path.relpath(file_path, config.CONTENT_DIR))
+        rel_path = _to_posix(os.path.relpath(file_path, config.CONTENT_KO))
+        nav_path = _with_locale_prefix(rel_path)
         frontmatter = _read_frontmatter(file_path, rel_path, warnings)
 
         title_value = frontmatter.get("title")
@@ -233,7 +238,7 @@ def _build_directory_nav(section_path: str, warnings: list[str]) -> list[dict[st
         pages.append(
             {
                 "title": title,
-                "path": rel_path,
+                "path": nav_path,
                 "nav_order": nav_order,
                 "is_index": is_index,
             }
@@ -274,12 +279,12 @@ def run(manifest: dict) -> dict:
 
     for section_title, section_target in config.NAV_SECTION_ORDER:
         if section_target.lower().endswith(".md"):
-            file_path = os.path.join(config.CONTENT_DIR, section_target)
+            file_path = os.path.join(config.CONTENT_KO, section_target)
             if not os.path.exists(file_path):
                 warnings.append(f"section file missing: {section_target}")
                 continue
 
-            relative_target = _to_posix(section_target)
+            relative_target = _with_locale_prefix(section_target)
             nav.append({section_title: relative_target})
             items_processed += 1
             continue

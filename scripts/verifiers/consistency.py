@@ -202,7 +202,7 @@ def run(manifest: dict) -> dict:
         if not os.path.isdir(config.CONTENT_DIR):
             warnings.append(f"Content directory not found: {_to_relpath(config.CONTENT_DIR)}")
         else:
-            config_ref_path = os.path.join(config.CONTENT_DIR, "config-reference.md")
+            config_ref_path = os.path.join(config.CONTENT_KO, "config-reference.md")
             markdown_files: list[str] = []
             for root, _, files in os.walk(config.CONTENT_DIR):
                 for filename in sorted(files):

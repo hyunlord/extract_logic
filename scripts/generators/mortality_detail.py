@@ -545,7 +545,7 @@ def run(manifest: dict, extracted: dict) -> dict:
             "errors": errors,
         }
 
-    output_dir = os.path.join(config.CONTENT_DIR, "systems")
+    output_dir = config.CONTENT_SYSTEMS
     output_path = os.path.join(output_dir, "mortality-detail.md")
 
     existing_manual = _extract_manual_block(output_path, warnings)

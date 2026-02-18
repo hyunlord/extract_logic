@@ -149,3 +149,48 @@ Found via localhost:8000 content audit.
 **Root causes:**
 - t-117: `_infer_control_description` had no mental_break-specific mappings; `duration_base_ticks` fell through all checks to generic fallback
 - t-118: `_collect_emotion_weights` read from `decay_config.get("stress").get("weights")` but decay_config.json has no such path; EMOTION_WEIGHTS is a GDScript const dict not in extracted/constants.json
+
+---
+
+## 1단계: 소스 데이터 누락 필드 보완 (2026-02-18)
+
+i18n 구조 전환 전 소스 데이터의 누락 필드 추가. 대상: `new-world-wt/lead`.
+
+| # | Title | Dispatch | Status |
+|---|-------|----------|--------|
+| t-119 | `emotion_definition.json` — 8개 감정 객체에 `name_en` 추가 | ask_codex (Job 46e5d626) | ✅ |
+| t-120 | `mental_breaks.json` — 10개 항목에 `description_kr`/`description_en` 추가 | ask_codex (Job 85231c7c) | ✅ |
+| t-121 | `stressor_events.json` — 24개 이벤트에 `description_kr`/`description_en` 추가 | ask_codex (Job 10fc41b4) | ✅ |
+
+**Results:**
+- t-119: `emotions` 딕셔너리 각 객체에 `name_en` 추가 완료 (8 fields). JSON valid.
+- t-120: 10개 mental break 항목에 description_kr/en 추가 (20 fields). JSON valid, ORDER_OK.
+- t-121: 24개 stressor 이벤트에 description_kr/en 추가 (48 fields). JSON valid, _comment* 보존.
+
+**총 추가 필드:** 76개 (8 + 20 + 48)
+
+---
+
+## 2단계: i18n 구조 전환 (2026-02-18)
+
+MkDocs Material i18n 플러그인 기반 한/영 토글 구조 전환.
+환경: `.venv` 내 mkdocs-material 9.7.1, mkdocs-static-i18n 미설치.
+
+| # | Title | Dispatch | Status |
+|---|-------|----------|--------|
+| t-I1 | `mkdocs.yml` i18n 플러그인 설정 + `mkdocs-static-i18n` 설치 | ask_codex | ✅ |
+| t-I2 | `generators/strings.py` locale dict 추출 — 하드코딩 문자열 외부화 | ask_codex | ✅ |
+| t-I3 | `content/` → `content/ko/` 이동 + config.py/nav_builder.py 경로 갱신 | ask_codex | ✅ |
+
+**의존 관계:** t-I1 ‖ t-I2 (병렬) → t-I3 (I1 완료 후)
+
+**Results:**
+- t-I1 (Job 843c4982): `mkdocs.yml` plugins 섹션 교체 완료. `mkdocs-static-i18n` 1.3.0 호스트에서 설치 (`pip install`). `mkdocs build` → `site/` (ko) + `site/en/` (en) 생성 확인. (Codex 샌드박스 네트워크 제한으로 install은 호스트에서 직접 수행)
+- t-I2 (Job 9ea1bd3d): `scripts/generators/strings.py` 신규 생성. ko/en 각 138개 키, `t(key, lang="ko")` fallback 함수 구현. 키 정합성 가드(불일치 시 오류) 포함. Gate 5/5 pass.
+- t-I3 (Job 2f7cc655): `content/` → `content/ko/` 106개 파일 이동, `content/en/` 생성. `config.py`에 `CONTENT_KO`/`CONTENT_EN` 추가. `nav_builder.py` 스캔 기준 및 출력 경로를 `ko/...` prefix로 변경. 관련 generator/verifier 10개 파일의 직접 경로 참조 `CONTENT_KO`로 치환. 최종: `root_md=0`, `ko_md=106`, gate 5/5 PASS.
+
+**Gate (최종):**
+```
+check 4/5: Frontmatter  106 files OK
+check 5/5: Summary      PASS — 0 warnings
+```

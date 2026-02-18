@@ -84,14 +84,14 @@ def _build_expectations(
     data_expected: list[dict[str, str]] = []
     glossary_expected: list[dict[str, str]] = []
     required_expected: list[dict[str, str]] = [
-        {"group": "required", "source": "content/config-reference.md", "path": os.path.join(config.CONTENT_DIR, "config-reference.md")},
-        {"group": "required", "source": "content/index.md", "path": os.path.join(config.CONTENT_DIR, "index.md")},
+        {"group": "required", "source": "content/ko/config-reference.md", "path": os.path.join(config.CONTENT_KO, "config-reference.md")},
+        {"group": "required", "source": "content/ko/index.md", "path": os.path.join(config.CONTENT_KO, "index.md")},
         # v2 required content pages
-        {"group": "required", "source": "content/pipeline.md", "path": os.path.join(config.CONTENT_DIR, "pipeline.md")},
-        {"group": "required", "source": "content/traits/_index.md", "path": os.path.join(config.CONTENT_TRAITS, "_index.md")},
-        {"group": "required", "source": "content/systems/emotion-detail.md", "path": os.path.join(config.CONTENT_SYSTEMS, "emotion-detail.md")},
-        {"group": "required", "source": "content/systems/stress-detail.md", "path": os.path.join(config.CONTENT_SYSTEMS, "stress-detail.md")},
-        {"group": "required", "source": "content/systems/mortality-detail.md", "path": os.path.join(config.CONTENT_SYSTEMS, "mortality-detail.md")},
+        {"group": "required", "source": "content/ko/pipeline.md", "path": os.path.join(config.CONTENT_KO, "pipeline.md")},
+        {"group": "required", "source": "content/ko/traits/_index.md", "path": os.path.join(config.CONTENT_TRAITS, "_index.md")},
+        {"group": "required", "source": "content/ko/systems/emotion-detail.md", "path": os.path.join(config.CONTENT_SYSTEMS, "emotion-detail.md")},
+        {"group": "required", "source": "content/ko/systems/stress-detail.md", "path": os.path.join(config.CONTENT_SYSTEMS, "stress-detail.md")},
+        {"group": "required", "source": "content/ko/systems/mortality-detail.md", "path": os.path.join(config.CONTENT_SYSTEMS, "mortality-detail.md")},
         # v2 required extracted JSON files
         {"group": "required", "source": "extracted/trait_data.json", "path": os.path.join(config.EXTRACTED_DIR, "trait_data.json")},
         {"group": "required", "source": "extracted/stressor_data.json", "path": os.path.join(config.EXTRACTED_DIR, "stressor_data.json")},

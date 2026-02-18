@@ -804,7 +804,7 @@ def run(manifest: dict, extracted: dict) -> dict:
     if raw_source_file:
         source_files.append(raw_source_file)
 
-    traits_dir = os.path.join(config.CONTENT_DIR, "traits")
+    traits_dir = config.CONTENT_TRAITS
     config.ensure_dir(traits_dir)
 
     index_content = _render_index_page(
