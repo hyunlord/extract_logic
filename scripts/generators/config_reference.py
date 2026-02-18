@@ -267,7 +267,7 @@ def run(manifest: dict) -> dict:
         warnings.append(f"Missing or invalid references.json, using empty references: {references_error}")
         references_data = {}
 
-    output_path = os.path.join(config.CONTENT_DIR, "config-reference.md")
+    output_path = os.path.join(config.CONTENT_KO, "config-reference.md")
     manual_block = _existing_manual_block(output_path)
 
     try:
@@ -293,7 +293,7 @@ def run(manifest: dict) -> dict:
             )
 
     try:
-        config.ensure_dir(config.CONTENT_DIR)
+        config.ensure_dir(config.CONTENT_KO)
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(markdown)
     except OSError as exc:

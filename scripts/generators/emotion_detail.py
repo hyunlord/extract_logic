@@ -782,7 +782,7 @@ def run(manifest: dict, extracted: dict) -> dict:
         warnings.append("extracted is not an object; using empty extracted payload")
         extracted = {}
 
-    output_path = os.path.join(config.CONTENT_DIR, "systems", "emotion-detail.md")
+    output_path = os.path.join(config.CONTENT_SYSTEMS, "emotion-detail.md")
     config.ensure_dir(config.CONTENT_SYSTEMS)
 
     try:

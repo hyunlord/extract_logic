@@ -31,17 +31,19 @@ IGNORE_FILES = {
 # ── Output Directories (relative to repo root) ────────────────────────
 EXTRACTED_DIR = os.path.join(_REPO_ROOT, "extracted")
 CONTENT_DIR = os.path.join(_REPO_ROOT, "content")
+CONTENT_KO = os.path.join(CONTENT_DIR, "ko")
+CONTENT_EN = os.path.join(CONTENT_DIR, "en")
 EXPORTS_DIR = os.path.join(_REPO_ROOT, "exports")
 MKDOCS_YML = os.path.join(_REPO_ROOT, "mkdocs.yml")
 
 # ── Content Subdirectories ─────────────────────────────────────────────
-CONTENT_SYSTEMS = os.path.join(CONTENT_DIR, "systems")
-CONTENT_DATA = os.path.join(CONTENT_DIR, "data")
-CONTENT_INTERACTIONS = os.path.join(CONTENT_DIR, "interactions")
-CONTENT_GLOSSARY = os.path.join(CONTENT_DIR, "glossary")
-CONTENT_CORE = os.path.join(CONTENT_DIR, "core")
-CONTENT_TRAITS = os.path.join(CONTENT_DIR, "traits")
-CONTENT_MANUAL = os.path.join(CONTENT_DIR, "_manual")
+CONTENT_SYSTEMS = os.path.join(CONTENT_KO, "systems")
+CONTENT_DATA = os.path.join(CONTENT_KO, "data")
+CONTENT_INTERACTIONS = os.path.join(CONTENT_KO, "interactions")
+CONTENT_GLOSSARY = os.path.join(CONTENT_KO, "glossary")
+CONTENT_CORE = os.path.join(CONTENT_KO, "core")
+CONTENT_TRAITS = os.path.join(CONTENT_KO, "traits")
+CONTENT_MANUAL = os.path.join(CONTENT_KO, "_manual")
 
 # ── Export Settings ────────────────────────────────────────────────────
 EXPORT_MAX_BYTES = 150_000  # Hard warning threshold
@@ -151,6 +153,8 @@ def ensure_all_dirs() -> None:
     for d in [
         EXTRACTED_DIR,
         CONTENT_DIR,
+        CONTENT_KO,
+        CONTENT_EN,
         CONTENT_SYSTEMS,
         CONTENT_DATA,
         CONTENT_INTERACTIONS,

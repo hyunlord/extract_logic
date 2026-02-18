@@ -759,7 +759,7 @@ def run(manifest: dict, extracted: dict) -> dict:
 
     markdown = _render_markdown(manifest, extracted, warnings)
 
-    output_path = os.path.join(config.CONTENT_DIR, "systems", "stress-detail.md")
+    output_path = os.path.join(config.CONTENT_SYSTEMS, "stress-detail.md")
     config.ensure_dir(os.path.dirname(output_path))
 
     existing_content = ""

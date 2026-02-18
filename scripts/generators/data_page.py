@@ -814,7 +814,7 @@ def _render_personality_defer(
         "",
     ]
 
-    trait_index_path = os.path.join(config.CONTENT_DIR, "traits", "_index.md")
+    trait_index_path = os.path.join(config.CONTENT_TRAITS, "_index.md")
     lines.append(
         f"- See [`Trait Pages`]({_relative_link(output_dir, trait_index_path)}) for HEXACO conditions and effect breakdowns. (HEXACO 조건/효과 정리)"
     )

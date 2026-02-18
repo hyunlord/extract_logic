@@ -1,4 +1,4 @@
-"""Generate the docs index page at content/index.md."""
+"""Generate the docs index page at content/ko/index.md."""
 
 from __future__ import annotations
 
@@ -177,8 +177,8 @@ def run(manifest: dict) -> dict:
         "```\n"
     )
 
-    output_path = os.path.join(config.CONTENT_DIR, "index.md")
-    config.ensure_dir(config.CONTENT_DIR)
+    output_path = os.path.join(config.CONTENT_KO, "index.md")
+    config.ensure_dir(config.CONTENT_KO)
 
     try:
         if os.path.exists(output_path):
