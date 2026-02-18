@@ -1,0 +1,23 @@
+site/
+__pycache__/
+*.pyc
+.env
+.venv/
+extracted/
+exports/*.md
+!exports/.gitkeep
+
+# OMC
+.omc/
+.omc*
+.omx/
+
+# Codex dispatch prompts
+.codex-prompts/
+.codex-prompt*
+.codex_prompts/
+.codex/
+
+# ticket
+.ticket*
+tickets/
