@@ -10,9 +10,9 @@ nav_order: 7
 
 # tutorial 용어 / Glossary
 
-총 7개 항목 | Total 7 entries
+총 항목 수: 7
 
-## 용어 목록
+## 용어 사전
 
 | Key | 한국어 | English |
 |-----|--------|---------|
@@ -24,7 +24,7 @@ nav_order: 7
 | `TUT_SPEED_CONTROL` | 1-5 키로 시뮬레이션 속도를 조절합니다 | Use 1-5 keys to control simulation speed |
 | `TUT_WELCOME` | WorldSim에 오신 것을 환영합니다! | Welcome to WorldSim! |
 
-## 수동 메모 / Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

@@ -19,7 +19,7 @@ nav_order: 1
 
 # The WorldSim Pipeline: Personality → Emotion → Stress → Mortality
 
-## 개요 / Overview
+## 개요
 
 WorldSim simulates a complete psychophysiological pipeline for each entity:
 
@@ -63,7 +63,7 @@ graph TD
     DEATH -->|death event| EVT
 ```
 
-## Stage 1: Personality (Static Foundation) / 성격 (정적 기반)
+## 1단계: 성격 (정적 기반)
 
 **Model**: Ashton & Lee (2007) HEXACO
 **Computation**: Once at entity creation + yearly maturation
@@ -89,17 +89,17 @@ Traits activate when facet scores exceed thresholds (e.g., `H_sincerity > 0.92` 
 
 ---
 
-## Stage 2: Emotion (Fast Response) / 감정 (빠른 반응)
+## 2단계: 감정 (빠른 반응)
 
 **Models**: Plutchik (1980), Lazarus (1991), Scherer (2009)
 **Tick interval**: 12 ticks
 
-### Input / 입력
+### 입력
 - Game events with appraisal vectors (8 dimensions)
 - Personality sensitivity multipliers
 - Trait emotion modifiers
 
-### Computation / 계산
+### 계산
 1. **Appraisal**: emotion impulses from appraisal dimensions
 
 | Emotion | Formula |
@@ -119,7 +119,7 @@ Traits activate when facet scores exceed thresholds (e.g., `H_sincerity > 0.92` 
 5. **Inhibition**: opposite pair suppression at γ = 0.3
 6. **Contagion**: spatial spread with κ coefficients
 
-### Output / 출력
+### 출력
 - 8 emotion values (0-100 each)
 - Valence-arousal coordinates
 - Mental break trigger probability update
@@ -130,18 +130,18 @@ Traits activate when facet scores exceed thresholds (e.g., `H_sincerity > 0.92` 
 
 ---
 
-## Stage 3: Stress (Medium Accumulation) / 스트레스 (중간 축적)
+## 3단계: 스트레스 (중간 축적)
 
 **Models**: Lazarus (1984), Selye (1956), McEwen (1998), Hobfoll (1989)
 **Tick interval**: 2 ticks
 
-### Input / 입력
+### 입력
 - Emotion values (from Stage 2)
 - Continuous need states (hunger, energy, social)
 - Stressor events
 - Personality modifiers
 
-### Computation / 계산
+### 계산
 1. **Emotion contribution**: `stress += γ_VA * Σ(w_e * emotion_e)`
 2. **Continuous stressors**: hunger/energy/social deficit → stress
 3. **Event stressors**: `severity = base_instant + per_tick/decay * 10; if loss: × 2.5`
@@ -149,29 +149,29 @@ Traits activate when facet scores exceed thresholds (e.g., `H_sincerity > 0.92` 
 5. **Allostatic load**: chronic accumulation when stress exceeds reserve
 6. **GAS stages**: alarm → resistance → exhaustion
 
-### Output / 출력
+### 출력
 - Current stress level (0-100)
 - Allostatic load (0-100)
 - GAS stage (alarm/resistance/exhaustion)
 - Yerkes-Dodson efficiency multiplier
 
-📄 source: `scripts/systems/stress_system.gd:L71`
-📄 source: `scripts/systems/stress_system.gd:L213`
+📄 source: `scripts/systems/stress_system.gd:L66`
+📄 source: `scripts/systems/stress_system.gd:L208`
 📄 source: `data/stressor_events.json`
 
 ---
 
-## Stage 4: Mortality (Slow Selection) / 사망 (느린 선택)
+## 4단계: 사망 (느린 선택)
 
 **Model**: Siler (1979)
 **Tick interval**: 1 ticks
 
-### Input / 입력
+### 입력
 - Entity age
 - Allostatic load (from Stage 3)
 - Tech level, nutrition, care status, season
 
-### Computation / 계산
+### 계산
 $$
 \mu(x) = a_1 e^{-b_1 x} + a_2 + a_3 e^{b_3 x}
 $$
@@ -181,17 +181,17 @@ $$
 P(\text{death}) = 1 - e^{-\mu_{\text{final}}(x) / \text{TICKS\_PER\_YEAR}}
 $$
 
-### Output / 출력
+### 출력
 - Death probability per tick
 - Death event (triggers bereavement stressors on survivors)
 
 📄 source: `scripts/systems/mortality_system.gd:L130`
-📄 source: `scripts/systems/mortality_system.gd`
+📄 source: `scripts/systems/mortality_system.gd:L378`
 📄 source: `data/species/human/mortality/siler_parameters.json`
 
-## Feedback Loops / 피드백 루프
+## 피드백 루프
 
-### Bereavement Cascade / 애도 연쇄
+### 애도 연쇄
 ```mermaid
 graph LR
     DEATH[Entity Death] -->|bereavement stressor| STRESS[Survivor Stress]
@@ -199,7 +199,7 @@ graph LR
     MORT -->|more deaths| DEATH
 ```
 
-### Mental Break Loop / 정신 붕괴 루프
+### 정신 붕괴 루프
 ```mermaid
 graph LR
     STRESS[High Stress] -->|threshold exceeded| BREAK[Mental Break]
@@ -207,7 +207,7 @@ graph LR
     EMOT -->|emotion contribution| STRESS
 ```
 
-## Example: Entity Loses Partner / 예시: 동반자 상실
+## 예시: 동반자 상실
 
 **Event**: `partner_death` (intensity=95, is_trauma=true, is_loss=true)
 
@@ -231,7 +231,7 @@ graph LR
 - At allostatic_load=60: mortality hazard ×1.6
 - 10-year survival (age 35, baseline Siler params): 89.2% → 83.3%
 
-## Pipeline Statistics / 파이프라인 통계
+## 파이프라인 통계
 
 | Metric | Value |
 |--------|-------|

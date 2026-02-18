@@ -1,4 +1,4 @@
-"""Generate the docs index page at content/ko/index.md."""
+"""Generate the docs index page at content/<lang>/index.md."""
 
 from __future__ import annotations
 
@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from typing import Any
 
 import scripts.config as config
+from scripts.generators.strings import t
 
 _MANUAL_START = "<!-- MANUAL:START -->"
 _MANUAL_END = "<!-- MANUAL:END -->"
@@ -65,7 +66,7 @@ def _preserve_manual_block(new_text: str, existing_text: str) -> str:
     return f"{before}{old_content}{after}"
 
 
-def run(manifest: dict) -> dict:
+def run(manifest: dict, extracted: dict | None = None, lang: str = "ko") -> dict:
     """Main entry point for index page generation.
 
     Args:
@@ -80,6 +81,8 @@ def run(manifest: dict) -> dict:
     """
     warnings: list[str] = []
     errors: list[str] = []
+    del extracted
+    dirs = config.lang_dirs(lang)
 
     if not isinstance(manifest, dict):
         warnings.append("Manifest is not a dict; using empty manifest")
@@ -130,6 +133,27 @@ def run(manifest: dict) -> dict:
     if not generated_date:
         generated_date = datetime.now(timezone.utc).date().isoformat()
 
+    intro = (
+        "Automatically generated WorldSim simulation system documentation."
+        if lang == "en"
+        else "자동 생성된 WorldSim 게임 시뮬레이션 시스템 문서입니다."
+    )
+    section_items = [
+        "- **[Systems](systems/)** — Simulation system docs (priority order)",
+        "- **[Config Reference](config-reference.md)** — Full GameConfig constants",
+        "- **[Data](data/)** — JSON data file analysis",
+        "- **[System Interactions](interactions/)** — Cross-system dependencies and interactions",
+        "- **[Glossary](glossary/)** — Korean/English game terms",
+        "- **[Core](core/)** — Core module reference",
+    ] if lang == "en" else [
+        "- **[시스템](systems/)** — 시뮬레이션 시스템 문서 (우선순위 순)",
+        "- **[설정 레퍼런스](config-reference.md)** — GameConfig 전체 상수",
+        "- **[데이터](data/)** — JSON 데이터 파일 분석",
+        "- **[시스템 상호작용](interactions/)** — 시스템 간 의존성 및 상호작용",
+        "- **[용어 사전](glossary/)** — 한영 대조 게임 용어",
+        "- **[코어](core/)** — 코어 모듈 레퍼런스",
+    ]
+
     index_md = (
         "---\n"
         "title: \"WorldSim Documentation\"\n"
@@ -143,8 +167,8 @@ def run(manifest: dict) -> dict:
         "nav_order: 0\n"
         "---\n\n"
         "# WorldSim Documentation\n\n"
-        "자동 생성된 WorldSim 게임 시뮬레이션 시스템 문서입니다.\n\n"
-        "## 프로젝트 통계\n\n"
+        f"{intro}\n\n"
+        f"## {t('section_project_stats', lang)}\n\n"
         "| 항목 | 수량 |\n"
         "|------|------|\n"
         f"| 시스템 (Systems) | {_format_number(systems_count)} |\n"
@@ -155,14 +179,10 @@ def run(manifest: dict) -> dict:
         f"| 로케일 키 (Keys) | {_format_number(locale_key_count)} |\n"
         f"| GDScript 라인 | {_format_number(gdscript_lines)} |\n\n"
         f"> 📅 Generated: {generated_date} | Source commit: `{source_commit}`\n\n"
-        "## 주요 섹션\n\n"
-        "- **[시스템](systems/)** — 시뮬레이션 시스템 문서 (우선순위 순)\n"
-        "- **[설정 레퍼런스](config-reference.md)** — GameConfig 전체 상수\n"
-        "- **[데이터](data/)** — JSON 데이터 파일 분석\n"
-        "- **[시스템 상호작용](interactions/)** — 시스템 간 의존성 및 상호작용\n"
-        "- **[용어 사전](glossary/)** — 한영 대조 게임 용어\n"
-        "- **[코어](core/)** — 코어 모듈 레퍼런스\n\n"
-        "## 시뮬레이션 아키텍처\n\n"
+        f"## {t('section_key_sections', lang)}\n\n"
+        + "\n".join(section_items)
+        + "\n\n"
+        f"## {t('section_sim_architecture', lang)}\n\n"
         "```mermaid\n"
         "graph TD\n"
         "  subgraph \"Core\"\n"
@@ -177,8 +197,8 @@ def run(manifest: dict) -> dict:
         "```\n"
     )
 
-    output_path = os.path.join(config.CONTENT_KO, "index.md")
-    config.ensure_dir(config.CONTENT_KO)
+    output_path = os.path.join(dirs["base"], "index.md")
+    config.ensure_dir(dirs["base"])
 
     try:
         if os.path.exists(output_path):

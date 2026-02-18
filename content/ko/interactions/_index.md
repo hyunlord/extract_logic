@@ -18,7 +18,7 @@ nav_order: 1
 
 Generated 7 calculation-pipeline interaction pages.
 
-## System Dependency Graph
+## 시스템 의존 그래프
 ```mermaid
 graph TD
     PERS[Personality System] -->|sensitivity, baselines| EMOT[Emotion System]
@@ -31,7 +31,7 @@ graph TD
     MORT -->|death event| EMOT
 ```
 
-## Interaction Pages
+## 상호작용 페이지
 | Interaction Pair | Output Page |
 |---|---|
 | `Personality → Emotion` | [personality-emotion.md](personality-emotion.md) |
@@ -42,10 +42,10 @@ graph TD
 | `Events → Emotion` | [events-emotion.md](events-emotion.md) |
 | `Stress → Emotion` | [stress-emotion.md](stress-emotion.md) |
 
-## Feedback Loops
+## 피드백 루프
 - stress -> mental break -> emotion inject -> more stress
 - death event -> bereavement stressor -> stress -> allostatic load -> mortality
 
-## Manual Notes
+## 수동 노트
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

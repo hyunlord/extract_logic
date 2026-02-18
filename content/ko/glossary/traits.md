@@ -10,9 +10,9 @@ nav_order: 6
 
 # traits 용어 / Glossary
 
-총 374개 항목 | Total 374 entries
+총 항목 수: 374
 
-## 용어 목록
+## 용어 사전
 
 | Key | 한국어 | English |
 |-----|--------|---------|
@@ -391,7 +391,7 @@ nav_order: 6
 | `TRAIT_F_VENGEFUL` | 앙심 품은 | Vengeful |
 | `TRAIT_F_VENGEFUL_DESC` | 상처받은 일을 기억하고 되갚으려 한다. 갈등이 늘지만 억제력을 통해 두려움을 줄 수도 있다. | Remembers slights and seeks payback; increases conflict, sometimes using intimidation to reduce fear. |
 
-## 수동 메모 / Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

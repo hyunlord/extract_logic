@@ -13,10 +13,10 @@ nav_order: 18
 
 📄 source: `scripts/core/resource_map.gd` | 161 lines | extends: RefCounted
 
-## 개요 (Overview)
+## 개요
 No summary available.
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -28,6 +28,6 @@ No summary available.
 |--------|------------|
 | - | - |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: -
 - Used by: -

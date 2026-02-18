@@ -13,10 +13,10 @@ nav_order: 15
 
 📄 source: `scripts/core/personality_system.gd` | 45 lines | extends: RefCounted
 
-## 개요 (Overview)
+## 개요
 Personality utility functions: compatibility and affinity scaling.
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -28,6 +28,6 @@ Personality utility functions: compatibility and affinity scaling.
 |--------|------------|
 | - | - |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: [`personality_system.gd`](personality_system.md)
 - Used by: [`personality_system.gd`](personality_system.md), [`social_event_system.gd`](../systems/social_events.md)

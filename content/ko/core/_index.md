@@ -1,5 +1,5 @@
 ---
-title: "코어 모듈 (Core Modules)"
+title: "코어 모듈"
 description: "Core module overview and quick reference"
 generated: true
 source_files:
@@ -33,7 +33,7 @@ source_files:
 nav_order: 1
 ---
 
-# 코어 모듈 (Core Modules)
+# 코어 모듈
 
 Total: 27 modules
 
@@ -44,10 +44,10 @@ Total: 27 modules
 | [Chunk Index](chunk_index.md) | `scripts/core/chunk_index.gd` | 86 | 16x16 tile spatial index for O(1) chunk lookups. |
 | [Deceased Registry](deceased_registry.md) | `scripts/core/deceased_registry.gd` | 103 | Registry of deceased entities for historical viewing. |
 | [Emotion Data](emotion_data.md) | `scripts/core/emotion_data.gd` | 365 | Plutchik 8 basic emotions with 3-layer temporal dynamics. |
-| [Entity Data](entity_data.md) | `scripts/core/entity_data.gd` | 255 | - |
+| [Entity Data](entity_data.md) | `scripts/core/entity_data.gd` | 237 | - |
 | [Entity Manager](entity_manager.md) | `scripts/core/entity_manager.gd` | 190 | - |
 | [Event Logger](event_logger.md) | `scripts/core/event_logger.gd` | 174 | - |
-| [Game Calendar](game_calendar.md) | `scripts/core/game_calendar.gd` | 307 | Gregorian calendar system for simulation time conversion. |
+| [Game Calendar](game_calendar.md) | `scripts/core/game_calendar.gd` | 299 | Gregorian calendar system for simulation time conversion. |
 | [Game Config](game_config.md) | `scripts/core/game_config.gd` | 322 | World constants Simulation parameters Time conversion (1 tick = 2 game hours) Age stage thresholds (in simulation ticks) — 6 stages infant ≤2y, toddler 3-5y, child 6-11y, teen 12-14y, adult 15-55y, elder 56+ UI Scale (adjustable at runtime, saved with game) |
 | [Locale](locale.md) | `scripts/core/locale.gd` | 129 | Autoload: Locale All text lookups go through this singleton. |
 | [Name Generator](name_generator.md) | `scripts/core/name_generator.gd` | 293 | - |
@@ -60,7 +60,7 @@ Total: 27 modules
 | [Save Manager](save_manager.md) | `scripts/core/save_manager.gd` | 592 | Binary save/load system (version 2). |
 | [Settlement Data](settlement_data.md) | `scripts/core/settlement_data.gd` | 46 | - |
 | [Settlement Manager](settlement_manager.md) | `scripts/core/settlement_manager.gd` | 120 | - |
-| [Simulation Bus](simulation_bus.md) | `scripts/core/simulation_bus.gd` | 46 | Core simulation events |
+| [Simulation Bus](simulation_bus.md) | `scripts/core/simulation_bus.gd` | 42 | Core simulation events |
 | [Simulation Engine](simulation_engine.md) | `scripts/core/simulation_engine.gd` | 78 | - |
 | [Simulation System](simulation_system.md) | `scripts/core/simulation_system.gd` | 15 | - |
 | [Species Manager](species_manager.md) | `scripts/core/species_manager.gd` | 82 | Species data loader singleton (Autoload). |

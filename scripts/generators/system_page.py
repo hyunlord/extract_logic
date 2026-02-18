@@ -9,6 +9,7 @@ from collections import defaultdict
 from typing import Any
 
 import scripts.config as config
+from scripts.generators.strings import t
 
 _MANUAL_BLOCK_RE = re.compile(
     r"<!-- MANUAL:START -->.*?<!-- MANUAL:END -->",
@@ -938,6 +939,7 @@ def _render_system_page(
     field_access_map: dict[str, dict[str, set[str]]],
     field_usage_map: dict[str, set[str]],
     ticks_per_year: float | None,
+    lang: str,
 ) -> str:
     rel_file = str(entry.get("file", ""))
     slug = slug_by_file.get(rel_file, "system")
@@ -969,11 +971,12 @@ def _render_system_page(
     lines.append(f"# {display_name}")
     lines.append("")
     lines.append(
-        f"📄 source: `{rel_file}` | Priority: {priority_text} | Tick interval: {tick_interval_text}"
+        f"{t('label_source', lang)} `{rel_file}` | {t('label_priority', lang)}: {priority_text} | "
+        f"{t('label_tick_interval', lang)}: {tick_interval_text}"
     )
     lines.append("")
 
-    lines.append("## Overview (개요)")
+    lines.append(f"## {t('section_overview', lang)}")
     lines.append("")
     model_text = ", ".join(_academic_models(entry, formulas))
     lines.append(
@@ -984,13 +987,13 @@ def _render_system_page(
         f"It runs {_tick_interval_overview(entry, ticks_per_year)} at priority **{priority_text}**."
     )
     lines.append("")
-    lines.append(f"**Core entity data**: {_core_entity_data_text(entry, rel_field_access)}")
+    lines.append(f"**{t('label_core_entity_data', lang)}**: {_core_entity_data_text(entry, rel_field_access)}")
     lines.append("")
     if doc_comment:
         lines.append(f"> {_first_sentence(doc_comment)}")
         lines.append("")
 
-    lines.append("## Tick Pipeline (틱 파이프라인)")
+    lines.append(f"## {t('section_tick_pipeline', lang)}")
     lines.append("")
     if pipeline_steps:
         for index, step in enumerate(pipeline_steps, start=1):
@@ -1008,15 +1011,15 @@ def _render_system_page(
                 lines.append(f"   Math context: {', '.join(_md_cell(item) for item in math_refs)}")
         lines.append("")
         if pipeline_mermaid:
-            lines.append("### Pipeline Diagram (파이프라인 다이어그램)")
+            lines.append(f"### {t('section_pipeline_diagram', lang)}")
             lines.append("")
             lines.append(pipeline_mermaid)
             lines.append("")
     else:
-        lines.append("No tick pipeline metadata was extracted for this module.")
+        lines.append(t("phrase_no_tick_pipeline", lang))
         lines.append("")
 
-    lines.append("## Formulas (수식)")
+    lines.append(f"## {t('section_formulas', lang)}")
     lines.append("")
     if formulas:
         for formula in formulas:
@@ -1078,7 +1081,7 @@ def _render_system_page(
         lines.append("No extracted formulas for this module.")
         lines.append("")
 
-    lines.append("## Configuration Reference (설정)")
+    lines.append(f"## {t('section_config_reference', lang)}")
     lines.append("")
     config_rows = _build_configuration_rows(entry, constants_map)
     if config_rows:
@@ -1090,12 +1093,12 @@ def _render_system_page(
         )
         lines.append("")
     else:
-        lines.append("No explicit `GameConfig` references extracted.")
+        lines.append(t("phrase_no_config_refs", lang))
         lines.append("")
 
-    lines.append("## Cross-System Effects (시스템 간 상호작용)")
+    lines.append(f"## {t('section_cross_system_effects', lang)}")
     lines.append("")
-    lines.append("### Imported Modules (모듈 임포트)")
+    lines.append(f"### {t('section_imported_modules', lang)}")
     lines.append("")
     imports = imports_by_file.get(rel_file, [])
     if imports:
@@ -1109,10 +1112,10 @@ def _render_system_page(
             else:
                 lines.append(f"- {target_text} via `{import_type}`")
     else:
-        lines.append("No import relationships extracted for this module.")
+        lines.append(t("phrase_no_imports", lang))
     lines.append("")
 
-    lines.append("### Shared Entity Fields (공유 엔티티 필드)")
+    lines.append(f"### {t('section_shared_entity_fields', lang)}")
     lines.append("")
     shared_rows: list[list[str]] = []
     for field in _unique_strings(entry.get("entity_fields", [])):
@@ -1138,15 +1141,15 @@ def _render_system_page(
         ]
         if read_shared:
             lines.append("")
-            lines.append(f"Reads shared fields: {', '.join(read_shared)}")
+            lines.append(f"{t('phrase_reads_shared_fields', lang)}: {', '.join(read_shared)}")
         if write_shared:
             lines.append("")
-            lines.append(f"Writes shared fields: {', '.join(write_shared)}")
+            lines.append(f"{t('phrase_writes_shared_fields', lang)}: {', '.join(write_shared)}")
     else:
-        lines.append("No cross-system shared entity field usage was inferred.")
+        lines.append(t("phrase_no_shared_fields", lang))
     lines.append("")
 
-    lines.append("### Signals (시그널)")
+    lines.append(f"### {t('section_signals', lang)}")
     lines.append("")
     if emitted_signals:
         signal_rows: list[list[str]] = []
@@ -1204,22 +1207,22 @@ def _render_system_page(
                 )
             )
         else:
-            lines.append("No emitted signal metadata available.")
+            lines.append(t("phrase_no_signals", lang))
     else:
-        lines.append("No emitted signals extracted for this module.")
+        lines.append(t("phrase_no_signals", lang))
     lines.append("")
 
-    lines.append("### Downstream Impact (다운스트림 영향)")
+    lines.append(f"### {t('section_downstream_impact', lang)}")
     lines.append("")
     downstream = dependency_graph.get(rel_file, {}).get("depended_by", [])
     if isinstance(downstream, list) and downstream:
         for dep in sorted(_unique_strings(downstream)):
             lines.append(f"- {_file_link(dep, slug_by_file)} depends on this system's outputs.")
     else:
-        lines.append("- No explicit downstream dependencies extracted.")
+        lines.append(f"- {t('phrase_no_downstream', lang)}")
     lines.append("")
 
-    lines.append("## Entity Data Model (엔티티 데이터 모델)")
+    lines.append(f"## {t('section_entity_data_model', lang)}")
     lines.append("")
     field_rows: list[list[str]] = []
     ordered_fields = _unique_strings(entry.get("entity_fields", []))
@@ -1252,13 +1255,14 @@ def _render_system_page(
     return "\n".join(lines).rstrip() + "\n"
 
 
-def run(manifest: dict, extracted: dict) -> dict:
+def run(manifest: dict, extracted: dict | None = None, lang: str = "ko") -> dict:
     """Generate one narrative documentation page per system module."""
     warnings: list[str] = []
     errors: list[str] = []
     files_written: list[str] = []
 
-    config.ensure_dir(config.CONTENT_SYSTEMS)
+    dirs = config.lang_dirs(lang)
+    config.ensure_dir(dirs["systems"])
 
     systems_path = os.path.join(config.EXTRACTED_DIR, "systems.json")
     formulas_path = os.path.join(config.EXTRACTED_DIR, "formulas.json")
@@ -1369,9 +1373,10 @@ def run(manifest: dict, extracted: dict) -> dict:
             field_access_map=field_access_map,
             field_usage_map=field_usage_map,
             ticks_per_year=ticks_per_year,
+            lang=lang,
         )
 
-        output_path = os.path.join(config.CONTENT_SYSTEMS, f"{slug}.md")
+        output_path = os.path.join(dirs["systems"], f"{slug}.md")
         if _write_markdown(output_path, page_content, warnings, errors):
             files_written.append(output_path)
 

@@ -13,7 +13,7 @@ nav_order: 15
 
 한국어 / English: 계산 파이프라인 중심 상호작용 문서 / Calculation-pipeline interaction documentation.
 
-## Interaction Overview
+## 상호작용 개요
 Event presets provide appraisal vectors that are transformed into per-emotion impulses.
 
 ## Events -> Emotion System
@@ -39,7 +39,7 @@ Event presets provide appraisal vectors that are transformed into per-emotion im
 | `controllability` | `event_presets.ate_food.controllability` | `appraisal_vector.c` | `direct assignment` | Populate appraisal vector used by impulse equations |
 | `ate_food.intensity` | `event_presets.ate_food.intensity` | `emotion_system.impulse_scale` | `I = 20` | Scale appraisal equations by event intensity |
 
-## Calculation Flow Diagram
+## 계산 흐름 다이어그램
 ```mermaid
 graph LR
     E[Game Events] --> AV[Appraisal Vector]
@@ -53,10 +53,10 @@ graph LR
     OT --> EM
 ```
 
-## Feedback Loops
+## 피드백 루프
 - Sample extracted event preset used for table generation: `ate_food`.
 
-## Source References
+## 소스 노트
 - 📄 source: `scripts/systems/emotion_system.gd:L10`
 - 📄 source: `scripts/systems/social_event_system.gd:L2`
 - 📄 source: `scripts/systems/social_event_system.gd:L39`
@@ -74,6 +74,6 @@ graph LR
 - 📄 source: `scripts/core/emotion_data.gd:L19`
 - 📄 source: `scripts/core/emotion_data.gd:L37`
 
-## Manual Notes
+## 수동 노트
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

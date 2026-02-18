@@ -15,7 +15,7 @@ Traits modify emotion sensitivity, behavior weights, stress responses, and socia
 
 **Model basis**: Ashton & Lee (2007) HEXACO Personality Model, with extensions for dark triad traits and composite conditions.
 
-## Overview
+## 개요
 
 | HEXACO Axis | Name (EN) | Name (KR) | Traits | Positive | Negative |
 | --- | --- | --- | --- | --- | --- |
@@ -26,7 +26,7 @@ Traits modify emotion sensitivity, behavior weights, stress responses, and socia
 | C | Conscientiousness | 성실성 | 20 | 11 | 7 |
 | O | Openness to Experience | 경험 개방성 | 24 | 12 | 1 |
 
-## Trait Types
+## 특성 유형
 
 | Type | Count | Description |
 | --- | --- | --- |
@@ -34,14 +34,14 @@ Traits modify emotion sensitivity, behavior weights, stress responses, and socia
 | Dark | 0 | Dark triad/tetrad traits (composite conditions) |
 | Composite | 0 | Multi-condition traits |
 
-## How Traits Work
+## 특성 작동 방식
 
 1. **Activation**: Each entity's HEXACO personality scores are checked against trait conditions.
 2. **Threshold**: A trait activates when a facet score is above (`high`) or below (`low`) the threshold.
 3. **Effects**: Active traits modify behavior weights, emotion sensitivity, stress responses, and social interactions.
 4. **Synergies**: Some traits amplify each other's effects; anti-synergies create internal conflict.
 
-## Axis Pages
+## 축 페이지
 
 - [Honesty-Humility (H) - 정직-겸손](H.md)
 - [Emotionality (E) - 감정성](E.md)
@@ -50,7 +50,7 @@ Traits modify emotion sensitivity, behavior weights, stress responses, and socia
 - [Conscientiousness (C) - 성실성](C.md)
 - [Openness to Experience (O) - 경험 개방성](O.md)
 
-## Synergy Network (Top 20 Connected Traits)
+## 시너지 네트워크
 
 ```mermaid
 graph LR
@@ -111,7 +111,7 @@ graph LR
 
 📄 source: `extracted/trait_data.json`
 
-## Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

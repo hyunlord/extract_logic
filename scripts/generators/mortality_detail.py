@@ -8,6 +8,7 @@ import re
 from typing import Any
 
 import scripts.config as config
+from scripts.generators.strings import t
 
 
 MANUAL_START = "<!-- MANUAL:START -->"
@@ -238,6 +239,7 @@ def _build_markdown(
     manifest: dict,
     extracted: dict,
     warnings: list[str],
+    lang: str,
 ) -> tuple[str, dict[str, Any]]:
     del manifest  # intentionally unused for this generator
 
@@ -403,7 +405,7 @@ def _build_markdown(
         "| Background | $a_2$ | Constant across all ages | Accidents, infections, random events |",
         "| Senescent | $a_3 \\cdot e^{b_3 x}$ | Negligible in youth, exponential in old age | Aging, organ failure, cancer |",
         "",
-        "## Technology Modifiers",
+        f"## {t('section_technology_modifiers', lang)}",
         "",
         "Settlement technology level reduces mortality:",
         "",
@@ -421,7 +423,7 @@ def _build_markdown(
         "",
         "**Design note**: Tech has the strongest effect on infant mortality (easiest wins) and weakest on aging (hard biological limit).",
         "",
-        "## Infant & Child Care Protection",
+        f"## {t('section_infant_care_protection', lang)}",
         "",
         "Young entities receive mortality reduction when cared for:",
         "",
@@ -435,7 +437,7 @@ def _build_markdown(
         f"| care_reduction | {_format_decimal(care_reduction, 2)} | Mortality reduction when cared for |",
         f"| orphan_penalty | {_format_decimal(orphan_penalty, 2)} | Additional mortality risk without caregiver |",
         "",
-        "## Seasonal Mortality Modifiers",
+        f"## {t('section_seasonal_environment_effects', lang)}",
         "",
         "| Season | Modifier | Effect |",
         "|:-------|:---------|:-------|",
@@ -488,7 +490,7 @@ def _build_markdown(
         "|----:|----------:|------------------:|--------------:|:-------------------|",
         *mortality_rows,
         "",
-        "## Source Notes",
+        f"## {t('section_source_notes', lang)}",
         "",
         f"- 📄 source: `{source_system_file}`",
         f"- 📄 source: `{source_data_file}`",
@@ -505,7 +507,7 @@ def _build_markdown(
     return "\n".join(lines), metadata
 
 
-def run(manifest: dict, extracted: dict) -> dict:
+def run(manifest: dict, extracted: dict | None = None, lang: str = "ko") -> dict:
     """Generate mortality system detail documentation.
 
     Args:
@@ -535,7 +537,7 @@ def run(manifest: dict, extracted: dict) -> dict:
         }
 
     try:
-        markdown, _meta = _build_markdown(manifest, extracted, warnings)
+        markdown, _meta = _build_markdown(manifest, extracted, warnings, lang)
     except Exception as exc:  # pragma: no cover - defensive guard
         errors.append(f"Failed to render mortality detail page: {exc}")
         return {
@@ -545,7 +547,8 @@ def run(manifest: dict, extracted: dict) -> dict:
             "errors": errors,
         }
 
-    output_dir = config.CONTENT_SYSTEMS
+    dirs = config.lang_dirs(lang)
+    output_dir = dirs["systems"]
     output_path = os.path.join(output_dir, "mortality-detail.md")
 
     existing_manual = _extract_manual_block(output_path, warnings)

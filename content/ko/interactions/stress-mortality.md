@@ -13,7 +13,7 @@ nav_order: 13
 
 한국어 / English: 계산 파이프라인 중심 상호작용 문서 / Calculation-pipeline interaction documentation.
 
-## Interaction Overview
+## 상호작용 개요
 Stress-derived allostatic load scales mortality hazard before death probability checks.
 
 ## Stress -> Mortality System
@@ -30,7 +30,7 @@ Stress-derived allostatic load scales mortality hazard before death probability 
 | `siler_baseline` | `mortality.siler_parameters.baseline` | `mortality_system.mu_base(age)` | `0.6*exp(-1.3*x) + 0.01 + 6e-05*exp(0.09*x)` | Compute age-dependent baseline mortality hazard |
 | `annual_death_probability` | `mortality_system.mu_adj` | `mortality_system.death_roll` | `q = 1 - exp(-mu_adj)` | Convert adjusted hazard into death probability |
 
-## Calculation Flow Diagram
+## 계산 흐름 다이어그램
 ```mermaid
 graph LR
     S[Stress State] --> AL[Allostatic Load]
@@ -39,16 +39,16 @@ graph LR
     HM --> D[Death Probability]
 ```
 
-## Feedback Loops
+## 피드백 루프
 - Death events can create bereavement stressors in survivors, forming a mortality-stress feedback channel.
 
-## Source References
+## 소스 노트
 - 📄 source: `scripts/systems/mortality_system.gd:L8`
 - 📄 source: `scripts/systems/mortality_system.gd:L131`
 - 📄 source: `scripts/systems/mortality_system.gd:L290`
 - 📄 source: `scripts/core/emotion_data.gd:L37`
 - 📄 source: `scripts/core/species_manager.gd:L29`
-- 📄 source: `scripts/systems/mental_break_system.gd:L99`
+- 📄 source: `scripts/systems/mental_break_system.gd:L94`
 - 📄 source: `scripts/systems/mortality_system.gd:L3`
 - 📄 source: `scripts/systems/mortality_system.gd:L133`
 - 📄 source: `scripts/systems/mortality_system.gd:L134`
@@ -57,6 +57,6 @@ graph LR
 - 📄 source: `scripts/systems/mortality_system.gd:L144`
 - 📄 source: `scripts/systems/mortality_system.gd:L168`
 
-## Manual Notes
+## 수동 노트
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

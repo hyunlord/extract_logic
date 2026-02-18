@@ -9,26 +9,26 @@ nav_order: 10
 
 # trait_definitions_fixed
 
-📄 source (출처): `data/personality/trait_definitions_fixed.json` | Category (분류): personality | Type (유형): array
+📄 소스: `data/personality/trait_definitions_fixed.json` | 분류: personality | 유형: array
 
-## 개요 (Overview)
+## 개요
 
-- Configures (설정 내용): `personality` 데이터 도메인 설정 값. Configuration values for the `personality` data domain.
-- Read by systems/modules (읽는 시스템/모듈): trait_violation
-- Related documentation (관련 문서): [`trait_violation`](../../systems/trait_violation.md)
+- 설정 내용: `personality` 데이터 도메인 설정 값. Configuration values for the `personality` data domain.
+- 읽는 시스템/모듈: references.json에서 추론되지 않음
+- 관련 문서: 없음
 
-## 해석된 파라미터 (Interpreted Parameters)
+## 해석된 파라미터
 
-### Thresholds & Bounds (임계/경계)
+### 임계 & 경계
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `item.condition.threshold` | 0.92 threshold | float | Activation boundary used by game logic. (작동 임계값) |
 | `item.effects.stress_modifiers.break_threshold_mult` | 0.98 threshold | float | Activation boundary used by game logic. (작동 임계값) |
 
-### Weights & Multipliers (가중/배수)
+### 가중치 & 배수
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `item.effects.behavior_weights.betray` | 0.75 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
 | `item.effects.behavior_weights.leadership` | 1.05 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
@@ -46,9 +46,9 @@ nav_order: 10
 | `item.effects.work_modifiers.quality_mult` | 1.05 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
 | `item.effects.work_modifiers.speed_mult` | 0.98 multiplier | float | Strength multiplier used in gameplay calculations. (계산 강도 배수) |
 
-### Stress & Emotion (스트레스/감정)
+### 스트레스 & 감정
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `item.effects.emotion_modifiers.anger_sensitivity` | 0.95 | float | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `item.effects.emotion_modifiers.guilt_sensitivity` | 1.2 | float | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
@@ -57,18 +57,18 @@ nav_order: 10
 | `item.effects.stress_modifiers.violation_stress.lie` | 14 | int | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `item.effects.stress_modifiers.violation_stress.take_bribe` | 18 | int | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 
-### Identifiers & Labels (식별자/라벨)
+### 식별자 & 라벨
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `item.id` | f_sincere | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 | `item.name_en` | Sincere | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 | `item.name_kr` | 진실한 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 | `item.type` | personality | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 
-### Other Parameters (기타)
+### 기타 파라미터
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `items` | 187 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 | `item.anti_synergies` | 3 items | array | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
@@ -83,11 +83,11 @@ nav_order: 10
 | `item.synergies.sample` | f_fair_minded | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 | `item.valence` | positive | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 
-## 참조하는 시스템 (Referenced By)
+## 레퍼런스
 
-- [`trait_violation`](../../systems/trait_violation.md) - references `data/personality/trait_definitions_fixed.json`
+- 참조 없음
 
-## 수동 노트 (Manual Notes)
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

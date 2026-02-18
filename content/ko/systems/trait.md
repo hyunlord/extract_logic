@@ -10,18 +10,18 @@ system_name: "trait"
 
 # Trait
 
-📄 source: `scripts/systems/trait_system.gd` | Priority: 100 | Tick interval: n/a
+📄 소스: `scripts/systems/trait_system.gd` | 우선순위: 100 | 틱 간격: n/a
 
-## Overview (개요)
+## 개요
 
 The **Trait** system implements a domain-specific simulation model to simulate discrete trait emergence and effects system.
 It runs **at an unspecified cadence** at priority **100**.
 
-**Core entity data**: `active_traits` (read/write (inferred)), `display_traits` (read/write (inferred)), `emotion_data` (read/write (inferred)), `emotions` (read/write (inferred)), `personality` (read/write (inferred)), `traits_dirty` (read/write (inferred))
+**핵심 엔티티 데이터**: `active_traits` (read/write (inferred)), `display_traits` (read/write (inferred)), `emotion_data` (read/write (inferred)), `emotions` (read/write (inferred)), `personality` (read/write (inferred)), `traits_dirty` (read/write (inferred))
 
 > Discrete trait emergence and effects system.
 
-## Tick Pipeline (틱 파이프라인)
+## 틱 파이프라인
 
 1. Check traits
    📄 source: `scripts/systems/trait_system.gd:L51`
@@ -42,7 +42,7 @@ It runs **at an unspecified cadence** at priority **100**.
 9. Resolve trait sentiment
    📄 source: `scripts/systems/trait_system.gd:L312`
 
-### Pipeline Diagram (파이프라인 다이어그램)
+### 파이프라인 다이어그램
 
 ```mermaid
 flowchart TD
@@ -65,40 +65,40 @@ flowchart TD
   step8 --> step9
 ```
 
-## Formulas (수식)
+## 수식
 
 No extracted formulas for this module.
 
-## Configuration Reference (설정)
+## 설정 레퍼런스
 
-No explicit `GameConfig` references extracted.
+GameConfig 참조가 추출되지 않음
 
-## Cross-System Effects (시스템 간 상호작용)
+## 시스템 간 상호작용
 
-### Imported Modules (모듈 임포트)
+### 모듈 임포트
 
 - [`trait`](trait.md) via `preload` at `scripts/systems/trait_system.gd:L4`
 
-### Shared Entity Fields (공유 엔티티 필드)
+### 공유 엔티티 필드
 
 | Field | Access | Shared With |
 | :-- | :-- | :-- |
-| `active_traits` | read/write (inferred) | [`stress`](stress.md), [`trait_violation`](trait_violation.md) |
+| `active_traits` | read/write (inferred) | [`stress`](stress.md) |
 | `emotion_data` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`mental_break`](mental_break.md), [`stress`](stress.md) |
-| `emotions` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
-| `personality` | read/write (inferred) | [`aging`](aging.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`stress`](stress.md), [`trait_violation`](trait_violation.md) |
+| `emotions` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md) |
+| `personality` | read/write (inferred) | [`aging`](aging.md), [`emotions`](emotions.md), [`mental_break`](mental_break.md), [`stress`](stress.md) |
 
-### Signals (시그널)
+### 시그널
 
-No emitted signals extracted for this module.
+시그널 메타데이터가 추출되지 않음
 
-### Downstream Impact (다운스트림 영향)
+### 다운스트림 영향
 
 - [`personality_generator`](personality_generator.md) depends on this system's outputs.
 - [`personality_maturation`](personality_maturation.md) depends on this system's outputs.
 - [`trait`](trait.md) depends on this system's outputs.
 
-## Entity Data Model (엔티티 데이터 모델)
+## 엔티티 데이터 모델
 
 | Field | Access | Type | Represents | Typical Values |
 | :-- | :-- | :-- | :-- | :-- |

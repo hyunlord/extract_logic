@@ -13,10 +13,10 @@ nav_order: 13
 
 📄 source: `scripts/core/pathfinder.gd` | 87 lines | extends: RefCounted
 
-## 개요 (Overview)
+## 개요
 A* pathfinding with 8-directional movement and Chebyshev heuristic
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -28,6 +28,6 @@ A* pathfinding with 8-directional movement and Chebyshev heuristic
 |--------|------------|
 | - | - |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: -
 - Used by: -

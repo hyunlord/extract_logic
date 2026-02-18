@@ -8,6 +8,7 @@ import re
 from typing import Any
 
 import scripts.config as config
+from scripts.generators.strings import t
 
 
 _MANUAL_BLOCK_RE = re.compile(
@@ -224,6 +225,7 @@ def _render_module_page(
     import_links: list[str],
     used_by_links: list[str],
     signal_entries: list[dict[str, str]],
+    lang: str,
 ) -> str:
     file_path = str(entry.get("file", ""))
     title = _title_from_entry(entry)
@@ -254,20 +256,20 @@ def _render_module_page(
         f"# {title}\n\n"
         f"> {quote}\n\n"
         f"📄 source: `{file_path}` | {lines} lines | extends: {extends}\n\n"
-        "## 개요 (Overview)\n"
+        f"## {t('section_overview', lang)}\n"
         f"{overview}\n\n"
-        "## 공개 API (Public API)\n\n"
+        f"## {t('section_public_api', lang)}\n\n"
         "### Functions\n"
         f"{_functions_table(functions)}\n\n"
         "### Signals\n"
         f"{_signals_table(signal_entries)}\n\n"
-        "## 의존성 (Dependencies)\n"
+        f"## {t('section_dependencies', lang)}\n"
         f"- Imports: {imports_text}\n"
         f"- Used by: {used_by_text}\n"
     )
 
 
-def _render_index_page(entries: list[dict[str, Any]]) -> str:
+def _render_index_page(entries: list[dict[str, Any]], lang: str) -> str:
     source_files = sorted(
         str(entry.get("file", ""))
         for entry in entries
@@ -276,7 +278,7 @@ def _render_index_page(entries: list[dict[str, Any]]) -> str:
 
     lines = [
         "---",
-        'title: "코어 모듈 (Core Modules)"',
+        f'title: "{t("section_core_modules", lang)}"',
         'description: "Core module overview and quick reference"',
         "generated: true",
         "source_files:",
@@ -291,7 +293,7 @@ def _render_index_page(entries: list[dict[str, Any]]) -> str:
             "nav_order: 1",
             "---",
             "",
-            "# 코어 모듈 (Core Modules)",
+            f"# {t('section_core_modules', lang)}",
             "",
             f"Total: {len(entries)} modules",
             "",
@@ -321,7 +323,7 @@ def _render_index_page(entries: list[dict[str, Any]]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def run(manifest: dict) -> dict:
+def run(manifest: dict, extracted: dict | None = None, lang: str = "ko") -> dict:
     """Main entry point.
 
     Args:
@@ -337,6 +339,8 @@ def run(manifest: dict) -> dict:
     files_written: list[str] = []
     warnings: list[str] = []
     errors: list[str] = []
+    del extracted
+    dirs = config.lang_dirs(lang)
 
     systems_path = os.path.join(config.EXTRACTED_DIR, "systems.json")
     references_path = os.path.join(config.EXTRACTED_DIR, "references.json")
@@ -344,7 +348,7 @@ def run(manifest: dict) -> dict:
     references_data = _read_json(references_path, warnings, "references.json")
 
     try:
-        config.ensure_dir(config.CONTENT_CORE)
+        config.ensure_dir(dirs["core"])
     except OSError as exc:
         return {
             "files_written": [],
@@ -375,7 +379,7 @@ def run(manifest: dict) -> dict:
             continue
 
         slug = _slugify_filename(file_path)
-        page_path = os.path.join(config.CONTENT_CORE, f"{slug}.md")
+        page_path = os.path.join(dirs["core"], f"{slug}.md")
 
         imports_set: set[str] = set()
         entry_imports = entry.get("imports", [])
@@ -447,15 +451,16 @@ def run(manifest: dict) -> dict:
                 import_links=import_links,
                 used_by_links=used_by_links,
                 signal_entries=signal_entries,
+                lang=lang,
             )
             _write_markdown(page_path, markdown)
             files_written.append(page_path)
         except OSError as exc:
             errors.append(f"Failed to write core page for {file_path}: {exc}")
 
-    index_path = os.path.join(config.CONTENT_CORE, "_index.md")
+    index_path = os.path.join(dirs["core"], "_index.md")
     try:
-        _write_markdown(index_path, _render_index_page(entries))
+        _write_markdown(index_path, _render_index_page(entries, lang))
         files_written.append(index_path)
     except OSError as exc:
         errors.append(f"Failed to write core index page: {exc}")

@@ -10,9 +10,9 @@ nav_order: 3
 
 # emotions 용어 / Glossary
 
-총 56개 항목 | Total 56 entries
+총 항목 수: 56
 
-## 용어 목록
+## 용어 사전
 
 | Key | 한국어 | English |
 |-----|--------|---------|
@@ -73,7 +73,7 @@ nav_order: 3
 | `EMO_TRUST_INTENSE` | 경외 | Admiration |
 | `EMO_TRUST_MILD` | 수용 | Acceptance |
 
-## 수동 메모 / Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

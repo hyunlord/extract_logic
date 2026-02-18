@@ -10,16 +10,16 @@ system_name: "migration"
 
 # Migration
 
-📄 source: `scripts/systems/migration_system.gd` | Priority: 60 | Tick interval: config (GameConfig.MIGRATION_TICK_INTERVAL)
+📄 소스: `scripts/systems/migration_system.gd` | 우선순위: 60 | 틱 간격: config (GameConfig.MIGRATION_TICK_INTERVAL)
 
-## Overview (개요)
+## 개요
 
 The **Migration** system implements a domain-specific simulation model to simulate migration dynamics for entities and world state.
 It runs on a **config-driven cadence** (`GameConfig.MIGRATION_TICK_INTERVAL`) at priority **60**.
 
-**Core entity data**: `action_target` (read/write (inferred)), `action_timer` (read/write (inferred)), `cached_path` (read/write (inferred)), `current_action` (read/write (inferred)), `id` (read/write (inferred)), `path_index` (read/write (inferred)), `settlement_id` (read/write (inferred))
+**핵심 엔티티 데이터**: `action_target` (read/write (inferred)), `action_timer` (read/write (inferred)), `cached_path` (read/write (inferred)), `current_action` (read/write (inferred)), `id` (read/write (inferred)), `path_index` (read/write (inferred)), `settlement_id` (read/write (inferred))
 
-## Tick Pipeline (틱 파이프라인)
+## 틱 파이프라인
 
 1. Run per-entity tick update loop
    📄 source: `scripts/systems/migration_system.gd:L27`
@@ -31,7 +31,7 @@ It runs on a **config-driven cadence** (`GameConfig.MIGRATION_TICK_INTERVAL`) at
 4. Resolve food score
    📄 source: `scripts/systems/migration_system.gd:L309`
 
-## Formulas (수식)
+## 수식
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -74,7 +74,7 @@ var dist_to_settlement: int = absi(other_settlement.center_x - x) + absi(other_s
 
 📄 source: `scripts/systems/migration_system.gd:L265`
 
-## Configuration Reference (설정)
+## 설정 레퍼런스
 
 | Constant | Default | Controls | Behavior Effect |
 | :-- | :-- | :-- | :-- |
@@ -93,13 +93,13 @@ var dist_to_settlement: int = absi(other_settlement.center_x - x) + absi(other_s
 | `SETTLEMENT_CLEANUP_INTERVAL` | 250 | Behavior tuning constant. | Lower values increase update frequency and responsiveness. |
 | `SETTLEMENT_MIN_DISTANCE` | 25 | Hard bound for safe state range. | Constrains extremes to stabilize the simulation. |
 
-## Cross-System Effects (시스템 간 상호작용)
+## 시스템 간 상호작용
 
-### Imported Modules (모듈 임포트)
+### 모듈 임포트
 
-No import relationships extracted for this module.
+임포트 관계가 추출되지 않음
 
-### Shared Entity Fields (공유 엔티티 필드)
+### 공유 엔티티 필드
 
 | Field | Access | Shared With |
 | :-- | :-- | :-- |
@@ -107,19 +107,19 @@ No import relationships extracted for this module.
 | `action_timer` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`movement`](movement.md) |
 | `cached_path` | read/write (inferred) | [`behavior`](behavior.md), [`movement`](movement.md) |
 | `current_action` | read/write (inferred) | [`behavior`](behavior.md), [`construction`](construction.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`movement`](movement.md), [`needs`](needs.md), [`social_events`](social_events.md), [`stress`](stress.md) |
-| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
+| `id` | read/write (inferred) | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`social_events`](social_events.md) |
 | `path_index` | read/write (inferred) | [`behavior`](behavior.md), [`movement`](movement.md) |
 | `settlement_id` | read/write (inferred) | [`behavior`](behavior.md), [`emotions`](emotions.md), [`family`](family.md), [`needs`](needs.md), [`population`](population.md), [`stress`](stress.md) |
 
-### Signals (시그널)
+### 시그널
 
-No emitted signals extracted for this module.
+시그널 메타데이터가 추출되지 않음
 
-### Downstream Impact (다운스트림 영향)
+### 다운스트림 영향
 
-- No explicit downstream dependencies extracted.
+- 다운스트림 의존성이 추출되지 않음
 
-## Entity Data Model (엔티티 데이터 모델)
+## 엔티티 데이터 모델
 
 | Field | Access | Type | Represents | Typical Values |
 | :-- | :-- | :-- | :-- | :-- |

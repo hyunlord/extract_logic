@@ -15,7 +15,7 @@ nav_order: 16
 
 한국어 / English: 계산 파이프라인 중심 상호작용 문서 / Calculation-pipeline interaction documentation.
 
-## Interaction Overview
+## 상호작용 개요
 Stress can trigger mental-break behavior and inject new emotion impulses, creating recursive feedback.
 
 ## Stress -> Emotion System
@@ -33,7 +33,7 @@ Stress can trigger mental-break behavior and inject new emotion impulses, creati
 | `allostatic_ratio` | `stress_system.entity_state.allostatic/100` | `emotion_system.slow_layer_shift` | `mu_shift = f(stress, allostatic)` | Shift slow emotion baselines under chronic stress |
 | `post_break_emotions` | `emotion_system.fast/slow channels` | `stress_system._calc_emotion_contribution()` | `gamma_VA * sum(w_e * emotion_e)` | Close stress-emotion feedback loop |
 
-## Calculation Flow Diagram
+## 계산 흐름 다이어그램
 ```mermaid
 graph LR
     ST[Stress State] --> MB[Mental Break Probability]
@@ -45,11 +45,11 @@ graph LR
     EM --> ST
 ```
 
-## Feedback Loops
+## 피드백 루프
 - Extracted mental-break behavior templates available: 5.
 - Core loop: stress -> mental break -> emotion inject -> stress.
 
-## Source References
+## 소스 노트
 - 📄 source: `scripts/systems/emotion_system.gd:L10`
 - 📄 source: `scripts/core/emotion_data.gd:L3`
 - 📄 source: `scripts/core/emotion_data.gd:L11`
@@ -62,6 +62,6 @@ graph LR
 - 📄 source: `scripts/core/emotion_data.gd:L203`
 - 📄 source: `scripts/core/emotion_data.gd:L211`
 
-## Manual Notes
+## 수동 노트
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

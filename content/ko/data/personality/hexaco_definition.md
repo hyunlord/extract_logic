@@ -9,33 +9,33 @@ nav_order: 10
 
 # hexaco_definition
 
-📄 source (출처): `data/personality/hexaco_definition.json` | Category (분류): personality | Type (유형): object
+📄 소스: `data/personality/hexaco_definition.json` | 분류: personality | 유형: object
 
-## 개요 (Overview)
+## 개요
 
-- Configures (설정 내용): `personality` 데이터 도메인 설정 값. Configuration values for the `personality` data domain.
-- Read by systems/modules (읽는 시스템/모듈): `references.json`에서 추론되지 않음.
-- Related documentation (관련 문서): 없음.
+- 설정 내용: `personality` 데이터 도메인 설정 값. Configuration values for the `personality` data domain.
+- 읽는 시스템/모듈: references.json에서 추론되지 않음
+- 관련 문서: 없음
 
-## 해석된 파라미터 (Interpreted Parameters)
+## 해석된 파라미터
 
-### Timing & Decay (시간/감쇠)
+### 타이밍 & 감쇠
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `axes.E.facets.E_sentimentality.name` | Sentimentality | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 | `axes.E.facets.E_sentimentality.name_kr` | 감상성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 
-### Stress & Emotion (스트레스/감정)
+### 스트레스 & 감정
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `axes.E.facets.E_fearfulness.name` | Fearfulness | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `axes.E.facets.E_fearfulness.name_kr` | 두려움 | string | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 
-### Identifiers & Labels (식별자/라벨)
+### 식별자 & 라벨
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `axes.A.facets.A_flexibility.name` | Flexibility | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 | `axes.A.facets.A_flexibility.name_kr` | 유연성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
@@ -96,17 +96,17 @@ nav_order: 10
 | `interstitial.altruism.name` | Altruism | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 | `interstitial.altruism.name_kr` | 이타성 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 
-### Other Parameters (기타)
+### 기타 파라미터
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `interstitial.altruism.note` | Component between H and E | string | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 
-## 참조하는 시스템 (Referenced By)
+## 레퍼런스
 
-- None found. (참조 없음)
+- 참조 없음
 
-## 수동 노트 (Manual Notes)
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

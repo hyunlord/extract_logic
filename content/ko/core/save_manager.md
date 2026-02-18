@@ -13,10 +13,10 @@ nav_order: 19
 
 📄 source: `scripts/core/save_manager.gd` | 592 lines | extends: RefCounted
 
-## 개요 (Overview)
+## 개요
 Binary save/load system (version 2).
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -29,6 +29,6 @@ Binary save/load system (version 2).
 | `game_loaded` | `-` |
 | `game_saved` | `-` |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: [`building_data.gd`](building_data.md), [`emotion_data.gd`](emotion_data.md), [`entity_data.gd`](entity_data.md), [`game_calendar.gd`](game_calendar.md), [`personality_data.gd`](personality_data.md), [`relationship_data.gd`](relationship_data.md), [`settlement_data.gd`](settlement_data.md)
 - Used by: -

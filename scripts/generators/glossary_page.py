@@ -8,10 +8,12 @@ import json
 import os
 
 import scripts.config as config
+from scripts.generators.strings import t
 
 
 MANUAL_START = "<!-- MANUAL:START -->"
 MANUAL_END = "<!-- MANUAL:END -->"
+_ACTIVE_LANG = "ko"
 
 
 def _escape_table_cell(value: str) -> str:
@@ -161,16 +163,16 @@ def _render_category_page(
 
     lines = [
         _frontmatter(
-            title=f"용어 사전 — {category}",
+            title=f"{t('section_glossary', _ACTIVE_LANG)} — {category}",
             description=f"{category} 한영 대조 용어",
             nav_order=nav_order,
             source_files=source_files,
         ),
         f"# {category} 용어 / Glossary",
         "",
-        f"총 {total_entries}개 항목 | Total {total_entries} entries",
+        f"{t('label_total_entries', _ACTIVE_LANG)}: {total_entries}",
         "",
-        "## 용어 목록",
+        f"## {t('section_glossary', _ACTIVE_LANG)}",
         "",
         "| Key | 한국어 | English |",
         "|-----|--------|---------|",
@@ -198,7 +200,7 @@ def _render_category_page(
     lines.extend(
         [
             "",
-            "## 수동 메모 / Manual Notes",
+            f"## {t('section_manual_notes', _ACTIVE_LANG)}",
             "",
             MANUAL_START,
             MANUAL_END,
@@ -218,20 +220,20 @@ def _render_index_page(
     total_categories = len(category_counts)
     lines = [
         _frontmatter(
-            title="용어 사전",
+            title=t("section_glossary", _ACTIVE_LANG),
             description="카테고리별 한영 대조 용어",
             nav_order=0,
             source_files=source_files,
         ),
         "# 용어 사전 / Glossary Index",
         "",
-        f"총 {total_categories}개 카테고리 | Total {total_categories} categories",
+        f"{t('label_total_categories', _ACTIVE_LANG)}: {total_categories}",
         "",
-        f"총 {total_entries}개 항목 | Total {total_entries} entries",
+        f"{t('label_total_entries', _ACTIVE_LANG)}: {total_entries}",
         "",
-        "## 카테고리별 통계 / Category Stats",
+        f"## {t('section_by_category', _ACTIVE_LANG)}",
         "",
-        "| Category | 항목 수 | Entries |",
+        f"| {t('label_category', _ACTIVE_LANG)} | {t('label_items', _ACTIVE_LANG)} | {t('label_items', _ACTIVE_LANG)} |",
         "|----------|-------:|--------:|",
     ]
 
@@ -242,7 +244,7 @@ def _render_index_page(
     lines.extend(
         [
             "",
-            "## 수동 메모 / Manual Notes",
+            f"## {t('section_manual_notes', _ACTIVE_LANG)}",
             "",
             MANUAL_START,
             MANUAL_END,
@@ -252,7 +254,7 @@ def _render_index_page(
     return "\n".join(lines)
 
 
-def run(manifest: dict) -> dict:
+def run(manifest: dict, extracted: dict | None = None, lang: str = "ko") -> dict:
     """Generate glossary markdown pages from extracted locale data.
 
     Args:
@@ -269,6 +271,10 @@ def run(manifest: dict) -> dict:
     errors: list[str] = []
     files_written: list[str] = []
     items_processed = 0
+    del extracted
+    dirs = config.lang_dirs(lang)
+    global _ACTIVE_LANG
+    _ACTIVE_LANG = lang
 
     locale_path = os.path.join(config.EXTRACTED_DIR, "locale.json")
     if not os.path.exists(locale_path):
@@ -311,7 +317,7 @@ def run(manifest: dict) -> dict:
             "errors": errors,
         }
 
-    config.ensure_dir(config.CONTENT_GLOSSARY)
+    config.ensure_dir(dirs["glossary"])
 
     sorted_categories = sorted(str(category) for category in categories_data.keys())
     category_counts: list[tuple[str, int]] = []
@@ -335,7 +341,7 @@ def run(manifest: dict) -> dict:
             nav_order=nav_order,
             source_files=source_files,
         )
-        output_path = os.path.join(config.CONTENT_GLOSSARY, f"{category}.md")
+        output_path = os.path.join(dirs["glossary"], f"{category}.md")
         if _write_markdown(output_path, page_content, warnings, errors):
             files_written.append(output_path)
             category_counts.append((category, entry_count))
@@ -346,7 +352,7 @@ def run(manifest: dict) -> dict:
         total_entries=items_processed,
         source_files=_collect_all_source_files(manifest, warnings),
     )
-    index_path = os.path.join(config.CONTENT_GLOSSARY, "_index.md")
+    index_path = os.path.join(dirs["glossary"], "_index.md")
     if _write_markdown(index_path, index_content, warnings, errors):
         files_written.append(index_path)
 

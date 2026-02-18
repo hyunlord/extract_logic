@@ -13,10 +13,10 @@ nav_order: 11
 
 📄 source: `scripts/core/locale.gd` | 129 lines | extends: Node
 
-## 개요 (Overview)
+## 개요
 Autoload: Locale All text lookups go through this singleton.
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -28,6 +28,6 @@ Autoload: Locale All text lookups go through this singleton.
 |--------|------------|
 | `locale_changed` | `-` |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: -
 - Used by: -

@@ -9,40 +9,40 @@ nav_order: 10
 
 # proto_syllabic
 
-📄 source (출처): `data/species/human/cultures/proto_syllabic.json` | Category (분류): species/human/cultures | Type (유형): object
+📄 소스: `data/species/human/cultures/proto_syllabic.json` | 분류: species/human/cultures | 유형: object
 
-## 개요 (Overview)
+## 개요
 
-- Configures (설정 내용): `species/human/cultures` 데이터 도메인 설정 값. Configuration values for the `species/human/cultures` data domain.
-- Read by systems/modules (읽는 시스템/모듈): species_manager
-- Related documentation (관련 문서): [`species_manager`](../../../../core/species_manager.md)
+- 설정 내용: `species/human/cultures` 데이터 도메인 설정 값. Configuration values for the `species/human/cultures` data domain.
+- 읽는 시스템/모듈: species_manager
+- 관련 문서: [`species_manager`](../../../../core/species_manager.md)
 
-## 해석된 파라미터 (Interpreted Parameters)
+## 해석된 파라미터
 
-### Thresholds & Bounds (임계/경계)
+### 임계 & 경계
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `naming_culture` | proto_syllabic | string | Activation boundary used by game logic. (작동 임계값) |
 
-### Stress & Emotion (스트레스/감정)
+### 스트레스 & 감정
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `emotion_modifiers.anger` | 0.9 | float | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotion_modifiers.joy` | 1.1 | float | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 | `emotion_modifiers.trust` | 1.1 | float | Stress/emotion contribution in simulation updates. (스트레스/감정 기여도) |
 
-### Identifiers & Labels (식별자/라벨)
+### 식별자 & 라벨
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `culture_id` | proto_syllabic | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 | `culture_name` | 음절 원시 | string | Identifier/label used for lookup or UI presentation. (식별자/라벨) |
 
-### Other Parameters (기타)
+### 기타 파라미터
 
-| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |
+| 매개변수 | 값 | 유형 | 게임 영향 |
 |----------------------|-----------|------------|-----------------------------|
 | `personality_shift.A` | 0 | float | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 | `personality_shift.C` | 0.1 | float | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
@@ -51,11 +51,11 @@ nav_order: 10
 | `personality_shift.O` | -0.1 | float | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 | `personality_shift.X` | 0.2 | float | General configuration parameter used by the corresponding system. (해당 시스템의 일반 설정 값) |
 
-## 참조하는 시스템 (Referenced By)
+## 레퍼런스
 
 - [`species_manager`](../../../../core/species_manager.md) - references data under `data/species/`
 
-## 수동 노트 (Manual Notes)
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

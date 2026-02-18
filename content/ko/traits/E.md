@@ -10,12 +10,12 @@ nav_order: 12
 
 # Emotionality (E) — 감정성
 
-## Axis Overview
+## 축 개요
 
 The **Emotionality** axis measures personality tendencies represented by the `E` axis in the HEXACO model.
 **Facets**: `E_anxiety` (불안 / Anxiety), `E_dependence` (의존성 / Dependence), `E_fearfulness` (두려움 / Fearfulness), `E_sentimentality` (감상성 / Sentimentality)
 
-## Traits
+## 특성 효과
 
 <a id="f_fearful"></a>
 ### Fearful (겁 많은) — `f_fearful`
@@ -1475,7 +1475,7 @@ The **Emotionality** axis measures personality tendencies represented by the `E`
 
 ---
 
-## Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

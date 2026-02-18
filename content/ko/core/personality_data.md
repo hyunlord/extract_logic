@@ -13,10 +13,10 @@ nav_order: 14
 
 📄 source: `scripts/core/personality_data.gd` | 139 lines | extends: RefCounted
 
-## 개요 (Overview)
+## 개요
 HEXACO 24-facet personality data container.
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -28,6 +28,6 @@ HEXACO 24-facet personality data container.
 |--------|------------|
 | - | - |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: [`personality_data.gd`](personality_data.md)
 - Used by: [`entity_data.gd`](entity_data.md), [`entity_manager.gd`](entity_manager.md), [`personality_data.gd`](personality_data.md), [`save_manager.gd`](save_manager.md), [`personality_generator.gd`](../systems/personality_generator.md), [`personality_maturation.gd`](../systems/personality_maturation.md)

@@ -14,7 +14,7 @@ nav_order: 11
 
 한국어 / English: 계산 파이프라인 중심 상호작용 문서 / Calculation-pipeline interaction documentation.
 
-## Interaction Overview
+## 상호작용 개요
 Stress templates are personality-conditioned through axis/facet weights and trait multipliers before event load is accumulated.
 
 ## Personality -> Stress System
@@ -39,7 +39,7 @@ Stress templates are personality-conditioned through axis/facet weights and trai
 | `parent_death.d_psychopath_primary` | `stressor_events.parent_death.personality_modifiers.traits` | `stress_system.event_scale` | `scale * 0.15` | Trait-specific multiplier on stress event impact |
 | `child_death.base_load` | `stressor_events.child_death` | `stress_system.trace_builder` | `instant=550, per_tick=12` | Seed stress trace magnitude from event template |
 
-## Calculation Flow Diagram
+## 계산 흐름 다이어그램
 ```mermaid
 graph LR
     subgraph Personality
@@ -54,10 +54,10 @@ graph LR
     end
 ```
 
-## Feedback Loops
+## 피드백 루프
 - Personality-conditioned stress scaling is event-specific; highest-severity extracted sample is `child_death`.
 
-## Source References
+## 소스 노트
 - 📄 source: `scripts/systems/personality_generator.gd:L5`
 - 📄 source: `scripts/systems/personality_generator.gd:L7`
 - 📄 source: `scripts/systems/personality_generator.gd:L8`
@@ -72,9 +72,9 @@ graph LR
 - 📄 source: `scripts/core/emotion_data.gd:L253`
 - 📄 source: `scripts/core/emotion_data.gd:L353`
 - 📄 source: `scripts/core/entity_data.gd:L50`
-- 📄 source: `scripts/core/entity_data.gd:L244`
+- 📄 source: `scripts/core/entity_data.gd:L228`
 - 📄 source: `scripts/core/personality_data.gd:L62`
 
-## Manual Notes
+## 수동 노트
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

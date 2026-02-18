@@ -10,18 +10,18 @@ system_name: "social_events"
 
 # Social Events
 
-📄 source: `scripts/systems/social_event_system.gd` | Priority: 37 | Tick interval: 30
+📄 소스: `scripts/systems/social_event_system.gd` | 우선순위: 37 | 틱 간격: 30
 
-## Overview (개요)
+## 개요
 
 The **Social Events** system implements a domain-specific simulation model to simulate drives relationship interactions using chunk-based proximity.
 It runs every **30 ticks** (0.0 game-years) at priority **37**.
 
-**Core entity data**: `current_action` (read), `id` (read), `position` (read)
+**핵심 엔티티 데이터**: `current_action` (read), `id` (read), `position` (read)
 
 > Drives relationship interactions using chunk-based proximity.
 
-## Tick Pipeline (틱 파이프라인)
+## 틱 파이프라인
 
 1. Run per-entity tick update loop
    📄 source: `scripts/systems/social_event_system.gd:L25`
@@ -34,7 +34,7 @@ It runs every **30 ticks** (0.0 game-years) at priority **37**.
 4. Emit system signals: `couple_formed`, `ui_notification`
    📄 source: `scripts/systems/social_event_system.gd:L250`
 
-## Formulas (수식)
+## 수식
 
 ### Computes a gameplay state update from mathematical relationships in the source logic.
 
@@ -120,38 +120,38 @@ Acceptance probability = (romantic_interest/100) * compatibility
 
 📄 source: `scripts/systems/social_event_system.gd:L230`
 
-## Configuration Reference (설정)
+## 설정 레퍼런스
 
-No explicit `GameConfig` references extracted.
+GameConfig 참조가 추출되지 않음
 
-## Cross-System Effects (시스템 간 상호작용)
+## 시스템 간 상호작용
 
-### Imported Modules (모듈 임포트)
+### 모듈 임포트
 
 - `scripts/core/personality_system.gd` via `preload` at `scripts/systems/social_event_system.gd:L2`
 
-### Shared Entity Fields (공유 엔티티 필드)
+### 공유 엔티티 필드
 
 | Field | Access | Shared With |
 | :-- | :-- | :-- |
 | `current_action` | read | [`behavior`](behavior.md), [`construction`](construction.md), [`emotions`](emotions.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`movement`](movement.md), [`needs`](needs.md), [`stress`](stress.md) |
-| `id` | read | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md), [`trait_violation`](trait_violation.md), [`trauma_scar`](trauma_scar.md) |
+| `id` | read | [`behavior`](behavior.md), [`aging`](aging.md), [`emotions`](emotions.md), [`family`](family.md), [`gathering`](gathering.md), [`job_assignment`](job_assignment.md), [`migration`](migration.md), [`mortality`](mortality.md), [`movement`](movement.md), [`needs`](needs.md), [`population`](population.md) |
 | `position` | read | [`behavior`](behavior.md), [`construction`](construction.md), [`gathering`](gathering.md), [`movement`](movement.md) |
 
-Reads shared fields: `current_action`, `id`, `position`
+공유 필드 읽기: `current_action`, `id`, `position`
 
-### Signals (시그널)
+### 시그널
 
 | Signal | Parameters | Subscribers | Source Line |
 | :-- | :-- | :-- | :-- |
 | `couple_formed` | entity_a_id: int, entity_a_name: String, entity_b_id: int, entity_b_name: String, tick: int | No known subscribers | L250 |
 | `ui_notification` | message: String, type: String | No known subscribers | L248 |
 
-### Downstream Impact (다운스트림 영향)
+### 다운스트림 영향
 
-- No explicit downstream dependencies extracted.
+- 다운스트림 의존성이 추출되지 않음
 
-## Entity Data Model (엔티티 데이터 모델)
+## 엔티티 데이터 모델
 
 | Field | Access | Type | Represents | Typical Values |
 | :-- | :-- | :-- | :-- | :-- |

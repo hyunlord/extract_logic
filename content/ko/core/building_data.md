@@ -13,10 +13,10 @@ nav_order: 1
 
 📄 source: `scripts/core/building_data.gd` | 43 lines | extends: RefCounted
 
-## 개요 (Overview)
+## 개요
 No summary available.
 
-## 공개 API (Public API)
+## 공개 API
 
 ### Functions
 | Function | Parameters | Returns | Line |
@@ -28,6 +28,6 @@ No summary available.
 |--------|------------|
 | - | - |
 
-## 의존성 (Dependencies)
+## 의존성
 - Imports: [`building_data.gd`](building_data.md)
 - Used by: [`building_data.gd`](building_data.md), [`building_manager.gd`](building_manager.md), [`save_manager.gd`](save_manager.md)

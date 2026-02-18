@@ -11,7 +11,7 @@ nav_order: 2
 
 📄 source: `scripts/core/game_config.gd` (322 lines)
 
-## Constants
+## 상수
 
 ### behavior
 
@@ -195,7 +195,7 @@ nav_order: 2
 | `NOISE_OCTAVES` | 5 | `5` | world_generator | `scripts/core/game_config.gd:L182` | - |
 | `ISLAND_FALLOFF` | 0.7 | `0.7` | world_generator | `scripts/core/game_config.gd:L183` | - |
 
-## Enums
+## 열거형
 
 ### Biome
 
@@ -229,7 +229,7 @@ Used by: behavior, gathering, resource_map, resource_regen
 | `WOOD` | 1 |
 | `STONE` | 2 |
 
-## Dictionaries
+## 사전
 
 ### UI_FONT_SIZES
 
@@ -485,7 +485,7 @@ var CHILD_MOVE_SKIP_MOD = {
 }
 ```
 
-## Utility Functions
+## 유틸리티 함수
 
 ### `get_font_size(key: String)`
 

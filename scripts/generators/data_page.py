@@ -9,10 +9,13 @@ from collections import defaultdict
 from typing import Any
 
 import scripts.config as config
+from scripts.generators.strings import t
 
 
 MANUAL_BLOCK_RE = re.compile(r"<!-- MANUAL:START -->.*?<!-- MANUAL:END -->", re.DOTALL)
 MAX_GENERIC_ROWS = 220
+_ACTIVE_DIRS = config.lang_dirs("ko")
+_ACTIVE_LANG = "ko"
 
 SEMANTIC_GROUP_ORDER = [
     "Timing & Decay",
@@ -27,15 +30,38 @@ SEMANTIC_GROUP_ORDER = [
 
 def _group_display(group: str) -> str:
     mapping = {
-        "Timing & Decay": "Timing & Decay (시간/감쇠)",
-        "Thresholds & Bounds": "Thresholds & Bounds (임계/경계)",
-        "Weights & Multipliers": "Weights & Multipliers (가중/배수)",
-        "Probabilities": "Probabilities (확률)",
-        "Stress & Emotion": "Stress & Emotion (스트레스/감정)",
-        "Identifiers & Labels": "Identifiers & Labels (식별자/라벨)",
-        "Other Parameters": "Other Parameters (기타)",
+        "Timing & Decay": "group_timing_decay",
+        "Thresholds & Bounds": "group_thresholds_bounds",
+        "Weights & Multipliers": "group_weights_multipliers",
+        "Probabilities": "group_probabilities",
+        "Stress & Emotion": "group_stress_emotion",
+        "Identifiers & Labels": "group_identifiers_labels",
+        "Other Parameters": "group_other_parameters",
     }
-    return mapping.get(group, group)
+    key = mapping.get(group)
+    if key:
+        return t(key, _ACTIVE_LANG)
+    return group
+
+
+def _dir(key: str) -> str:
+    return _ACTIVE_DIRS[key]
+
+
+def _pick(item: dict[str, Any], field: str, lang: str, fallback_field: str | None = None) -> str:
+    """Select localized field: {field}_{lang} -> fallback_field -> field."""
+    value = item.get(f"{field}_{lang}", "")
+    if isinstance(value, str) and value:
+        return value
+    if fallback_field:
+        fallback = item.get(fallback_field, "")
+        if isinstance(fallback, str) and fallback:
+            return fallback
+    for key in (f"{field}_kr", f"{field}_en", field):
+        candidate = item.get(key, "")
+        if isinstance(candidate, str) and candidate:
+            return candidate
+    return ""
 
 
 def _json_type(value: Any) -> str:
@@ -295,7 +321,7 @@ def _flatten_parameters(value: Any, prefix: str = "", rows: list[tuple[str, Any]
 
 def _render_parameter_table(rows: list[tuple[str, str, str, str]]) -> str:
     lines = [
-        "| Parameter (매개변수) | Value (값) | Type (유형) | What it controls (게임 영향) |",
+        f"| {t('label_parameter', _ACTIVE_LANG)} | {t('label_value', _ACTIVE_LANG)} | {t('label_type', _ACTIVE_LANG)} | {t('label_controls', _ACTIVE_LANG)} |",
         "|----------------------|-----------|------------|-----------------------------|",
     ]
 
@@ -313,7 +339,7 @@ def _render_parameter_table(rows: list[tuple[str, str, str, str]]) -> str:
 
 def _render_metric_table(rows: list[tuple[str, str]]) -> str:
     lines = [
-        "| Metric (지표) | Value (값) |",
+        f"| {t('label_metric', _ACTIVE_LANG)} | {t('label_value', _ACTIVE_LANG)} |",
         "|---------------|-----------|",
     ]
 
@@ -338,9 +364,9 @@ def _module_slug(section: str, module_file: str, module_entry: dict[str, Any]) -
 def _build_module_meta(manifest: dict) -> dict[str, dict[str, str]]:
     meta: dict[str, dict[str, str]] = {}
     sections = (
-        ("systems", config.CONTENT_SYSTEMS),
-        ("ai_modules", config.CONTENT_SYSTEMS),
-        ("core_modules", config.CONTENT_CORE),
+        ("systems", _dir("systems")),
+        ("ai_modules", _dir("systems")),
+        ("core_modules", _dir("core")),
     )
 
     for section, content_dir in sections:
@@ -358,7 +384,7 @@ def _build_module_meta(manifest: dict) -> dict[str, dict[str, str]]:
 
             slug = _module_slug(section, file_path, module_entry)
             title = (
-                module_entry.get("system_name")
+                _pick(module_entry, "system_name", _ACTIVE_LANG)
                 if section in {"systems", "ai_modules"}
                 else _slug_from_path(file_path)
             )
@@ -527,13 +553,16 @@ def _domain_group(entry: dict[str, Any]) -> str:
 
 def _domain_display(group: str) -> str:
     mapping = {
-        "species": "Species (종족)",
-        "emotions": "Emotions (감정)",
-        "personality": "Personality (성격)",
-        "stress": "Stress (스트레스)",
-        "unknown": "Unknown (미상)",
+        "species": "domain_species",
+        "emotions": "domain_emotions",
+        "personality": "domain_personality",
+        "stress": "domain_stress",
+        "unknown": "domain_unknown",
     }
-    return mapping.get(group, group.replace("_", " ").title())
+    key = mapping.get(group)
+    if key:
+        return t(key, _ACTIVE_LANG)
+    return group.replace("_", " ").title()
 
 
 def _load_optional_payload(extracted: dict[str, Any], key: str, warnings: list[str]) -> dict[str, Any] | None:
@@ -600,11 +629,11 @@ def _resolve_data_entries(
 
 def _known_system_docs(file_stem: str) -> list[tuple[str, str]]:
     mapping: dict[str, list[tuple[str, str]]] = {
-        "siler_parameters": [("mortality", os.path.join(config.CONTENT_SYSTEMS, "mortality.md"))],
-        "trait_definitions": [("trait", os.path.join(config.CONTENT_SYSTEMS, "trait.md"))],
-        "decay_parameters": [("emotions", os.path.join(config.CONTENT_SYSTEMS, "emotions.md"))],
-        "event_presets": [("emotions", os.path.join(config.CONTENT_SYSTEMS, "emotions.md"))],
-        "stressor_events": [("stress", os.path.join(config.CONTENT_SYSTEMS, "stress.md"))],
+        "siler_parameters": [("mortality", os.path.join(_dir("systems"), "mortality.md"))],
+        "trait_definitions": [("trait", os.path.join(_dir("systems"), "trait.md"))],
+        "decay_parameters": [("emotions", os.path.join(_dir("systems"), "emotions.md"))],
+        "event_presets": [("emotions", os.path.join(_dir("systems"), "emotions.md"))],
+        "stressor_events": [("stress", os.path.join(_dir("systems"), "stress.md"))],
     }
     return mapping.get(file_stem, [])
 
@@ -637,16 +666,18 @@ def _render_overview_section(
     file_stem = _slug_from_path(source_file)
 
     lines = [
-        "## 개요 (Overview)",
+        f"## {t('section_overview', _ACTIVE_LANG)}",
         "",
-        f"- Configures (설정 내용): {_overview_summary(file_stem, category)}",
+        f"- {t('label_configures', _ACTIVE_LANG)}: {_overview_summary(file_stem, category)}",
     ]
 
     if referenced_by:
         reader_names = ", ".join(sorted({ref["module_title"] for ref in referenced_by}))
-        lines.append(f"- Read by systems/modules (읽는 시스템/모듈): {reader_names}")
+        lines.append(f"- {t('label_read_by_modules', _ACTIVE_LANG)}: {reader_names}")
     else:
-        lines.append("- Read by systems/modules (읽는 시스템/모듈): `references.json`에서 추론되지 않음.")
+        lines.append(
+            f"- {t('label_read_by_modules', _ACTIVE_LANG)}: {t('status_not_inferred_from_references', _ACTIVE_LANG)}"
+        )
 
     doc_links: list[str] = []
     for title, doc_path in _known_system_docs(file_stem):
@@ -659,9 +690,9 @@ def _render_overview_section(
             )
 
     if doc_links:
-        lines.append(f"- Related documentation (관련 문서): {', '.join(doc_links)}")
+        lines.append(f"- {t('label_related_docs', _ACTIVE_LANG)}: {', '.join(doc_links)}")
     else:
-        lines.append("- Related documentation (관련 문서): 없음.")
+        lines.append(f"- {t('label_related_docs', _ACTIVE_LANG)}: {t('status_none', _ACTIVE_LANG)}")
 
     return lines + [""]
 
@@ -702,7 +733,7 @@ def _render_siler_parameters(content: dict[str, Any]) -> list[str]:
     }
 
     lines = [
-        "## 사망 모델 해석 (Mortality Model Interpretation)",
+        f"## {t('section_mortality_model_interpretation', _ACTIVE_LANG)}",
         "",
         "This file defines parameters for the Siler competing-risk hazard model used by the mortality system. (사망 시스템이 사용하는 Siler 경쟁위험도 모델 파라미터)",
         "",
@@ -714,7 +745,7 @@ def _render_siler_parameters(content: dict[str, Any]) -> list[str]:
         "- `a2`: background hazard floor. (연령 무관 기본 위험도)",
         "- `a3,b3`: senescent hazard that grows with age. (노년기 위험도, 연령 증가로 증가)",
         "",
-        "### 기본 파라미터 (Baseline Parameters)",
+        f"### {t('section_baseline_parameters', _ACTIVE_LANG)}",
         "",
     ]
 
@@ -735,7 +766,7 @@ def _render_siler_parameters(content: dict[str, Any]) -> list[str]:
     else:
         lines.extend(["- No baseline parameters found. (기본 파라미터 없음)", ""])
 
-    lines.extend(["### 기술 보정 (Technology Modifiers)", ""])
+    lines.extend([f"### {t('section_technology_modifiers', _ACTIVE_LANG)}", ""])
     tech_rows: list[tuple[str, str, str, str]] = []
     for key in sorted(tech_modifiers.keys()):
         value = tech_modifiers[key]
@@ -751,7 +782,7 @@ def _render_siler_parameters(content: dict[str, Any]) -> list[str]:
     else:
         lines.extend(["- No technology modifiers found. (기술 보정 없음)", ""])
 
-    lines.extend(["### 영아 보호 (Infant Care Protection)", ""])
+    lines.extend([f"### {t('section_infant_care_protection', _ACTIVE_LANG)}", ""])
     care_rows: list[tuple[str, str, str, str]] = []
     for key in sorted(care_protection.keys()):
         value = care_protection[key]
@@ -767,7 +798,7 @@ def _render_siler_parameters(content: dict[str, Any]) -> list[str]:
     else:
         lines.extend(["- No care_protection section found. (care_protection 없음)", ""])
 
-    lines.extend(["### 계절 환경 영향 (Seasonal Environment Effects)", ""])
+    lines.extend([f"### {t('section_seasonal_environment_effects', _ACTIVE_LANG)}", ""])
     season_rows: list[tuple[str, str, str, str]] = []
     for season, payload in sorted(season_modifiers.items()):
         if not isinstance(payload, dict):
@@ -808,13 +839,13 @@ def _render_personality_defer(
     output_dir: str,
 ) -> list[str]:
     lines = [
-        "## 전용 문서 (Specialized Documentation)",
+        f"## {t('section_specialized_docs', _ACTIVE_LANG)}",
         "",
         "Detailed trait interpretation is generated by `scripts/generators/trait_page.py`. (세부 특성 해석은 별도 생성)",
         "",
     ]
 
-    trait_index_path = os.path.join(config.CONTENT_TRAITS, "_index.md")
+    trait_index_path = os.path.join(_dir("traits"), "_index.md")
     lines.append(
         f"- See [`Trait Pages`]({_relative_link(output_dir, trait_index_path)}) for HEXACO conditions and effect breakdowns. (HEXACO 조건/효과 정리)"
     )
@@ -851,7 +882,7 @@ def _render_personality_defer(
     ]
 
     lines.extend([
-        "### 요약 (Summary)",
+        f"### {t('section_summary', _ACTIVE_LANG)}",
         "",
         _render_metric_table(summary_rows),
         "",
@@ -869,13 +900,13 @@ def _render_emotion_defer(
     decay_config: dict[str, Any] | None,
 ) -> list[str]:
     lines = [
-        "## 전용 문서 (Specialized Documentation)",
+        f"## {t('section_specialized_docs', _ACTIVE_LANG)}",
         "",
         "Detailed emotion-system explanation is generated by `scripts/generators/emotion_detail.py`. (감정 시스템 상세 문서)",
         "",
     ]
 
-    detail_path = os.path.join(config.CONTENT_SYSTEMS, "emotion-detail.md")
+    detail_path = os.path.join(_dir("systems"), "emotion-detail.md")
     lines.append(
         f"- See [`Emotion Detail`]({_relative_link(output_dir, detail_path)}) for model-level formulas and dynamics. (모델 수식/동역학)"
     )
@@ -934,7 +965,7 @@ def _render_emotion_defer(
         ]
 
     lines.extend([
-        "### 요약 (Summary)",
+        f"### {t('section_summary', _ACTIVE_LANG)}",
         "",
         _render_metric_table(summary_rows),
         "",
@@ -950,13 +981,13 @@ def _render_stress_defer(
     content: Any,
 ) -> list[str]:
     lines = [
-        "## 전용 문서 (Specialized Documentation)",
+        f"## {t('section_specialized_docs', _ACTIVE_LANG)}",
         "",
         "Detailed stress mechanics are generated by `scripts/generators/stress_detail.py`. (스트레스 상세 문서)",
         "",
     ]
 
-    detail_path = os.path.join(config.CONTENT_SYSTEMS, "stress-detail.md")
+    detail_path = os.path.join(_dir("systems"), "stress-detail.md")
     lines.append(
         f"- See [`Stress Detail`]({_relative_link(output_dir, detail_path)}) for pipeline formulas and stage interpretation. (수식/단계 해석)"
     )
@@ -984,7 +1015,7 @@ def _render_stress_defer(
     ]
 
     lines.extend([
-        "### 요약 (Summary)",
+        f"### {t('section_summary', _ACTIVE_LANG)}",
         "",
         _render_metric_table(summary_rows),
         "",
@@ -995,7 +1026,7 @@ def _render_stress_defer(
 
 def _render_generic_interpreted(content: Any) -> list[str]:
     lines = [
-        "## 해석된 파라미터 (Interpreted Parameters)",
+        f"## {t('section_interpreted_parameters', _ACTIVE_LANG)}",
         "",
     ]
 
@@ -1014,7 +1045,7 @@ def _render_generic_interpreted(content: Any) -> list[str]:
         )
 
     if not grouped_rows:
-        lines.extend(["- No interpretable parameters found. (해석 가능한 파라미터 없음)", ""])
+        lines.extend([f"- {t('phrase_no_interpretable_parameters', _ACTIVE_LANG)}", ""])
         return lines
 
     for group in SEMANTIC_GROUP_ORDER:
@@ -1102,7 +1133,8 @@ def _render_page(
         "",
         f"# {file_stem}",
         "",
-        f"📄 source (출처): `{source_file}` | Category (분류): {category} | Type (유형): {value_type}",
+        f"{t('label_source', _ACTIVE_LANG)} `{source_file}` | {t('label_category', _ACTIVE_LANG)}: {category} | "
+        f"{t('label_type', _ACTIVE_LANG)}: {value_type}",
         "",
     ]
 
@@ -1122,7 +1154,7 @@ def _render_page(
     if academic_refs:
         lines.extend(
             [
-                "## 참고 문헌 (Academic References)",
+                f"## {t('section_academic_refs', _ACTIVE_LANG)}",
                 "",
             ]
         )
@@ -1130,19 +1162,19 @@ def _render_page(
             lines.append(f"- {ref}")
         lines.append("")
 
-    lines.append("## 참조하는 시스템 (Referenced By)")
+    lines.append(f"## {t('section_references', _ACTIVE_LANG)}")
     lines.append("")
     if referenced_by:
         for ref in referenced_by:
             relative_link = _relative_link(output_dir, ref["module_doc_path"])
             lines.append(f"- [`{ref['module_title']}`]({relative_link}) - {ref['reason']}")
     else:
-        lines.append("- None found. (참조 없음)")
+        lines.append(f"- {t('phrase_no_references', _ACTIVE_LANG)}")
 
     lines.extend(
         [
             "",
-            "## 수동 노트 (Manual Notes)",
+            f"## {t('section_manual_notes', _ACTIVE_LANG)}",
             "",
             "<!-- MANUAL:START -->",
             "<!-- MANUAL:END -->",
@@ -1158,7 +1190,7 @@ def _render_index_page(grouped: dict[str, list[dict[str, Any]]], source_files: l
 
     lines = [
         "---",
-        'title: "데이터 (Data)"',
+        f'title: "{t("section_data", _ACTIVE_LANG)}"',
         'description: "WorldSim interpreted data file documentation (WorldSim 데이터 해석 문서)"',
         "generated: true",
         "source_files:",
@@ -1172,13 +1204,13 @@ def _render_index_page(grouped: dict[str, list[dict[str, Any]]], source_files: l
             "nav_order: 1",
             "---",
             "",
-            "# 데이터 (Data)",
+            f"# {t('section_data', _ACTIVE_LANG)}",
             "",
-            f"Total files (총 파일 수): **{total_files}**",
+            f"{t('label_total_files', _ACTIVE_LANG)}: **{total_files}**",
             "",
-            "## 도메인 요약 (Domain Summary)",
+            f"## {t('section_domain_summary', _ACTIVE_LANG)}",
             "",
-            "| Domain (도메인) | Files (파일 수) |",
+            f"| {t('label_domain', _ACTIVE_LANG)} | {t('label_files', _ACTIVE_LANG)} |",
             "|-----------------|----------------|",
         ]
     )
@@ -1194,7 +1226,8 @@ def _render_index_page(grouped: dict[str, list[dict[str, Any]]], source_files: l
             [
                 f"## {_domain_display(group)}",
                 "",
-                "| File (파일) | Category (분류) | Type (유형) | Key Count (키 수) | Items (항목 수) |",
+                f"| {t('label_files', _ACTIVE_LANG)} | {t('label_category', _ACTIVE_LANG)} | "
+                f"{t('label_type', _ACTIVE_LANG)} | {t('label_key_count', _ACTIVE_LANG)} | {t('label_items', _ACTIVE_LANG)} |",
                 "|-------------|----------------|------------|------------------|----------------|",
             ]
         )
@@ -1214,7 +1247,7 @@ def _render_index_page(grouped: dict[str, list[dict[str, Any]]], source_files: l
 
     lines.extend(
         [
-            "## 수동 노트 (Manual Notes)",
+            f"## {t('section_manual_notes', _ACTIVE_LANG)}",
             "",
             "<!-- MANUAL:START -->",
             "<!-- MANUAL:END -->",
@@ -1225,7 +1258,7 @@ def _render_index_page(grouped: dict[str, list[dict[str, Any]]], source_files: l
     return "\n".join(lines)
 
 
-def run(manifest: dict, extracted: dict) -> dict:
+def run(manifest: dict, extracted: dict | None = None, lang: str = "ko") -> dict:
     """Main entry point.
 
     Args:
@@ -1246,6 +1279,10 @@ def run(manifest: dict, extracted: dict) -> dict:
     if not isinstance(manifest, dict):
         warnings.append("manifest is not an object; using empty manifest")
         manifest = {}
+
+    global _ACTIVE_DIRS, _ACTIVE_LANG
+    _ACTIVE_DIRS = config.lang_dirs(lang)
+    _ACTIVE_LANG = lang
 
     extracted_payloads = extracted if isinstance(extracted, dict) else {}
 
@@ -1270,7 +1307,7 @@ def run(manifest: dict, extracted: dict) -> dict:
         if isinstance(file_path, str) and file_path:
             manifest_meta_by_file[file_path] = entry
 
-    config.ensure_dir(config.CONTENT_DATA)
+    config.ensure_dir(_dir("data"))
 
     referenced_by_map = _build_referenced_by_map(data_entries, manifest, warnings)
 
@@ -1306,7 +1343,7 @@ def run(manifest: dict, extracted: dict) -> dict:
         if not isinstance(normalized_entry.get("domain"), str) or not normalized_entry.get("domain"):
             normalized_entry["domain"] = _derive_domain_from_file(source_file)
 
-        category_dir = os.path.join(config.CONTENT_DATA, *category.split("/"))
+        category_dir = os.path.join(_dir("data"), *category.split("/"))
         config.ensure_dir(category_dir)
 
         output_file = os.path.join(category_dir, f"{_slug_from_path(source_file)}.md")
@@ -1342,7 +1379,7 @@ def run(manifest: dict, extracted: dict) -> dict:
         if not isinstance(items_count, int):
             items_count = "-"
 
-        index_rel_link = os.path.relpath(output_file, config.CONTENT_DATA)
+        index_rel_link = os.path.relpath(output_file, _dir("data"))
         grouped_for_index[_domain_group(normalized_entry)].append(
             {
                 "file": source_file,
@@ -1356,7 +1393,7 @@ def run(manifest: dict, extracted: dict) -> dict:
 
         processed_count += 1
 
-    index_path = os.path.join(config.CONTENT_DATA, "_index.md")
+    index_path = os.path.join(_dir("data"), "_index.md")
     index_sources = ["extracted/data_files.json"]
 
     optional_sources = {

@@ -10,12 +10,12 @@ nav_order: 11
 
 # Honesty-Humility (H) — 정직-겸손
 
-## Axis Overview
+## 축 개요
 
 The **Honesty-Humility** axis measures personality tendencies represented by the `H` axis in the HEXACO model.
 **Facets**: `H_fairness` (공정성 / Fairness), `H_greed_avoidance` (탐욕 회피 / Greed Avoidance), `H_modesty` (겸손 / Modesty), `H_sincerity` (진실성 / Sincerity)
 
-## Traits
+## 특성 효과
 
 <a id="f_sincere"></a>
 ### Sincere (진실한) — `f_sincere`
@@ -2881,7 +2881,7 @@ The **Honesty-Humility** axis measures personality tendencies represented by the
 
 ---
 
-## Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

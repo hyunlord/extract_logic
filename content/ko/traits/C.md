@@ -10,12 +10,12 @@ nav_order: 15
 
 # Conscientiousness (C) — 성실성
 
-## Axis Overview
+## 축 개요
 
 The **Conscientiousness** axis measures personality tendencies represented by the `C` axis in the HEXACO model.
 **Facets**: `C_diligence` (근면 / Diligence), `C_organization` (조직화 / Organization), `C_perfectionism` (완벽주의 / Perfectionism), `C_prudence` (신중 / Prudence)
 
-## Traits
+## 특성 효과
 
 <a id="f_organized"></a>
 ### Organized (정리정돈) — `f_organized`
@@ -946,7 +946,7 @@ The **Conscientiousness** axis measures personality tendencies represented by th
 
 ---
 
-## Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->

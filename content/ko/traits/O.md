@@ -10,12 +10,12 @@ nav_order: 16
 
 # Openness to Experience (O) — 경험 개방성
 
-## Axis Overview
+## 축 개요
 
 The **Openness to Experience** axis measures personality tendencies represented by the `O` axis in the HEXACO model.
 **Facets**: `O_aesthetic` (심미성 / Aesthetic Appreciation), `O_creativity` (창의성 / Creativity), `O_inquisitiveness` (호기심 / Inquisitiveness), `O_unconventionality` (비전통성 / Unconventionality)
 
-## Traits
+## 특성 효과
 
 <a id="f_aesthetic"></a>
 ### Aesthetic (심미적인) — `f_aesthetic`
@@ -1176,7 +1176,7 @@ The **Openness to Experience** axis measures personality tendencies represented 
 
 ---
 
-## Manual Notes
+## 수동 노트
 
 <!-- MANUAL:START -->
 <!-- MANUAL:END -->
